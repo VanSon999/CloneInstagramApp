@@ -4,6 +4,7 @@ import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import kotlinx.android.synthetic.main.activity_main.*
 import vanson.dev.instagramclone.Fragment.HomeFragment
 import vanson.dev.instagramclone.Fragment.NotificationsFragment
 import vanson.dev.instagramclone.Fragment.ProfileFragment
@@ -42,9 +43,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
-        navView.setOnNavigationItemSelectedListener { item ->
+//        val navView: BottomNavigationView = findViewById(R.id.nav_view)
+        nav_view.setOnNavigationItemSelectedListener { item ->
             when(item.itemId){
                 R.id.nav_home -> {
                     moveToFragment(HomeFragment())
