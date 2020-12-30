@@ -12,7 +12,7 @@
         android:background="@android:color/white">
 
         <androidx.appcompat.widget.Toolbar
-            android:id = "@+id/search__toolbar"
+            android:id = "@+id/search_toolbar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="4dp"
