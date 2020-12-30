@@ -11,7 +11,7 @@ import vanson.dev.instagramclone.Fragment.ProfileFragment
 import vanson.dev.instagramclone.Fragment.SearchFragment
 
 class MainActivity : AppCompatActivity() {
-    internal var selectedFragment : Fragment? = null
+//    internal var selectedFragment : Fragment? = null
 //    private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
 //        when (item.itemId) {
 //            R.id.nav_home -> {
@@ -47,31 +47,24 @@ class MainActivity : AppCompatActivity() {
         navView.setOnNavigationItemSelectedListener { item ->
             when(item.itemId){
                 R.id.nav_home -> {
-                    selectedFragment = HomeFragment()
-                    true
+                    moveToFragment(HomeFragment())
+                    return@setOnNavigationItemSelectedListener true
                 }
                 R.id.nav_search -> {
-                    selectedFragment = SearchFragment()
-                    true
+                    moveToFragment(SearchFragment())
+                    return@setOnNavigationItemSelectedListener true
                 }
                 R.id.nav_add_post -> {
-
-                    true
+                    return@setOnNavigationItemSelectedListener true
                 }
                 R.id.nav_heart -> {
-                    selectedFragment = NotificationsFragment()
-                    true
+                    moveToFragment(NotificationsFragment())
+                    return@setOnNavigationItemSelectedListener true
                 }
                 R.id.nav_profile -> {
-                    selectedFragment = ProfileFragment()
-                    true
+                    moveToFragment(ProfileFragment())
+                    return@setOnNavigationItemSelectedListener true
                 }
-            }
-            if(selectedFragment != null){
-                supportFragmentManager.beginTransaction().replace(
-                    R.id.fragment_container,
-                    selectedFragment!!
-                ).commit()
             }
             false
         }
@@ -83,9 +76,12 @@ class MainActivity : AppCompatActivity() {
 //                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications))
 //        setupActionBarWithNavController(navController, appBarConfiguration)
 //        navView.setupWithNavController(navController)
-        supportFragmentManager.beginTransaction().replace(
-            R.id.fragment_container,
-            HomeFragment()
-        ).commit()
+        moveToFragment(HomeFragment())
+    }
+
+    private fun moveToFragment(fragment: Fragment){
+        val fragmentTrans = supportFragmentManager.beginTransaction()
+        fragmentTrans.replace(R.id.fragment_container, fragment)
+        fragmentTrans.commit()
     }
 }
