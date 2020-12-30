@@ -32,7 +32,6 @@
                     android:src="@drawable/send_icon"
                     android:layout_centerInParent="true"
                     android:layout_alignParentRight="true"/>
-"
             </RelativeLayout>
 
         </androidx.appcompat.widget.Toolbar>

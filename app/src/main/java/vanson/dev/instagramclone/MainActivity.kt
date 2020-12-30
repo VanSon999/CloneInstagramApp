@@ -4,10 +4,14 @@ import android.os.Bundle
 import android.widget.TextView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import vanson.dev.instagramclone.Fragment.HomeFragment
+import vanson.dev.instagramclone.Fragment.NotificationsFragment
+import vanson.dev.instagramclone.Fragment.ProfileFragment
+import vanson.dev.instagramclone.Fragment.SearchFragment
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var textView : TextView
-
+    internal var selectedFragment : Fragment? = null
 //    private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
 //        when (item.itemId) {
 //            R.id.nav_home -> {
@@ -38,31 +42,36 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        textView = findViewById(R.id.text_select)
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         navView.setOnNavigationItemSelectedListener { item ->
             when(item.itemId){
                 R.id.nav_home -> {
-                    textView.setText("HOME")
+                    selectedFragment = HomeFragment()
                     true
                 }
                 R.id.nav_search -> {
-                    textView.setText("SEARCH")
+                    selectedFragment = SearchFragment()
                     true
                 }
                 R.id.nav_add_post -> {
-                    textView.setText("ADD")
+
                     true
                 }
                 R.id.nav_heart -> {
-                    textView.setText("HEART")
+                    selectedFragment = NotificationsFragment()
                     true
                 }
                 R.id.nav_profile -> {
-                    textView.setText( "PROFILE")
+                    selectedFragment = ProfileFragment()
                     true
                 }
+            }
+            if(selectedFragment != null){
+                supportFragmentManager.beginTransaction().replace(
+                    R.id.fragment_container,
+                    selectedFragment!!
+                ).commit()
             }
             false
         }
@@ -74,5 +83,9 @@ class MainActivity : AppCompatActivity() {
 //                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications))
 //        setupActionBarWithNavController(navController, appBarConfiguration)
 //        navView.setupWithNavController(navController)
+        supportFragmentManager.beginTransaction().replace(
+            R.id.fragment_container,
+            HomeFragment()
+        ).commit()
     }
 }
