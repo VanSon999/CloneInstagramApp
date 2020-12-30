@@ -1,7 +1,6 @@
-package vanson.dev.instagramclone
+package vanson.dev.instagramclone.Controller
 
 import android.os.Bundle
-import android.widget.TextView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -9,6 +8,7 @@ import vanson.dev.instagramclone.Fragment.HomeFragment
 import vanson.dev.instagramclone.Fragment.NotificationsFragment
 import vanson.dev.instagramclone.Fragment.ProfileFragment
 import vanson.dev.instagramclone.Fragment.SearchFragment
+import vanson.dev.instagramclone.R
 
 class MainActivity : AppCompatActivity() {
 //    internal var selectedFragment : Fragment? = null
