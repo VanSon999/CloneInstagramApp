@@ -1,6 +1,7 @@
 package vanson.dev.instagramclone.Controller
 
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -45,6 +46,9 @@ class SignInActivity : AppCompatActivity() {
                         val intent = Intent(this, MainActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                         startActivity(intent)
+                        val pref = this.getSharedPreferences("PREFS", Context.MODE_PRIVATE)?.edit()
+                        pref?.putString("profileId", FirebaseAuth.getInstance().currentUser!!.uid)
+                        pref?.apply()
                         finish()
                     }else{
                         progressDialog.dismiss()

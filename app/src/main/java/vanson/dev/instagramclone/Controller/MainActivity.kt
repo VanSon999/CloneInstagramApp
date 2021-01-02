@@ -1,9 +1,11 @@
 package vanson.dev.instagramclone.Controller
 
+import android.content.Context
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
 import vanson.dev.instagramclone.Fragment.HomeFragment
 import vanson.dev.instagramclone.Fragment.NotificationsFragment

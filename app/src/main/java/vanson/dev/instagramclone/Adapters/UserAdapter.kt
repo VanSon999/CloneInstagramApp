@@ -8,12 +8,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.NonNull
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
+import vanson.dev.instagramclone.Fragment.ProfileFragment
 import vanson.dev.instagramclone.Models.User
 import vanson.dev.instagramclone.R
 
@@ -26,12 +28,14 @@ class UserAdapter (private var mContext : Context, private var mUser: List<User>
         var followButton: Button = itemView.findViewById(R.id.follow_btn_search)
         var followingRef: Query? = null
         var followListenerRef: ValueEventListener? = null
+
         fun bindUser(user: User, firebase: FirebaseUser?){
             userName.text = user.getUsername()
             userFullName.text = user.getFullName()
             Picasso.get().load(user.getImage()).placeholder(R.drawable.profile).into(userProfileImage)
             //Problem!!!
             checkFollowingStatus(user.getUid(), followButton, firebase)
+            //................
             //................
             followButton.setOnClickListener {
                 if(followButton.text.toString() == "Follow"){
@@ -119,5 +123,12 @@ class UserAdapter (private var mContext : Context, private var mUser: List<User>
 
     override fun onBindViewHolder(holder: UserAdapter.ViewHolder, position: Int) {
         holder.bindUser(mUser[position], firebaseUser)
+        holder.itemView.setOnClickListener(View.OnClickListener {
+            val pref = mContext.getSharedPreferences("PREFS",Context.MODE_PRIVATE).edit()
+            pref.putString("profileId", mUser[position].getUid())
+            pref.apply()
+
+            (mContext as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, ProfileFragment()).commit()
+        })
     }
 }
