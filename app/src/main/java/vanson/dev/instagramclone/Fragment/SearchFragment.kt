@@ -10,10 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_search.view.*
 import vanson.dev.instagramclone.Adapters.UserAdapter
 import vanson.dev.instagramclone.Models.User
@@ -35,6 +32,10 @@ class SearchFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private var userAdapter: UserAdapter? = null
     private lateinit var mUser: ArrayList<User>
+
+    //Search
+    private var searchListener: ValueEventListener? = null
+    private var searchRef: Query? = null
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -74,8 +75,10 @@ class SearchFragment : Fragment() {
                 if(view.search_edit_text.text.toString() != ""){
                     Log.d("Test", "Text : ${p0.toString()}")
                     recyclerView.visibility = View.VISIBLE
-                    retrieveUsers()
+                    //Problem???
+//                    retrieveUsers()
                     searchUser(p0.toString().toLowerCase())
+                    //Problem???
                 }
             }
         })
@@ -83,9 +86,13 @@ class SearchFragment : Fragment() {
     }
 
     private fun searchUser(str: String) {
-        val query = FirebaseDatabase.getInstance().getReference().child("Users").orderByChild("search_name").startAt(str).endAt(str + "\uf8ff")
-
-        query.addValueEventListener(object : ValueEventListener{
+        //remove before listener
+        if(searchRef != null && searchListener != null){
+            searchRef!!.removeEventListener(searchListener!!)
+        }
+        //----------------------
+        searchRef = FirebaseDatabase.getInstance().getReference().child("Users").orderByChild("search_name").startAt(str).endAt(str + "\uf8ff")
+        searchListener = object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 mUser.clear()
 
@@ -102,7 +109,26 @@ class SearchFragment : Fragment() {
 
             override fun onCancelled(error: DatabaseError) {
             }
-        })
+        }
+        searchRef!!.addValueEventListener(searchListener!!)
+//        searchRef!!.addValueEventListener(object : ValueEventListener{
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                mUser.clear()
+//
+//                for(x in snapshot.children){
+//                    val user = x.getValue(User::class.java)
+//                    Log.d("Test", "Search -- " + user)
+//                    if(user != null){
+//                        mUser.add(user)
+//                    }
+//                }
+//
+//                userAdapter?.notifyDataSetChanged()
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//            }
+//        })
     }
 
     private fun retrieveUsers() {
