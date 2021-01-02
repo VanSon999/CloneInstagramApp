@@ -1,6 +1,7 @@
 package vanson.dev.instagramclone.Adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +11,7 @@ import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import vanson.dev.instagramclone.Models.User
@@ -26,7 +24,8 @@ class UserAdapter (private var mContext : Context, private var mUser: List<User>
         var userFullName: TextView = itemView.findViewById(R.id.user_full_name_search)
         var userProfileImage: CircleImageView = itemView.findViewById(R.id.user_profile_image_search)
         var followButton: Button = itemView.findViewById(R.id.follow_btn_search)
-
+        var followingRef: Query? = null
+        var followListenerRef: ValueEventListener? = null
         fun bindUser(user: User, firebase: FirebaseUser?){
             userName.text = user.getUsername()
             userFullName.text = user.getFullName()
@@ -80,14 +79,20 @@ class UserAdapter (private var mContext : Context, private var mUser: List<User>
         }
 
         private fun checkFollowingStatus(uid: String, followButton: Button, firebase: FirebaseUser?) {
-            val followingRef = firebase?.uid.let { it ->
+            //remove duplicate listener
+            if(followListenerRef!= null && followingRef != null){
+                followingRef!!.removeEventListener(followListenerRef!!)
+            }
+            //.........................
+
+            followingRef = firebase?.uid.let { it ->
                 FirebaseDatabase.getInstance().reference.child("Follow")
                         .child(it.toString())
                         .child("Following")
             }
-
-            followingRef.addValueEventListener(object : ValueEventListener{
+            followListenerRef = object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
+                    Log.d("Button", uid)
                     if(snapshot.child(uid).exists()){
                         followButton.text = "Following"
                     }else{
@@ -97,7 +102,8 @@ class UserAdapter (private var mContext : Context, private var mUser: List<User>
 
                 override fun onCancelled(error: DatabaseError) {
                 }
-            })
+            }
+            followingRef!!.addValueEventListener(followListenerRef!!)
         }
 
     }
@@ -114,5 +120,4 @@ class UserAdapter (private var mContext : Context, private var mUser: List<User>
     override fun onBindViewHolder(holder: UserAdapter.ViewHolder, position: Int) {
         holder.bindUser(mUser[position], firebaseUser)
     }
-
 }
