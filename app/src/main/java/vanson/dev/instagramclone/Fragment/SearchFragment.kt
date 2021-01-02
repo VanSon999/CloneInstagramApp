@@ -75,7 +75,7 @@ class SearchFragment : Fragment() {
                     Log.d("Test", "Text : ${p0.toString()}")
                     recyclerView.visibility = View.VISIBLE
                     retrieveUsers()
-                    searchUser(p0.toString())
+                    searchUser(p0.toString().toLowerCase())
                 }
             }
         })
@@ -83,7 +83,7 @@ class SearchFragment : Fragment() {
     }
 
     private fun searchUser(str: String) {
-        val query = FirebaseDatabase.getInstance().getReference().child("Users").orderByChild("fullname").startAt(str.toUpperCase()).endAt(str.toLowerCase() + "\uf8ff")
+        val query = FirebaseDatabase.getInstance().getReference().child("Users").orderByChild("search_name").startAt(str).endAt(str + "\uf8ff")
 
         query.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
