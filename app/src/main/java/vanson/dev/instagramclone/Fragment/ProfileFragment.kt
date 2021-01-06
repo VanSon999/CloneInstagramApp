@@ -3,6 +3,7 @@ package vanson.dev.instagramclone.Fragment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -66,7 +67,47 @@ class ProfileFragment : Fragment() {
         getFollowings(profileId)
         userInfo()
         view.edit_account_button.setOnClickListener { view ->
-            startActivity(Intent(context, AccountSettingActivity::class.java))
+            val text_edit_button = view.edit_account_button.text.toString()
+            when(text_edit_button){
+                "Following" -> {
+                    firebaseUser.uid.let { it ->
+                        FirebaseDatabase.getInstance().reference.child("Follow")
+                                .child(it.toString())
+                                .child("Following")
+                                .child(profileId)
+                                .removeValue()
+                    }
+
+                    firebaseUser.uid.let { it ->
+                        FirebaseDatabase.getInstance().reference.child("Follow")
+                                .child(profileId)
+                                .child("Followers")
+                                .child(it.toString())
+                                .removeValue()
+                    }
+                }
+                "Follow" -> {
+                    firebaseUser.uid.let { it ->
+                        FirebaseDatabase.getInstance().reference.child("Follow")
+                                .child(it.toString())
+                                .child("Following")
+                                .child(profileId)
+                                .setValue(true)
+                    }
+
+                    firebaseUser.uid.let { it ->
+                        FirebaseDatabase.getInstance().reference.child("Follow")
+                                .child(profileId)
+                                .child("Followers")
+                                .child(it.toString())
+                                .setValue(true)
+                    }
+                }
+                else -> {
+                    startActivity(Intent(context, AccountSettingActivity::class.java))
+                }
+            }
+
         }
         return view
     }
@@ -109,7 +150,11 @@ class ProfileFragment : Fragment() {
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
+//                    val number = snapshot.childrenCount.toString()
+//                    Log.d("Followers ", "uid : $uid : $number")
                     view?.total_followers?.text = snapshot.childrenCount.toString()
+                }else{
+                    view?.total_followers?.text = "0"
                 }
             }
         })
@@ -131,7 +176,11 @@ class ProfileFragment : Fragment() {
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
+//                    val number = snapshot.childrenCount.toString()
+//                    Log.d("Followers ", "uid : $uid : $number")
                     view?.total_following?.text = snapshot.childrenCount.toString()
+                }else{
+                    view?.total_following?.text = "0"
                 }
             }
         })
@@ -145,16 +194,15 @@ class ProfileFragment : Fragment() {
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
-//                if(context != null){
-//                    return
-//                }
-
-                if(snapshot.exists()){
-                    val user = snapshot.getValue<User>(User::class.java)
-                    Picasso.get().load(user!!.getImage()).placeholder(R.drawable.profile).into(view?.profile_image_fragment)
-                    view?.profile_fragment_username?.text = user.getUsername()
-                    view?.full_name_profile_frag?.text = user.getFullName()
-                    view?.bio_profile_frag?.text  = user.getBio()
+                if(context != null){ // this is problem??? context, view auto disappear after two time update profile!
+                    if(snapshot.exists()){
+                        val user = snapshot.getValue<User>(User::class.java)
+//                    Log.d("Profile", user.toString())
+                        Picasso.get().load(user!!.getImage()).placeholder(R.drawable.profile).into(view?.profile_image_fragment)
+                        view?.profile_fragment_username?.text = user.getUsername()
+                        view?.full_name_profile_frag?.text = user.getFullName()
+                        view?.bio_profile_frag?.text  = user.getBio()
+                    }
                 }
             }
         })
@@ -197,7 +245,6 @@ class ProfileFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-
         val pref = context?.getSharedPreferences("PREFS",Context.MODE_PRIVATE)?.edit()
         pref?.putString("profileId", firebaseUser.uid)
         pref?.apply()
