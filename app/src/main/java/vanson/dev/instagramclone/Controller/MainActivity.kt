@@ -1,6 +1,7 @@
 package vanson.dev.instagramclone.Controller
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -57,6 +58,7 @@ class MainActivity : AppCompatActivity() {
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.nav_add_post -> {
+                    startActivity(Intent(this, AddPostActivity::class.java))
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.nav_heart -> {
