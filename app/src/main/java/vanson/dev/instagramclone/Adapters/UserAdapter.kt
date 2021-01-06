@@ -24,7 +24,7 @@ class UserAdapter (private var mContext : Context, private var mUser: List<User>
     class ViewHolder(@NonNull itemView: View) : RecyclerView.ViewHolder(itemView){
         var userName: TextView = itemView.findViewById(R.id.user_name_search)
         var userFullName: TextView = itemView.findViewById(R.id.user_full_name_search)
-        var userProfileImage: CircleImageView = itemView.findViewById(R.id.user_profile_image_search)
+        var userProfileImage: CircleImageView = itemView.findViewById(R.id.user_profile_image_home)
         var followButton: Button = itemView.findViewById(R.id.follow_btn_search)
         var followingRef: Query? = null
         var followListenerRef: ValueEventListener? = null

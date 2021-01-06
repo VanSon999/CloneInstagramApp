@@ -1,6 +1,7 @@
 package vanson.dev.instagramclone.Fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -29,7 +30,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class HomeFragment : Fragment() {
-
+    private lateinit var recyclerView: RecyclerView
     private var postAdapter : PostAdapter? = null
     private var postList: ArrayList<Post>? = null
     private var followingList: ArrayList<String>? = null
@@ -53,7 +54,7 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_home, container, false)
 
-        var recyclerView: RecyclerView? = null
+//        var recyclerView: RecyclerView? = null
         recyclerView = view.findViewById(R.id.recycler_view_home)
         val linearLayoutManager = LinearLayoutManager(context)
         linearLayoutManager.reverseLayout = true
@@ -63,7 +64,7 @@ class HomeFragment : Fragment() {
         postList = ArrayList()
         followingList = ArrayList()
         postAdapter = context?.let { PostAdapter(postList!!, it) }
-
+        recyclerView.adapter = postAdapter
         checkFollowings()
         return view
     }
@@ -104,10 +105,11 @@ class HomeFragment : Fragment() {
                         for(id in followingList!!){
                             if(post!!.getPublisher() == id){
                                 postList!!.add(post)
+                                Log.d("Posts", post.getImage())
                             }
                         }
-                        postAdapter!!.notifyDataSetChanged()
                     }
+                    postAdapter?.notifyDataSetChanged()
                 }
             }
 
