@@ -12,4 +12,9 @@ class HomeActivity : BaseActivity(0) {
         setupBottomNavigation()
         Log.d(TAG, "onCreate: ${this.navNumber}")
     }
+
+    override fun onStart() {
+        super.onStart()
+        setActivityChecked(0)
+    }
 }

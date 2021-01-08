@@ -20,4 +20,9 @@ class ProfileActivity : BaseActivity(4) {
             startActivity(intent)
         }
     }
+
+    override fun onStart() {
+        super.onStart()
+        setActivityChecked(4)
+    }
 }

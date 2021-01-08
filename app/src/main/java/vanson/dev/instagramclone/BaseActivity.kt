@@ -41,7 +41,7 @@ abstract class BaseActivity(val navNumber: Int) : AppCompatActivity(){
         bottom_navigation_view.menu.getItem(navNumber).isChecked = true
     }
 
-//    fun setActivityChecked(num: Int): Unit{
-//        bottom_navigation_view.menu.getItem(navNumber).isChecked = true
-//    }
+    fun setActivityChecked(num: Int): Unit{
+        bottom_navigation_view.menu.getItem(num).isChecked = true
+    }
 }
