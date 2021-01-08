@@ -2,7 +2,7 @@ package vanson.dev.instagramclone
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_profile.*
+import kotlinx.android.synthetic.main.bottom_navigation_view.*
 
 abstract class BaseActivity(val navNumber: Int) : AppCompatActivity(){
     private val TAG = "BaseActivity"
@@ -40,4 +40,8 @@ abstract class BaseActivity(val navNumber: Int) : AppCompatActivity(){
 
         bottom_navigation_view.menu.getItem(navNumber).isChecked = true
     }
+
+//    fun setActivityChecked(num: Int): Unit{
+//        bottom_navigation_view.menu.getItem(navNumber).isChecked = true
+//    }
 }

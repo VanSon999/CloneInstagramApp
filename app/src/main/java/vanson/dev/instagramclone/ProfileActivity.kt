@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import kotlinx.android.synthetic.main.activity_profile.*
 
 class ProfileActivity : BaseActivity(4) {
     private val TAG = "ProfileActivity"
@@ -13,5 +14,10 @@ class ProfileActivity : BaseActivity(4) {
 
         setupBottomNavigation()
         Log.d(TAG, "onCreate: ${this.navNumber}")
+
+        edit_profile_btn.setOnClickListener {
+            val intent =Intent(this, EditProfileActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

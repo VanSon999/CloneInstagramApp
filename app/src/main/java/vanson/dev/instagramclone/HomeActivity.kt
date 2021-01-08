@@ -8,7 +8,7 @@ class HomeActivity : BaseActivity(0) {
     private val TAG = "HomeActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile)
+        setContentView(R.layout.acitivity_home)
         setupBottomNavigation()
         Log.d(TAG, "onCreate: ${this.navNumber}")
     }
