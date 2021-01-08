@@ -2,7 +2,7 @@ package vanson.dev.instagramclone
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.activity_profile.*
 
 abstract class BaseActivity(val navNumber: Int) : AppCompatActivity(){
     private val TAG = "BaseActivity"
