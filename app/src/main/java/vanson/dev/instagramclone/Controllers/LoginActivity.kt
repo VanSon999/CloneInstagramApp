@@ -12,10 +12,10 @@ import kotlinx.android.synthetic.main.activity_login.*
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
 import vanson.dev.instagramclone.R
+import vanson.dev.instagramclone.determineStateBtn
 import vanson.dev.instagramclone.showToast
 
-class LoginActivity : AppCompatActivity(), KeyboardVisibilityEventListener,
-    TextWatcher, View.OnClickListener {
+class LoginActivity : AppCompatActivity(), KeyboardVisibilityEventListener, View.OnClickListener {
     private val TAG = "LoginActivity"
     private lateinit var mAuth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,34 +23,21 @@ class LoginActivity : AppCompatActivity(), KeyboardVisibilityEventListener,
         setContentView(R.layout.activity_login)
 
         KeyboardVisibilityEvent.setEventListener(this, this)
-        login_btn.isEnabled = false
         mAuth = FirebaseAuth.getInstance()
-        email_login.addTextChangedListener(this)
-        password_login.addTextChangedListener(this)
 
         login_btn.setOnClickListener(this)
+        determineStateBtn(login_btn, email_login, password_login)
         create_account_text.setOnClickListener(this)
     }
 
     override fun onVisibilityChanged(isKeyBoardOpen: Boolean) {
         if (isKeyBoardOpen) {
-            scroll_view.scrollTo(0, scroll_view.bottom)
             create_account_text.visibility = View.GONE
         } else {
-            scroll_view.scrollTo(0, scroll_view.top)
             create_account_text.visibility = View.VISIBLE
         }
     }
 
-    override fun afterTextChanged(p0: Editable?) {
-        login_btn.isEnabled = validate(email_login.text.toString(), password_login.text.toString())
-    }
-
-    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-    }
-
-    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-    }
 
     override fun onClick(view: View) {
 
