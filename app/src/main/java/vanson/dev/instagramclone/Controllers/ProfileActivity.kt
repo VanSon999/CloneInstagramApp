@@ -1,10 +1,10 @@
-package vanson.dev.instagramclone
+package vanson.dev.instagramclone.Controllers
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import kotlinx.android.synthetic.main.activity_profile.*
+import vanson.dev.instagramclone.R
 
 class ProfileActivity : BaseActivity(4) {
     private val TAG = "ProfileActivity"

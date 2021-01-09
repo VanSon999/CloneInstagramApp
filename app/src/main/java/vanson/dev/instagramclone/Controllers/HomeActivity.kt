@@ -1,10 +1,11 @@
-package vanson.dev.instagramclone
+package vanson.dev.instagramclone.Controllers
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.acitivity_home.*
+import vanson.dev.instagramclone.R
 
 class HomeActivity : BaseActivity(0) {
     private val TAG = "HomeActivity"
@@ -16,7 +17,18 @@ class HomeActivity : BaseActivity(0) {
         Log.d(TAG, "onCreate: ${this.navNumber}")
 
         mAuth = FirebaseAuth.getInstance()
-        mAuth.signOut()
+
+        sign_out_text.setOnClickListener {
+            mAuth.signOut()
+        }
+        mAuth.addAuthStateListener {
+            if(mAuth.currentUser == null){
+                startActivity(Intent(this,
+                    LoginActivity::class.java))
+                finish()
+            }
+        }
+//        mAuth.signOut()
 //        mAuth.signInWithEmailAndPassword("thorjim99@gmail.com", "01213512168")
 //            .addOnCompleteListener {
 //                if(it.isSuccessful){
@@ -31,7 +43,7 @@ class HomeActivity : BaseActivity(0) {
         super.onStart()
         setActivityChecked(0)
         if(mAuth.currentUser == null){
-            startActivity(Intent(this,LoginActivity::class.java))
+            startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
     }

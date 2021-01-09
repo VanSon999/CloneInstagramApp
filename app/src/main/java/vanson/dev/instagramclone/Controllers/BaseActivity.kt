@@ -1,8 +1,9 @@
-package vanson.dev.instagramclone
+package vanson.dev.instagramclone.Controllers
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.bottom_navigation_view.*
+import vanson.dev.instagramclone.*
 
 abstract class BaseActivity(val navNumber: Int) : AppCompatActivity(){
     private val TAG = "BaseActivity"

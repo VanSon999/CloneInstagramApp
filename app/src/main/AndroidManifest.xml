@@ -9,20 +9,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.InstagramClone">
-        <activity android:name=".EditProfileActivity" />
-        <activity android:name=".HomeActivity">
+        <activity android:name=".Controllers.RegisterActivity"></activity>
+        <activity android:name=".Controllers.EditProfileActivity" />
+        <activity android:name=".Controllers.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LikesActivity" />
-        <activity android:name=".ShareActivity" />
-        <activity android:name=".SearchActivity" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".LoginActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize"></activity>
+        <activity android:name=".Controllers.LikesActivity" />
+        <activity android:name=".Controllers.ShareActivity" />
+        <activity android:name=".Controllers.SearchActivity" />
+        <activity android:name=".Controllers.ProfileActivity" />
+        <activity
+            android:name=".Controllers.LoginActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
     </application>
 
 </manifest>

@@ -1,11 +1,11 @@
-package vanson.dev.instagramclone
+package vanson.dev.instagramclone.Controllers
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import vanson.dev.instagramclone.R
 
-class SearchActivity : BaseActivity(1) {
-    private val TAG = "SearchActivity"
+class ShareActivity : BaseActivity(2) {
+    private val TAG = "ShareActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
@@ -16,6 +16,6 @@ class SearchActivity : BaseActivity(1) {
 
     override fun onStart() {
         super.onStart()
-        setActivityChecked(1)
+        setActivityChecked(2)
     }
 }

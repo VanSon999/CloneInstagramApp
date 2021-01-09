@@ -1,8 +1,8 @@
-package vanson.dev.instagramclone
+package vanson.dev.instagramclone.Controllers
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import vanson.dev.instagramclone.R
 
 class LikesActivity : BaseActivity(3) {
     private val TAG = "LikesActivity"
