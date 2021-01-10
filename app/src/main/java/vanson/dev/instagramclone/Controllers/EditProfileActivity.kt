@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_edit_profile.*
 import vanson.dev.instagramclone.*
 import vanson.dev.instagramclone.Models.User
 import vanson.dev.instagramclone.R
-import vanson.dev.instagramclone.Utilites.CameraPictureTaker
+import vanson.dev.instagramclone.Utilites.CameraHelper
 import vanson.dev.instagramclone.Utilites.FirebaseHelper
 import vanson.dev.instagramclone.Utilites.ValueEventListenerAdapter
 import vanson.dev.instagramclone.Views.PasswordDialog
@@ -20,7 +20,7 @@ class EditProfileActivity : AppCompatActivity(), PasswordDialog.Listener {
 
     private lateinit var mPendingUser: User
     private lateinit var mUser: User
-    private lateinit var cameraPictureTaker: CameraPictureTaker
+    private lateinit var cameraHelper: CameraHelper
     private lateinit var mFirebaseHelper : FirebaseHelper
 
     private val TAG = "EditProfileActivity"
@@ -28,15 +28,15 @@ class EditProfileActivity : AppCompatActivity(), PasswordDialog.Listener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
         Log.d(TAG, "onCreate")
-        cameraPictureTaker =
-            CameraPictureTaker(this)
+        cameraHelper =
+            CameraHelper(this)
         mFirebaseHelper = FirebaseHelper(this)
 
         close_image.setOnClickListener {
             finish()
         }
         save_image.setOnClickListener { updateProfile() }
-        change_avatar_text.setOnClickListener { cameraPictureTaker.takeImageFromCamera() }
+        change_avatar_text.setOnClickListener { cameraHelper.takeImageFromCamera() }
 
         mFirebaseHelper.currentUserReference()
             .addListenerForSingleValueEvent(ValueEventListenerAdapter {
@@ -53,8 +53,8 @@ class EditProfileActivity : AppCompatActivity(), PasswordDialog.Listener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == cameraPictureTaker.REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            mFirebaseHelper.uploadUserPhoto(cameraPictureTaker.mImageUri!!) {
+        if (requestCode == cameraHelper.REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            mFirebaseHelper.uploadUserPhoto(cameraHelper.mImageUri!!) {
                 val photoUrl = it.toString()
                 mFirebaseHelper.uploadUserPhoto(photoUrl) {
                     mUser = mUser.copy(photo = photoUrl)
