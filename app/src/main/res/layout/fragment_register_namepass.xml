@@ -30,7 +30,7 @@
         android:id="@+id/password_input"
         style="@style/login_input"
         android:inputType="textPassword"
-        android:hint="Passwor"
+        android:hint="Password"
         app:layout_constraintTop_toBottomOf="@id/full_name_input"
         tools:ignore="MissingConstraints" />
 

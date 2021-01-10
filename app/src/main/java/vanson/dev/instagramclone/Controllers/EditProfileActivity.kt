@@ -4,9 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
-import com.google.firebase.auth.EmailAuthCredential
-import com.google.firebase.auth.EmailAuthProvider
-import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.*
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import vanson.dev.instagramclone.Models.User
@@ -76,15 +74,10 @@ class EditProfileActivity : AppCompatActivity(), PasswordDialog.Listener {
         if (user.website != mUser.website) updateMap["website"] = user.website
         if (user.phone != mUser.phone) updateMap["phone"] = user.phone
 
-        mDatabase.child("Users").child(mAuth.currentUser!!.uid).updateChildren(updateMap)
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    showToast("Profile saved!")
-                    finish()
-                } else {
-                    showToast(it.exception!!.message!!)
-                }
-            }
+        mDatabase.updateUser(mAuth.currentUser!!.uid, updateMap){
+            showToast("Profile saved!")
+            finish()
+        }
     }
 
     private fun validate(user: User): String? {
@@ -99,21 +92,43 @@ class EditProfileActivity : AppCompatActivity(), PasswordDialog.Listener {
     override fun onPasswordConfirm(password: String) {
         if(password.isNotEmpty()){
             val credentials = EmailAuthProvider.getCredential(mUser.email, password)
-            mAuth.currentUser!!.reauthenticate(credentials).addOnCompleteListener {
-                if(it.isSuccessful){
-                    mAuth.currentUser!!.updateEmail(mPendingUser.email).addOnCompleteListener {
-                        if(it.isSuccessful){
-                            updateUser(mPendingUser)
-                        }else{
-                            showToast(it.exception!!.message!!)
-                        }
-                    }
-                }else{
-                    showToast(it.exception!!.message!!)
+            mAuth.currentUser!!.reauthenticate(credentials){
+                mAuth.currentUser!!.updateEmail(mPendingUser.email){
+                    updateUser(mPendingUser)
                 }
             }
         }else{
             showToast("You should enter password!")
+        }
+    }
+
+    private fun FirebaseUser.reauthenticate(credentials: AuthCredential, onSuccess: () -> Unit){ //Note!!!
+        reauthenticate(credentials).addOnCompleteListener {
+            if(it.isSuccessful){
+                onSuccess()
+            }else{
+                showToast(it.exception!!.message!!)
+            }
+        }
+    }
+
+    private fun FirebaseUser.updateEmail(email: String, onSuccess: () -> Unit){
+        updateEmail(email).addOnCompleteListener {
+            if(it.isSuccessful){
+                onSuccess()
+            }else{
+                showToast(it.exception!!.message!!)
+            }
+        }
+    }
+
+    private fun DatabaseReference.updateUser(uid: String, userMap: Map<String, Any>, onSuccess: () -> Unit){
+        child("Users").child(uid).updateChildren(userMap).addOnCompleteListener {
+            if(it.isSuccessful){
+                onSuccess()
+            }else{
+                showToast(it.exception!!.message!!)
+            }
         }
     }
 }
