@@ -52,4 +52,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx:20.0.1'
     implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC2'
     implementation 'com.google.firebase:firebase-database-ktx:19.6.0'
+    implementation 'com.google.firebase:firebase-storage-ktx:19.2.1'
 }

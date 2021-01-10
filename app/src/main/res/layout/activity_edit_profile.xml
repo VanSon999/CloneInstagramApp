@@ -63,11 +63,23 @@
             app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
         <TextView
+            android:id="@+id/change_avatar_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_image_edit"
+            android:text="Change Avatar"
+            android:textColor="@color/blue"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
             android:id="@+id/name_label"
             style="@style/edit_profile_label"
             android:text="Name:"
             android:labelFor="@id/name_input"
-            app:layout_constraintTop_toBottomOf="@id/profile_image_edit"
+            app:layout_constraintTop_toBottomOf="@id/change_avatar_text"
             tools:ignore="MissingConstraints" />
 
         <EditText
