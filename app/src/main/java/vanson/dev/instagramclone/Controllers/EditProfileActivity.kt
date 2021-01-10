@@ -7,7 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.text.Editable
 import android.util.Log
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.FileProvider
 import com.google.firebase.auth.*
@@ -15,11 +17,10 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_edit_profile.*
+import vanson.dev.instagramclone.*
 import vanson.dev.instagramclone.Models.User
 import vanson.dev.instagramclone.R
-import vanson.dev.instagramclone.ValueEventListenerAdapter
 import vanson.dev.instagramclone.Views.PasswordDialog
-import vanson.dev.instagramclone.showToast
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -58,6 +59,7 @@ class EditProfileActivity : AppCompatActivity(), PasswordDialog.Listener {
                 bio_input.setText(mUser!!.bio, TextView.BufferType.EDITABLE)
                 email_input.setText(mUser!!.email, TextView.BufferType.EDITABLE)
                 phone_input.setText(mUser!!.phone, TextView.BufferType.EDITABLE)
+                profile_image_edit.loadUserPhoto(mUser.photo)
             })
     }
 
@@ -73,10 +75,12 @@ class EditProfileActivity : AppCompatActivity(), PasswordDialog.Listener {
                 fileRef.downloadUrl
             }.addOnCompleteListener {
                 if (it.isSuccessful) {
-                    mDatabase.child("Users/$uid/photo").setValue(it.result.toString())
+                    val photoUrl = it.result.toString()
+                    mDatabase.child("Users/$uid/photo").setValue(photoUrl)
                         .addOnCompleteListener {
                             if(it.isSuccessful){
-                                Log.d(TAG, "onActivityResult: photo saved activity!")
+                                mUser = mUser.copy(photo = photoUrl)
+                                profile_image_edit.loadUserPhoto(mUser.photo)
                             }else{
                                 showToast(it.exception!!.message!!)
                             }
@@ -117,10 +121,10 @@ class EditProfileActivity : AppCompatActivity(), PasswordDialog.Listener {
         mPendingUser = User(
             name_input.text.toString(),
             username_input.text.toString(),
-            website_input.text.toString(),
-            bio_input.text.toString(),
+            website_input.text.toStringOrNull(),
+            bio_input.text.toStringOrNull(),
             email_input.text.toString(),
-            phone_input.text.toString()
+            phone_input.text.toStringOrNull()
         )
         val error = validate(mPendingUser)
         if (error == null) {
@@ -134,8 +138,9 @@ class EditProfileActivity : AppCompatActivity(), PasswordDialog.Listener {
         }
     }
 
+
     private fun updateUser(user: User) {
-        val updateMap = mutableMapOf<String, Any>()
+        val updateMap = mutableMapOf<String, Any?>()
         if (user.name != mUser.name) updateMap["name"] = user.name
         if (user.username != mUser.username) updateMap["username"] = user.username
         if (user.email != mUser.email) updateMap["email"] = user.email
@@ -196,7 +201,7 @@ class EditProfileActivity : AppCompatActivity(), PasswordDialog.Listener {
 
     private fun DatabaseReference.updateUser(
         uid: String,
-        userMap: Map<String, Any>,
+        userMap: Map<String, Any?>,
         onSuccess: () -> Unit
     ) {
         child("Users").child(uid).updateChildren(userMap).addOnCompleteListener {
