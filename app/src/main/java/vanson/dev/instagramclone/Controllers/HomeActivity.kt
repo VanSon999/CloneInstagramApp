@@ -6,42 +6,39 @@ import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.acitivity_home.*
 import vanson.dev.instagramclone.R
+import vanson.dev.instagramclone.Utilites.FirebaseHelper
+import vanson.dev.instagramclone.Utilites.ValueEventListenerAdapter
 
 class HomeActivity : BaseActivity(0) {
     private val TAG = "HomeActivity"
-    private lateinit var mAuth: FirebaseAuth
+    private lateinit var mFirebase: FirebaseHelper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.acitivity_home)
         setupBottomNavigation()
         Log.d(TAG, "onCreate: ${this.navNumber}")
 
-        mAuth = FirebaseAuth.getInstance()
+        mFirebase = FirebaseHelper(this)
 
         sign_out_text.setOnClickListener {
-            mAuth.signOut()
+            mFirebase.auth.signOut()
         }
-        mAuth.addAuthStateListener {
-            if(mAuth.currentUser == null){
+        mFirebase.auth.addAuthStateListener {
+            if(mFirebase.auth.currentUser == null){
                 startActivity(Intent(this,
                     LoginActivity::class.java))
                 finish()
             }
         }
-//        mAuth.signOut()
-//        mAuth.signInWithEmailAndPassword("thorjim99@gmail.com", "01213512168")
-//            .addOnCompleteListener {
-//                if(it.isSuccessful){
-//                    Log.d(TAG, "sign in: success")
-//                }else{
-//                    Log.d(TAG, "sign in: failure")
-//                }
-//            }
+        mFirebase.database.child("Feed-Posts").child(mFirebase.auth.currentUser!!.uid).addValueEventListener(ValueEventListenerAdapter{
+            val posts = it.children.map { it.getValue(FeedPost::class.java)}
+            Log.d(TAG, "feedPosts: ${posts.first()?.timestampDate()}")
+        })
     }
 
     override fun onStart() {
         super.onStart()
-        if(mAuth.currentUser == null){
+        if(mFirebase.auth.currentUser == null){
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
