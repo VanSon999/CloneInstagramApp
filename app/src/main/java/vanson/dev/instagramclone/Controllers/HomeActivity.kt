@@ -41,7 +41,6 @@ class HomeActivity : BaseActivity(0) {
 
     override fun onStart() {
         super.onStart()
-        setActivityChecked(0)
         if(mAuth.currentUser == null){
             startActivity(Intent(this, LoginActivity::class.java))
             finish()

@@ -10,17 +10,16 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import vanson.dev.instagramclone.showToast
 
-class FirebaseHelper(private val activity: Activity){
-    private var mDatabase: DatabaseReference = FirebaseDatabase.getInstance().reference
-    private var mStorage: StorageReference = FirebaseStorage.getInstance().reference
-    private var mAuth: FirebaseAuth =
-        FirebaseAuth.getInstance()
+class FirebaseHelper(private val activity: Activity) {
+    val database: DatabaseReference = FirebaseDatabase.getInstance().reference
+    val storage: StorageReference = FirebaseStorage.getInstance().reference
+    val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     fun reauthenticate(
         credentials: AuthCredential,
         onSuccess: () -> Unit
     ) { //Note!!!
-        mAuth.currentUser!!.reauthenticate(credentials).addOnCompleteListener {
+        auth.currentUser!!.reauthenticate(credentials).addOnCompleteListener {
             if (it.isSuccessful) {
                 onSuccess()
             } else {
@@ -30,7 +29,7 @@ class FirebaseHelper(private val activity: Activity){
     }
 
     fun updateEmail(email: String, onSuccess: () -> Unit) {
-        mAuth.currentUser!!.updateEmail(email).addOnCompleteListener {
+        auth.currentUser!!.updateEmail(email).addOnCompleteListener {
             if (it.isSuccessful) {
                 onSuccess()
             } else {
@@ -43,25 +42,27 @@ class FirebaseHelper(private val activity: Activity){
         userMap: Map<String, Any?>,
         onSuccess: () -> Unit
     ) {
-        mDatabase.child("Users").child(mAuth.currentUser!!.uid).updateChildren(userMap).addOnCompleteListener {
-            if (it.isSuccessful) {
-                onSuccess()
-            } else {
-              activity.showToast(it.exception!!.message!!)
+        database.child("Users").child(auth.currentUser!!.uid).updateChildren(userMap)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    onSuccess()
+                } else {
+                    activity.showToast(it.exception!!.message!!)
+                }
             }
-        }
     }
 
     fun uploadUserPhoto(
         image: Uri,
         onSuccess: (Uri) -> Unit
     ) {
-        mStorage.child("Users/${mAuth.currentUser!!.uid}/photo").putFile(image).continueWithTask { task ->
-            if (!task.isSuccessful) {
-                activity.showToast(task.exception!!.message!!)
-            }
-            mStorage.child("Users/${mAuth.currentUser!!.uid}/photo").downloadUrl
-        }.addOnCompleteListener {
+        storage.child("Users/${auth.currentUser!!.uid}/photo").putFile(image)
+            .continueWithTask { task ->
+                if (!task.isSuccessful) {
+                    activity.showToast(task.exception!!.message!!)
+                }
+                storage.child("Users/${auth.currentUser!!.uid}/photo").downloadUrl
+            }.addOnCompleteListener {
             if (it.isSuccessful) {
                 onSuccess(it.result!!)
             } else {
@@ -74,14 +75,16 @@ class FirebaseHelper(private val activity: Activity){
         photoUrl: String,
         onSuccess: () -> Unit
     ) {
-        mDatabase.child("Users/${mAuth.currentUser!!.uid}/photo").setValue(photoUrl).addOnCompleteListener {
-            if (it.isSuccessful) {
-                onSuccess()
-            } else {
-                activity.showToast(it.exception!!.message!!)
+        database.child("Users/${auth.currentUser!!.uid}/photo").setValue(photoUrl)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    onSuccess()
+                } else {
+                    activity.showToast(it.exception!!.message!!)
+                }
             }
-        }
     }
 
-    fun currentUserReference(): DatabaseReference = mDatabase.child("Users").child(mAuth.currentUser!!.uid)
+    fun currentUserReference(): DatabaseReference =
+        database.child("Users").child(auth.currentUser!!.uid)
 }

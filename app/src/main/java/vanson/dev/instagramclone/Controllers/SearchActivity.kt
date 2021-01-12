@@ -13,9 +13,4 @@ class SearchActivity : BaseActivity(1) {
         setupBottomNavigation()
         Log.d(TAG, "onCreate: ${this.navNumber}")
     }
-
-    override fun onStart() {
-        super.onStart()
-        setActivityChecked(1)
-    }
 }

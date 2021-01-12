@@ -13,9 +13,4 @@ class LikesActivity : BaseActivity(3) {
         setupBottomNavigation()
         Log.d(TAG, "onCreate: ${this.navNumber}")
     }
-
-    override fun onStart() {
-        super.onStart()
-        setActivityChecked(3)
-    }
 }
