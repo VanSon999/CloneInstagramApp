@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_add_friends.*
 import kotlinx.android.synthetic.main.add_friends_item.view.*
@@ -29,7 +30,8 @@ class AddFriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
         mAdapter = FriendsAdapter(this)
         val uid = mFirebase.auth.currentUser!!.uid
 
-        add_friends_recycler.adapter
+        add_friends_recycler.adapter = mAdapter
+        add_friends_recycler.layoutManager = LinearLayoutManager(this)
         mFirebase.database.child("Users").addValueEventListener(ValueEventListenerAdapter {
             val allUsers = it.children.map { it.getValue(User::class.java)!!.copy(uid = it.key) }
             val (userList, otherUserList) = allUsers.partition { it.uid == uid }
