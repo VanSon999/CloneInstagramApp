@@ -24,6 +24,7 @@ import vanson.dev.instagramclone.R
 import vanson.dev.instagramclone.Utilites.FirebaseHelper
 import vanson.dev.instagramclone.Utilites.GlideApp
 import vanson.dev.instagramclone.Utilites.ValueEventListenerAdapter
+import vanson.dev.instagramclone.loadImage
 import vanson.dev.instagramclone.showToast
 
 class HomeActivity : BaseActivity(0) {
@@ -116,7 +117,7 @@ class FeedAdapter(private val posts: List<FeedPost>) :
         movementMethod = LinkMovementMethod.getInstance() // support for ClickableSpan()
     }
 
-    private fun ImageView.loadImage(urlImage: String?) {
-        GlideApp.with(this).load(urlImage).centerCrop().into(this)
-    }
+//    private fun ImageView.loadImage(urlImage: String?) {
+//        GlideApp.with(this).load(urlImage).centerCrop().into(this)
+//    }
 }

@@ -16,6 +16,7 @@ import vanson.dev.instagramclone.R
 import vanson.dev.instagramclone.Utilites.FirebaseHelper
 import vanson.dev.instagramclone.Utilites.GlideApp
 import vanson.dev.instagramclone.Utilites.ValueEventListenerAdapter
+import vanson.dev.instagramclone.loadImage
 import vanson.dev.instagramclone.loadUserPhoto
 
 class ProfileActivity : BaseActivity(4) {
@@ -73,9 +74,9 @@ class ImagesAdapter(private val images: List<String>) :
         holder.image.loadImage(images[position])
     }
 
-    private fun ImageView.loadImage(urlImage: String){
-        GlideApp.with(this).load(urlImage).centerCrop().into(this)
-    }
+//    private fun ImageView.loadImage(urlImage: String){
+//        GlideApp.with(this).load(urlImage).centerCrop().into(this)
+//    }
 }
 
 class SquareImageView(context: Context, attrs: AttributeSet) : androidx.appcompat.widget.AppCompatImageView(context, attrs){

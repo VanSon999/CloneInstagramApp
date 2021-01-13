@@ -43,3 +43,7 @@ fun Editable.toStringOrNull(): String? {
     val toString = toString()
     return if (toString.isEmpty()) null else toString
 }
+
+fun ImageView.loadImage(urlImage: String?) {
+    GlideApp.with(this).load(urlImage).centerCrop().into(this)
+}
