@@ -86,4 +86,10 @@
         <item name="android:padding">0dp</item>
         <item name="android:stateListAnimator">@animator/login_btn_animator</item>
     </style>
+
+    <style name="icon">
+        <item name="android:layout_width">@dimen/toolbar_height</item>
+        <item name="android:layout_height">@dimen/toolbar_height</item>
+        <item name="android:padding">10dp</item>
+    </style>
 </resources>
