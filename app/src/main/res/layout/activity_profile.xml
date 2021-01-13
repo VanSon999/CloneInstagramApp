@@ -28,6 +28,15 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
+                android:id="@+id/add_friends_image"
+                style="@style/toolbar_image"
+                android:src="@drawable/ic_add_friends"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/settings_image"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/settings_image"
                 style="@style/toolbar_image"
                 android:src="@drawable/ic_more"
                 app:layout_constraintBottom_toBottomOf="parent"

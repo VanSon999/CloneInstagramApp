@@ -30,7 +30,8 @@
         <activity
             android:name=".Controllers.RegisterActivity"
             android:windowSoftInputMode="stateVisible|adjustResize" />
-
+        <activity android:name=".Controllers.ProfileSettingActivity"/>
+        <activity android:name=".Controllers.AddFriendsActivity"/>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="vanson.dev.instagramclone.fileprovider"
