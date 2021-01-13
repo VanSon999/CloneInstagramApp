@@ -12,5 +12,5 @@ data class User(
     val photo: String? = null,
     val follows: Map<String, Boolean> = emptyMap(),
     val followers: Map<String, Boolean> = emptyMap(),
-    @Exclude val uid: String? = null //@Exclude to show that uid will be export from database
+    @Exclude val uid: String = "" //@Exclude to show that uid will be export from database
 )

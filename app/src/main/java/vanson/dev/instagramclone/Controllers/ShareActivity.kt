@@ -12,6 +12,7 @@ import vanson.dev.instagramclone.Utilites.CameraHelper
 import vanson.dev.instagramclone.Utilites.FirebaseHelper
 import vanson.dev.instagramclone.Utilites.GlideApp
 import vanson.dev.instagramclone.Utilites.ValueEventListenerAdapter
+import vanson.dev.instagramclone.asUser
 import vanson.dev.instagramclone.showToast
 import java.util.*
 
@@ -31,7 +32,7 @@ class ShareActivity : BaseActivity(2) {
         back_image.setOnClickListener { finish() }
         share_text.setOnClickListener { share() }
         mFirebase.currentUserReference().addValueEventListener(ValueEventListenerAdapter {
-            mUser = it.getValue(User::class.java)!!
+            mUser = it.asUser()!!
         })
     }
 

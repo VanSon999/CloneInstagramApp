@@ -8,6 +8,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.TaskCompletionSource
+import com.google.firebase.database.DataSnapshot
+import vanson.dev.instagramclone.Models.User
 import vanson.dev.instagramclone.Utilites.GlideApp
 
 fun Context.showToast(text: String, duration: Int = Toast.LENGTH_SHORT) {
@@ -47,3 +51,11 @@ fun Editable.toStringOrNull(): String? {
 fun ImageView.loadImage(urlImage: String?) {
     GlideApp.with(this).load(urlImage).centerCrop().into(this)
 }
+
+fun <T> task(block: (TaskCompletionSource<T>) -> Unit): Task<T> { //this is it when addOnCompleteListener!!!
+    val taskSource  = TaskCompletionSource<T>()
+    block(taskSource)
+    return taskSource.task // this is equal mFirebase.database.child("Feed_Posts").child(mUser.uid!!).updateChildren(postsMap).addOnCompleteListener ...
+}
+
+fun DataSnapshot.asUser(): User? = getValue(User::class.java)?.copy(uid = key.toString())

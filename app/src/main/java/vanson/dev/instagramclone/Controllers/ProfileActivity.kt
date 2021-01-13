@@ -16,6 +16,7 @@ import vanson.dev.instagramclone.R
 import vanson.dev.instagramclone.Utilites.FirebaseHelper
 import vanson.dev.instagramclone.Utilites.GlideApp
 import vanson.dev.instagramclone.Utilites.ValueEventListenerAdapter
+import vanson.dev.instagramclone.asUser
 import vanson.dev.instagramclone.loadImage
 import vanson.dev.instagramclone.loadUserPhoto
 
@@ -45,7 +46,7 @@ class ProfileActivity : BaseActivity(4) {
         }
         mFirebase = FirebaseHelper(this)
         mFirebase.currentUserReference().addValueEventListener(ValueEventListenerAdapter {
-            mUser = it.getValue(User::class.java)!!
+            mUser = it.asUser()!!
             profile_image.loadUserPhoto(mUser.photo)
             username_text.text = mUser.username
         })
