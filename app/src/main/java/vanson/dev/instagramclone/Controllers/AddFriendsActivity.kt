@@ -26,7 +26,7 @@ class AddFriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
         mFirebase = FirebaseHelper(this)
         mAdapter = FriendsAdapter(this)
         back_image.setOnClickListener { finish() }
-        val uid = mFirebase.auth.currentUser!!.uid
+        val uid = mFirebase.currentUid()!!
         add_friends_recycler.adapter = mAdapter
         add_friends_recycler.layoutManager = LinearLayoutManager(this)
 
@@ -53,8 +53,6 @@ class AddFriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
     }
 
     private fun setFollow(uid: String, follow: Boolean, onSuccess: () -> Unit) {
-        fun DatabaseReference.setValueTrueOrRemove(follow: Boolean) =
-            if (follow) setValue(true) else removeValue()
 
         val followsTask =
             mFirebase.database.child("Users").child(mUser.uid).child("Follows").child(uid)

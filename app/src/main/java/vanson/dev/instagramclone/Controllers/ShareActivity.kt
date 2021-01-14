@@ -1,11 +1,10 @@
 package vanson.dev.instagramclone.Controllers
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import com.google.firebase.database.ServerValue
 import kotlinx.android.synthetic.main.activity_share.*
+import vanson.dev.instagramclone.Models.FeedPost
 import vanson.dev.instagramclone.Models.User
 import vanson.dev.instagramclone.R
 import vanson.dev.instagramclone.Utilites.CameraHelper
@@ -14,7 +13,6 @@ import vanson.dev.instagramclone.Utilites.GlideApp
 import vanson.dev.instagramclone.Utilites.ValueEventListenerAdapter
 import vanson.dev.instagramclone.asUser
 import vanson.dev.instagramclone.showToast
-import java.util.*
 
 class ShareActivity : BaseActivity(2) {
     private val TAG = "ShareActivity"
@@ -39,7 +37,7 @@ class ShareActivity : BaseActivity(2) {
     private fun share() {
         var uriImage = mCamera.mImageUri
         if (uriImage != null) {
-            val uid = mFirebase.auth.currentUser!!.uid
+            val uid = mFirebase.currentUid()!!
             mFirebase.storage.child("Users").child(uid).child("images").child(
                 uriImage.lastPathSegment!!
             ).putFile(uriImage).continueWithTask { task ->
@@ -99,19 +97,3 @@ class ShareActivity : BaseActivity(2) {
     }
 }
 
-data class FeedPost(
-    val uid: String = "",
-    val username: String = "",
-    val image: String = "",
-    val likeCount: Int = 0,
-    val commentsCount: Int = 0,
-    val caption: String = "",
-    val comments: List<Comment> = emptyList(),
-    val timestamp: Any = ServerValue.TIMESTAMP, //get value follow server
-    val photo: String? = null
-) {
-
-    fun timestampDate(): Date = Date(timestamp as Long)
-}
-
-class Comment(val uid: String, val username: String, val text: String)

@@ -14,16 +14,24 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.feed_item.view.*
-import vanson.dev.instagramclone.Controllers.FeedPost
+import vanson.dev.instagramclone.Controllers.FeedPostLikes
+import vanson.dev.instagramclone.Models.FeedPost
 import vanson.dev.instagramclone.R
 import vanson.dev.instagramclone.loadImage
 import vanson.dev.instagramclone.loadUserPhoto
 import vanson.dev.instagramclone.showToast
 
-class FeedAdapter(private val posts: List<FeedPost>) :
+class FeedAdapter(private val listener: Listener, private val posts: List<FeedPost>) :
     RecyclerView.Adapter<FeedAdapter.ViewHolder>() {
+    interface Listener {
+        fun toggleLike(postId: String)
+        fun loadLikes(id: String, position: Int)
+    }
+
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)
 
+    private var postLikes: Map<Int, FeedPostLikes> = emptyMap()
+    private val defaultPostLikes = FeedPostLikes(0, false)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.feed_item, parent, false)
         return ViewHolder(view)
@@ -33,18 +41,22 @@ class FeedAdapter(private val posts: List<FeedPost>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val post = posts[position]
-        with(holder) {
-            view.user_photo_image.loadUserPhoto(post.photo)
-            view.username_text.text = post.username
-            view.post_image.loadImage(post.image)
-            if (post.likeCount == 0) {
-                view.likes_text.visibility = View.GONE
+        val likes = postLikes[position] ?: defaultPostLikes
+        with(holder.view) {
+            user_photo_image.loadUserPhoto(post.photo)
+            username_text.text = post.username
+            post_image.loadImage(post.image)
+            if (likes.likesCount == 0) {
+                likes_text.visibility = View.GONE
             } else {
-                view.likes_text.visibility = View.VISIBLE
-                view.likes_text.text = "${post.likeCount} likes"
+                likes_text.visibility = View.VISIBLE
+                likes_text.text = "${likes.likesCount} likes"
             }
             //Spannable: username(bold, clickable) caption
-            view.caption_text.setCaptionText(post.username, post.caption)
+            caption_text.setCaptionText(post.username, post.caption)
+            like_image.setOnClickListener { listener.toggleLike(post.id) }
+            like_image.setImageResource(if (likes.likeByUser) R.drawable.ic_likes_active else R.drawable.ic_favorite_boder)
+            listener.loadLikes(post.id, position)
         }
     }
 
@@ -66,6 +78,11 @@ class FeedAdapter(private val posts: List<FeedPost>) :
 
         text = SpannableStringBuilder().append(usernameSpannable).append(" ").append(caption)
         movementMethod = LinkMovementMethod.getInstance() // support for ClickableSpan()
+    }
+
+    fun updatePostLikes(position: Int, Likes: FeedPostLikes) {
+        postLikes += (position to Likes)
+        notifyItemChanged(position)
     }
 
 //    private fun ImageView.loadImage(urlImage: String?) {

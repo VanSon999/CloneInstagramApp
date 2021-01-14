@@ -12,6 +12,8 @@ import android.widget.Toast
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.TaskCompletionSource
 import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseReference
+import vanson.dev.instagramclone.Models.FeedPost
 import vanson.dev.instagramclone.Models.User
 import vanson.dev.instagramclone.Utilites.GlideApp
 
@@ -66,3 +68,8 @@ fun <T> task(block: (TaskCompletionSource<T>) -> Unit): Task<T> { //this is it w
 }
 
 fun DataSnapshot.asUser(): User? = getValue(User::class.java)?.copy(uid = key.toString())
+
+fun DataSnapshot.asFeedPost(): FeedPost? = getValue(FeedPost::class.java)?.copy(id = key.toString())
+
+fun DatabaseReference.setValueTrueOrRemove(follow: Boolean) =
+    if (follow) setValue(true) else removeValue()
