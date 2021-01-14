@@ -115,7 +115,7 @@ class FriendsAdapter(private val listener: Listener) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             val user = mUsers[position]
-            view.photo_image.loadImage(user.photo)
+            view.photo_image.loadUserPhoto(user.photo)
             view.username_text.text = user.username
             view.name_text.text = user.name
             view.follow_btn.setOnClickListener { listener.follow(user.uid) }

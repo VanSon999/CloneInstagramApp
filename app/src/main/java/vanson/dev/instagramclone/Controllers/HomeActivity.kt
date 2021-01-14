@@ -25,6 +25,7 @@ import vanson.dev.instagramclone.Utilites.FirebaseHelper
 import vanson.dev.instagramclone.Utilites.GlideApp
 import vanson.dev.instagramclone.Utilites.ValueEventListenerAdapter
 import vanson.dev.instagramclone.loadImage
+import vanson.dev.instagramclone.loadUserPhoto
 import vanson.dev.instagramclone.showToast
 
 class HomeActivity : BaseActivity(0) {
@@ -60,7 +61,7 @@ class HomeActivity : BaseActivity(0) {
         } else {
             mFirebase.database.child("Feed-Posts").child(currentUser.uid)
                 .addValueEventListener(ValueEventListenerAdapter {
-                    val posts = it.children.map { it.getValue(FeedPost::class.java)!! }
+                    val posts = it.children.map { it.getValue(FeedPost::class.java)!! }.sortedByDescending { it.timestampDate() }
 //                    Log.d(TAG, "feedPosts: ${posts.first()?.timestampDate()}")
                     recycler_posts.adapter = FeedAdapter(posts)
                     recycler_posts.layoutManager = LinearLayoutManager(this)
@@ -83,7 +84,7 @@ class FeedAdapter(private val posts: List<FeedPost>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val post = posts[position]
         with(holder) {
-            view.user_photo_image.loadImage(post.photo)
+            view.user_photo_image.loadUserPhoto(post.photo)
             view.username_text.text = post.username
             view.post_image.loadImage(post.image)
             if (post.likeCount == 0) {

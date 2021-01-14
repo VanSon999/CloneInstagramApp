@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -37,19 +38,25 @@ fun determineStateBtn(btn: Button, vararg input: EditText) {
     btn.isEnabled = input.all { it.text.isNotEmpty() }
 }
 
-fun ImageView.loadUserPhoto(photoUrl: String?) {
-    if (!(context as Activity).isDestroyed) {
-        GlideApp.with(this).load(photoUrl).fallback(R.drawable.default_profile).into(this)
-    }
-}
 
 fun Editable.toStringOrNull(): String? {
     val toString = toString()
     return if (toString.isEmpty()) null else toString
 }
 
-fun ImageView.loadImage(urlImage: String?) {
-    GlideApp.with(this).load(urlImage).centerCrop().into(this)
+fun ImageView.loadUserPhoto(photoUrl: String?) =
+    ifNotDestroyed {
+        GlideApp.with(this).load(photoUrl).fallback(R.drawable.default_profile).into(this)
+    }
+
+fun ImageView.loadImage(urlImage: String?) =
+    ifNotDestroyed { GlideApp.with(this).load(urlImage).centerCrop().into(this) }
+
+
+private fun View.ifNotDestroyed(block: () -> Unit) {
+    if (!(context as Activity).isDestroyed) {
+        block()
+    }
 }
 
 fun <T> task(block: (TaskCompletionSource<T>) -> Unit): Task<T> { //this is it when addOnCompleteListener!!!
