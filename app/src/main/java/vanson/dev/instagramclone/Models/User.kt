@@ -10,7 +10,7 @@ data class User(
     val email: String = "",
     val phone: String? = null,
     val photo: String? = null,
-    val follows: Map<String, Boolean> = emptyMap(),
-    val followers: Map<String, Boolean> = emptyMap(),
+    val Follows: Map<String, Boolean> = emptyMap(),
+    val Followers: Map<String, Boolean> = emptyMap(),
     @Exclude val uid: String = "" //@Exclude to show that uid will be export from database
 )

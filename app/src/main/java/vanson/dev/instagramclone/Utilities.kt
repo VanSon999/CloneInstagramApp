@@ -53,7 +53,7 @@ fun ImageView.loadImage(urlImage: String?) {
 }
 
 fun <T> task(block: (TaskCompletionSource<T>) -> Unit): Task<T> { //this is it when addOnCompleteListener!!!
-    val taskSource  = TaskCompletionSource<T>()
+    val taskSource = TaskCompletionSource<T>()
     block(taskSource)
     return taskSource.task // this is equal mFirebase.database.child("Feed_Posts").child(mUser.uid!!).updateChildren(postsMap).addOnCompleteListener ...
 }

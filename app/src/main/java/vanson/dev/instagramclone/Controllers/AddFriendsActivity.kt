@@ -1,6 +1,7 @@
 package vanson.dev.instagramclone.Controllers
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,7 @@ import vanson.dev.instagramclone.Utilites.TaskSourceOnCompleteListener
 import vanson.dev.instagramclone.Utilites.ValueEventListenerAdapter
 
 class AddFriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
+    private val TAG = "AddFriendsActivity"
     private lateinit var mAdapter: FriendsAdapter
     private lateinit var mUsers: List<User>
     private lateinit var mUser: User
@@ -40,7 +42,7 @@ class AddFriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
             mUser = userList.first()
             mUsers = otherUserList
 
-            mAdapter.update(mUsers, mUser.follows)
+            mAdapter.update(mUsers, mUser.Follows)
         })
     }
 
@@ -63,21 +65,19 @@ class AddFriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
         val followsTask =
             mFirebase.database.child("Users").child(mUser.uid).child("Follows").child(uid)
                 .setValueTrueOrRemove(follow)
-        val followersTask = mFirebase.database.child("Users").child(uid).child("Followers").child(
-            mUser.uid
-        )
-            .setValueTrueOrRemove(follow)
+        val followersTask = mFirebase.database.child("Users").child(uid).child("Followers")
+                .child(mUser.uid).setValueTrueOrRemove(follow)
 
         val feedPostsTask = task<Void> { taskSource ->
-            mFirebase.database.child("Feed_Posts").child(uid)
+            mFirebase.database.child("Feed-Posts").child(uid)
                 .addListenerForSingleValueEvent(ValueEventListenerAdapter {
                     val postsMap = if (follow) {
-                        it.children.map { it.key to it.value }.toMap()
+                        it.children.map { x -> x.key to x.value }.toMap()
                     } else {
-                        it.children.map { it.key to null }.toMap()
+                        it.children.map { x -> x.key to null }.toMap()
                     }
-                    mFirebase.database.child("Feed_Posts").child(mUser.uid).updateChildren(postsMap)
-                        .addOnCompleteListener { TaskSourceOnCompleteListener(taskSource) }
+                    mFirebase.database.child("Feed-Posts").child(mUser.uid).updateChildren(postsMap)
+                        .addOnCompleteListener(TaskSourceOnCompleteListener(taskSource))
                 })
         }
         Tasks.whenAll(followsTask, followersTask, feedPostsTask).addOnCompleteListener {
