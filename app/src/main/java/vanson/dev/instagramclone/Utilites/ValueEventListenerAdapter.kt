@@ -7,9 +7,9 @@ import com.google.firebase.database.ValueEventListener
 
 class ValueEventListenerAdapter(val handler: (DataSnapshot) -> Unit) :
     ValueEventListener {
-    private val TAG = "ValueEventListenerAdapt"
+    private val tag = "ValueEventListenerAdapt"
     override fun onCancelled(error: DatabaseError) {
-        Log.d(TAG, "onCancelled: ", error.toException())
+        Log.d(tag, "onCancelled: ", error.toException())
     }
 
     override fun onDataChange(snapshot: DataSnapshot) {

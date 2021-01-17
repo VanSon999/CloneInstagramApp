@@ -59,12 +59,12 @@ class FriendsAdapter(private val listener: Listener) :
     }
 
     fun followed(uid: String) {
-        mFollows += (uid to true)
-        notifyItemChanged(mPositions[uid]!!)
+        mFollows = mFollows + (uid to true)
+        notifyItemChanged(mPositions[uid] ?: error(""))
     }
 
     fun unfollowed(uid: String) {
-        mFollows -= uid
-        notifyItemChanged(mPositions[uid]!!)
+        mFollows = mFollows - uid
+        notifyItemChanged(mPositions[uid] ?: error(""))
     }
 }

@@ -15,7 +15,7 @@ import vanson.dev.instagramclone.asUser
 import vanson.dev.instagramclone.showToast
 
 class ShareActivity : BaseActivity(2) {
-    private val TAG = "ShareActivity"
+    private val tag = "ShareActivity"
     private lateinit var mCamera: CameraHelper
     private lateinit var mFirebase: FirebaseHelper
     private lateinit var mUser: User
@@ -23,7 +23,7 @@ class ShareActivity : BaseActivity(2) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_share)
 
-        Log.d(TAG, "onCreate: ${this.navNumber}")
+        Log.d(tag, "onCreate: ${this.navNumber}")
         mFirebase = FirebaseHelper(this)
         mCamera = CameraHelper(this)
         mCamera.takeImageFromCamera()
@@ -35,7 +35,7 @@ class ShareActivity : BaseActivity(2) {
     }
 
     private fun share() {
-        var uriImage = mCamera.mImageUri
+        val uriImage = mCamera.mImageUri
         if (uriImage != null) {
             val uid = mFirebase.currentUid()!!
             mFirebase.storage.child("Users").child(uid).child("images").child(
@@ -47,13 +47,13 @@ class ShareActivity : BaseActivity(2) {
                 mFirebase.storage.child("Users").child(uid).child("images").child(
                     uriImage.lastPathSegment!!
                 ).downloadUrl
-            }.addOnCompleteListener {
-                if (it.isSuccessful) {
-                    val imageDownloadUrl = it.result.toString()
+            }.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val imageDownloadUrl = task.result.toString()
                     mFirebase.database.child("images").child(uid).push()
-                        .setValue(it.result.toString())
-                        .addOnCompleteListener {
-                            if (it.isSuccessful) {
+                        .setValue(task.result.toString())
+                        .addOnCompleteListener { task1 ->
+                            if (task1.isSuccessful) {
                                 mFirebase.database.child("Feed-Posts").child(uid).push()
                                     .setValue(mkFeedPost(uid, imageDownloadUrl))
                                     .addOnCompleteListener {
@@ -65,11 +65,11 @@ class ShareActivity : BaseActivity(2) {
                                         }
                                     }
                             } else {
-                                showToast(it.exception!!.message!!)
+                                showToast(task1.exception!!.message!!)
                             }
                         }
                 } else {
-                    showToast(it.exception!!.message!!)
+                    showToast(task.exception!!.message!!)
                 }
             }
         }
@@ -77,7 +77,7 @@ class ShareActivity : BaseActivity(2) {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == mCamera.REQUEST_CODE) {
+        if (requestCode == mCamera.requestCode) {
             if (resultCode == RESULT_OK) {
                 GlideApp.with(this).load(mCamera.mImageUri).centerCrop().into(post_image)
             } else {

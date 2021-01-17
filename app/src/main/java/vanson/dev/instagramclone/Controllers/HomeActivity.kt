@@ -15,14 +15,14 @@ import vanson.dev.instagramclone.setValueTrueOrRemove
 
 class HomeActivity : BaseActivity(0), FeedAdapter.Listener {
     private lateinit var mAdapter: FeedAdapter
-    private val TAG = "HomeActivity"
+    private val tag = "HomeActivity"
     private lateinit var mFirebase: FirebaseHelper
     private var mLikesListeners: Map<String, ValueEventListener> = emptyMap()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.acitivity_home)
         setupBottomNavigation()
-        Log.d(TAG, "onCreate: ${this.navNumber}")
+        Log.d(tag, "onCreate: ${this.navNumber}")
 
         mFirebase = FirebaseHelper(this)
 
@@ -47,8 +47,8 @@ class HomeActivity : BaseActivity(0), FeedAdapter.Listener {
             finish()
         } else {
             mFirebase.database.child("Feed-Posts").child(currentUser.uid)
-                .addValueEventListener(ValueEventListenerAdapter {
-                    val posts = it.children.map { it.asFeedPost()!! }
+                .addValueEventListener(ValueEventListenerAdapter { dataSnapshot ->
+                    val posts = dataSnapshot.children.map { it.asFeedPost()!! }
                         .sortedByDescending { it.timestampDate() }
 //                    Log.d(TAG, "feedPosts: ${posts.first()?.timestampDate()}")
                     mAdapter = FeedAdapter(this, posts)
@@ -66,18 +66,18 @@ class HomeActivity : BaseActivity(0), FeedAdapter.Listener {
         })
     }
 
-    override fun loadLikes(postId: String, position: Int) {
+    override fun loadLikes(id: String, position: Int) {
         fun createListener() =
-            mFirebase.database.child("likes").child(postId)
-                .addValueEventListener(ValueEventListenerAdapter {
-                    val userLikes = it.children.map { it.key }.toSet() //Set: O(1), List: O(n)
+            mFirebase.database.child("likes").child(id)
+                .addValueEventListener(ValueEventListenerAdapter { snapshot ->
+                    val userLikes = snapshot.children.map { it.key }.toSet() //Set: O(1), List: O(n)
                     val postLikes =
                         FeedPostLikes(userLikes.size, userLikes.contains(mFirebase.currentUid()))
                     mAdapter.updatePostLikes(position, postLikes)
                 })
 
-        if(mLikesListeners[postId] == null){
-            mLikesListeners += (postId to createListener())
+        if (mLikesListeners[id] == null) {
+            mLikesListeners = mLikesListeners + (id to createListener())
         }
     }
 

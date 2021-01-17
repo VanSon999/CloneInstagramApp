@@ -1,5 +1,6 @@
 package vanson.dev.instagramclone.Adapters
 
+import android.annotation.SuppressLint
 import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableString
@@ -39,6 +40,7 @@ class FeedAdapter(private val listener: Listener, private val posts: List<FeedPo
 
     override fun getItemCount(): Int = posts.size
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val post = posts[position]
         val likes = postLikes[position] ?: defaultPostLikes
@@ -50,7 +52,11 @@ class FeedAdapter(private val listener: Listener, private val posts: List<FeedPo
                 likes_text.visibility = View.GONE
             } else {
                 likes_text.visibility = View.VISIBLE
-                likes_text.text = "${likes.likesCount} likes"
+                likes_text.text =
+                    likes.likesCount.toString() + " " + holder.view.context.resources.getQuantityString(
+                        R.plurals.likes_count,
+                        likes.likesCount
+                    )
             }
             //Spannable: username(bold, clickable) caption
             caption_text.setCaptionText(post.username, post.caption)
@@ -81,7 +87,7 @@ class FeedAdapter(private val listener: Listener, private val posts: List<FeedPo
     }
 
     fun updatePostLikes(position: Int, Likes: FeedPostLikes) {
-        postLikes += (position to Likes)
+        postLikes = postLikes + (position to Likes)
         notifyItemChanged(position)
     }
 

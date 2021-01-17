@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package vanson.dev.instagramclone.Views
 
 import android.app.AlertDialog
@@ -19,11 +21,11 @@ class PasswordDialog : DialogFragment() {
         val view = activity.layoutInflater.inflate(R.layout.dialog_password, null)
 
         return AlertDialog.Builder(context).setView(view)
-            .setPositiveButton(android.R.string.ok, { _, _ ->
+            .setPositiveButton(android.R.string.ok) { _, _ ->
                 mListener.onPasswordConfirm(view.password_dialog.text.toString())
-            }).setNegativeButton(android.R.string.cancel, { _, _ ->
+            }.setNegativeButton(android.R.string.cancel) { _, _ ->
 
-            }).setTitle(R.string.please_enter_password).create()
+            }.setTitle(R.string.please_enter_password).create()
     }
 
     override fun onAttach(context: Context?) {

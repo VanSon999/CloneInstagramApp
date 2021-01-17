@@ -21,10 +21,10 @@ class KeyboardAwareScrollView(context: Context, attrs: AttributeSet) : ScrollVie
         KeyboardVisibilityEvent.setEventListener(context as Activity, this)
     }
 
-    override fun onVisibilityChanged(isKeyBoardOpen: Boolean) {
-        if(isKeyBoardOpen){
+    override fun onVisibilityChanged(isOpen: Boolean) {
+        if (isOpen) {
             scrollTo(0, bottom)
-        }else{
+        } else {
             scrollTo(0, top)
         }
     }

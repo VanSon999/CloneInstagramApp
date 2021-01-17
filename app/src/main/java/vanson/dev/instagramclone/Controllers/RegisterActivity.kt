@@ -2,12 +2,12 @@ package vanson.dev.instagramclone.Controllers
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -20,9 +20,10 @@ import vanson.dev.instagramclone.Models.User
 import vanson.dev.instagramclone.R
 import vanson.dev.instagramclone.determineStateBtn
 import vanson.dev.instagramclone.showToast
+import java.util.*
 
 class RegisterActivity : AppCompatActivity(), EmailFragment.Listener, NamePassFragment.Listener {
-    private val TAG = "RegisterActivity"
+    private val tag = "RegisterActivity"
     private var mEmail: String? = null
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mDatabase: DatabaseReference
@@ -50,11 +51,11 @@ class RegisterActivity : AppCompatActivity(), EmailFragment.Listener, NamePassFr
                         .addToBackStack(null) //save state for user back to EmailFragment
                         .commit()
                 } else {
-                    showToast("This email already exists")
+                    showToast(getString(R.string.email_already_exists))
                 }
             }
         } else {
-            showToast("Please enter email!")
+            showToast(getString(R.string.please_enter_email))
         }
     }
 
@@ -64,7 +65,7 @@ class RegisterActivity : AppCompatActivity(), EmailFragment.Listener, NamePassFr
     ) {
         fetchSignInMethodsForEmail(email).addOnCompleteListener {
             if (it.isSuccessful) {
-                onSuccess(it.result?.signInMethods ?: emptyList<String>()) //elvis operator
+                onSuccess(it.result?.signInMethods ?: emptyList()) //elvis operator
             } else {
                 showToast(it.exception!!.message!!)
             }
@@ -82,12 +83,12 @@ class RegisterActivity : AppCompatActivity(), EmailFragment.Listener, NamePassFr
                     }
                 }
             } else {
-                Log.e(TAG, "onRegister: email is null")
-                showToast("Please enter email")
+                Log.e(tag, "onRegister: email is null")
+                showToast(getString(R.string.please_enter_email))
                 supportFragmentManager.popBackStack() // back to EmailFragment
             }
         } else {
-            showToast("Please enter full name and password")
+            showToast(getString(R.string.please_enter_fullname_pass))
         }
     }
 
@@ -116,8 +117,8 @@ class RegisterActivity : AppCompatActivity(), EmailFragment.Listener, NamePassFr
     }
 
     private fun unknowRegisterError(it: Task<*>) {
-        Log.e(TAG, "onRegister: fail to create user profile", it.exception)
-        showToast("Something wrong happened. Please try again later!")
+        Log.e(tag, "onRegister: fail to create user profile", it.exception)
+        showToast(getString(R.string.something_wrong_try_again_later))
     }
 
     private fun startHomeActivity() {
@@ -130,7 +131,7 @@ class RegisterActivity : AppCompatActivity(), EmailFragment.Listener, NamePassFr
         return User(name = fullname, username = username, email = email)
     }
 
-    private fun mUserName(fullname: String) = fullname.toLowerCase().replace(" ", ".")
+    private fun mUserName(fullname: String) = fullname.toLowerCase(Locale.ROOT).replace(" ", ".")
 }
 
 class EmailFragment : Fragment() {
@@ -192,6 +193,6 @@ class NamePassFragment : Fragment() {
 
     override fun onAttach(context: Context) { //attach to activity, so context is this activity
         super.onAttach(context)
-        mListener = context as NamePassFragment.Listener
+        mListener = context as Listener
     }
 }

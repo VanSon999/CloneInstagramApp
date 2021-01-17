@@ -1,5 +1,6 @@
 package vanson.dev.instagramclone.Utilites
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -12,14 +13,14 @@ import java.util.*
 
 class CameraHelper(private val activity: Activity) {
     var mImageUri: Uri? = null
-    val REQUEST_CODE = 1
+    val requestCode = 1
     private val simpleDateFormat: SimpleDateFormat =
         SimpleDateFormat(
             "yyyyMMdd_HHmmss",
             Locale.US
         )
 
-    fun createImageFile(): File {
+    private fun createImageFile(): File {
         // Create an image file name
         val storageDir: File = activity.getExternalFilesDir(
             Environment.DIRECTORY_PICTURES
@@ -31,6 +32,7 @@ class CameraHelper(private val activity: Activity) {
         )
     }
 
+    @SuppressLint("QueryPermissionsNeeded")
     fun takeImageFromCamera() {
         val intent =
             Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -42,7 +44,7 @@ class CameraHelper(private val activity: Activity) {
                 imageFile
             )
             intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri)
-            activity.startActivityForResult(intent, REQUEST_CODE)
+            activity.startActivityForResult(intent, requestCode)
         }
 
     }
