@@ -23,19 +23,20 @@
                 android:src="@drawable/ic_back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/description_image" />
             <TextView
                 android:id="@+id/username_text"
                 style="@style/toolbar_title"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/back_image"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="Share to" />
+                android:text="@string/share_to" />
 
             <TextView
                 android:id="@+id/share_text"
                 style="@style/toolbar_text"
-                android:text="Share"
+                android:text="@string/share"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -52,7 +53,8 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/caption_input"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp"
+        android:contentDescription="@string/description_image" />
     <EditText
         android:id="@+id/caption_input"
         android:layout_width="0dp"
@@ -61,6 +63,8 @@
         app:layout_constraintTop_toTopOf="@id/post_image"
         app:layout_constraintBottom_toBottomOf="@id/post_image"
         app:layout_constraintEnd_toEndOf="parent"
-        android:hint="Enter a caption here..."
-        android:background="@android:color/transparent"/>
+        android:hint="@string/enter_a_caption_here"
+        android:background="@android:color/transparent"
+        android:autofillHints=""
+        android:inputType="text" />
 </androidx.constraintlayout.widget.ConstraintLayout>

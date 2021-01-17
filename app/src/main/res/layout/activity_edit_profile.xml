@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Controllers.EditProfileActivity"
-    tools:scrollY="100px">
+    tools:scrollY="100dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -31,11 +31,12 @@
                     android:src="@drawable/ic_close"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:contentDescription="@string/description_image" />
 
                 <TextView
                     style="@style/toolbar_title"
-                    android:text="Edit Profile"
+                    android:text="@string/edit_profile"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/close_image"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -46,7 +47,8 @@
                     android:src="@drawable/ic_check"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:contentDescription="@string/description_image" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </Toolbar>
 
@@ -69,7 +71,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/profile_image_edit"
-            android:text="Change Avatar"
+            android:text="@string/change_avatar"
             android:textColor="@color/blue"
             android:textStyle="bold"
             android:layout_marginTop="10dp"/>
@@ -77,7 +79,7 @@
         <TextView
             android:id="@+id/name_label"
             style="@style/edit_profile_label"
-            android:text="Name:"
+            android:text="@string/name"
             android:labelFor="@id/name_input"
             app:layout_constraintTop_toBottomOf="@id/change_avatar_text"
             tools:ignore="MissingConstraints" />
@@ -87,12 +89,13 @@
             style="@style/edit_profile_input"
             android:inputType="text"
             app:layout_constraintTop_toBottomOf="@id/name_label"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="MissingConstraints"
+            android:autofillHints="" />
 
         <TextView
             android:id="@+id/username_label"
             style="@style/edit_profile_label"
-            android:text="Username:"
+            android:text="@string/username"
             android:labelFor="@id/username_input"
             app:layout_constraintTop_toBottomOf="@id/name_input"
             tools:ignore="MissingConstraints" />
@@ -102,12 +105,13 @@
             style="@style/edit_profile_input"
             android:inputType="text"
             app:layout_constraintTop_toBottomOf="@id/username_label"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="MissingConstraints"
+            android:autofillHints="" />
 
         <TextView
             android:id="@+id/website_label"
             style="@style/edit_profile_label"
-            android:text="Website:"
+            android:text="@string/website"
             android:labelFor="@id/website_input"
             app:layout_constraintTop_toBottomOf="@id/username_input"
             tools:ignore="MissingConstraints" />
@@ -117,12 +121,13 @@
             style="@style/edit_profile_input"
             android:inputType="text"
             app:layout_constraintTop_toBottomOf="@id/website_label"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="MissingConstraints"
+            android:autofillHints="" />
 
         <TextView
             android:id="@+id/bio_label"
             style="@style/edit_profile_label"
-            android:text="Bio:"
+            android:text="@string/bio"
             android:labelFor="@id/bio_input"
             app:layout_constraintTop_toBottomOf="@id/website_input"
             tools:ignore="MissingConstraints" />
@@ -132,12 +137,13 @@
             style="@style/edit_profile_input"
             android:inputType="text"
             app:layout_constraintTop_toBottomOf="@id/bio_label"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="MissingConstraints"
+            android:autofillHints="" />
 
         <TextView
             android:id="@+id/private_info_label"
             style="@style/edit_profile_label"
-            android:text="Private Information:"
+            android:text="@string/private_information"
             android:textColor="@color/black"
             app:layout_constraintTop_toBottomOf="@id/bio_input"
             tools:ignore="MissingConstraints" />
@@ -145,7 +151,7 @@
         <TextView
             android:id="@+id/email_label"
             style="@style/edit_profile_label"
-            android:text="Email:"
+            android:text="@string/email"
             android:labelFor="@id/email_input"
             app:layout_constraintTop_toBottomOf="@id/private_info_label"
             tools:ignore="MissingConstraints" />
@@ -155,12 +161,13 @@
             style="@style/edit_profile_input"
             android:inputType="textEmailAddress"
             app:layout_constraintTop_toBottomOf="@id/email_label"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="MissingConstraints"
+            android:autofillHints="" />
 
         <TextView
             android:id="@+id/phone_label"
             style="@style/edit_profile_label"
-            android:text="Phone:"
+            android:text="@string/phone"
             android:labelFor="@id/phone_input"
             app:layout_constraintTop_toBottomOf="@id/email_input"
             tools:ignore="MissingConstraints" />
@@ -170,6 +177,7 @@
             style="@style/edit_profile_input"
             android:inputType="phone"
             app:layout_constraintTop_toBottomOf="@id/phone_label"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="MissingConstraints"
+            android:autofillHints="" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

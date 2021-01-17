@@ -19,7 +19,7 @@
         android:id="@+id/username_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Van Son"
+        android:text="@string/user_name"
         app:layout_constraintVertical_bias="0.1"
         app:layout_constraintStart_toEndOf="@id/photo_image"
         app:layout_constraintTop_toTopOf="@id/photo_image"
@@ -32,7 +32,7 @@
         android:id="@+id/name_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Van Son"
+        android:text="@string/user_name"
         app:layout_constraintStart_toStartOf="@id/username_text"
         app:layout_constraintTop_toBottomOf="@id/username_text"/>
 
@@ -41,7 +41,7 @@
         style="@style/small_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Follow"
+        android:text="@string/follow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/username_text"
         android:visibility="gone"/>
@@ -51,7 +51,7 @@
         style="@style/secondary_small_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Unfollow"
+        android:text="@string/unfollow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/username_text" />
 </androidx.constraintlayout.widget.ConstraintLayout>

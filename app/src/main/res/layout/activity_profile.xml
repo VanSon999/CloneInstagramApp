@@ -22,7 +22,7 @@
             <TextView
                 android:id="@+id/username_text"
                 style="@style/toolbar_title"
-                android:text="Van Son"
+                android:text="@string/user_name"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -33,7 +33,8 @@
                 android:src="@drawable/ic_add_friends"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/settings_image"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/description_image" />
 
             <ImageView
                 android:id="@+id/settings_image"
@@ -41,7 +42,8 @@
                 android:src="@drawable/ic_more"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/description_image" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </Toolbar>
@@ -65,7 +67,7 @@
     <TextView
         android:id="@+id/posts_count_text"
         style="@style/profile_text_count"
-        android:text="50"
+        tools:text="50"
         app:layout_constraintBottom_toTopOf="@id/edit_profile_btn"
         app:layout_constraintEnd_toEndOf="@id/posts_text"
         app:layout_constraintStart_toStartOf="@id/posts_text"
@@ -75,7 +77,7 @@
     <TextView
         android:id="@+id/posts_text"
         style="@style/profile_text"
-        android:text="Posts"
+        android:text="@string/posts"
         app:layout_constraintEnd_toStartOf="@id/followers_text"
         app:layout_constraintStart_toStartOf="@id/edit_profile_btn"
         app:layout_constraintTop_toBottomOf="@+id/posts_count_text" />
@@ -83,7 +85,7 @@
     <TextView
         android:id="@+id/followers_count_text"
         style="@style/profile_text_count"
-        android:text="200"
+        tools:text="200"
         app:layout_constraintBaseline_toBaselineOf="@+id/posts_count_text"
         app:layout_constraintEnd_toEndOf="@id/followers_text"
         app:layout_constraintStart_toStartOf="@id/followers_text" />
@@ -91,7 +93,7 @@
     <TextView
         android:id="@+id/followers_text"
         style="@style/profile_text"
-        android:text="Followers"
+        android:text="@string/followers"
         app:layout_constraintBaseline_toBaselineOf="@+id/posts_text"
         app:layout_constraintEnd_toStartOf="@+id/following_text"
         app:layout_constraintStart_toEndOf="@id/posts_text" />
@@ -99,7 +101,7 @@
     <TextView
         android:id="@+id/following_count_text"
         style="@style/profile_text_count"
-        android:text="100"
+        tools:text="100"
         app:layout_constraintBaseline_toBaselineOf="@+id/posts_count_text"
         app:layout_constraintEnd_toEndOf="@id/following_text"
         app:layout_constraintStart_toStartOf="@id/following_text" />
@@ -107,7 +109,7 @@
     <TextView
         android:id="@+id/following_text"
         style="@style/profile_text"
-        android:text="Following"
+        android:text="@string/following"
         app:layout_constraintBaseline_toBaselineOf="@+id/posts_text"
         app:layout_constraintEnd_toEndOf="@id/edit_profile_btn"
         app:layout_constraintStart_toEndOf="@id/followers_text" />
@@ -121,7 +123,7 @@
         android:minHeight="0dp"
         android:paddingTop="4dp"
         android:paddingBottom="4dp"
-        android:text="Edit Profile"
+        android:text="@string/edit_profile"
         android:textAllCaps="false"
         android:textSize="14sp"
         android:layout_marginBottom="4dp"
