@@ -2,9 +2,10 @@ package vanson.dev.instagramclone.Controllers
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.tasks.Tasks
-import com.google.firebase.database.DatabaseReference
 import kotlinx.android.synthetic.main.activity_add_friends.*
 import vanson.dev.instagramclone.*
 import vanson.dev.instagramclone.Adapters.FriendsAdapter
@@ -12,6 +13,10 @@ import vanson.dev.instagramclone.Models.User
 import vanson.dev.instagramclone.Utilites.FirebaseHelper
 import vanson.dev.instagramclone.Utilites.TaskSourceOnCompleteListener
 import vanson.dev.instagramclone.Utilites.ValueEventListenerAdapter
+
+class AddFriendsViewModel : ViewModel() {
+
+}
 
 class AddFriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
     private val TAG = "AddFriendsActivity"
@@ -25,6 +30,8 @@ class AddFriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
         setContentView(R.layout.activity_add_friends)
         mFirebase = FirebaseHelper(this)
         mAdapter = FriendsAdapter(this)
+
+        ViewModelProvider(this).get(AddFriendsViewModel::class.java)
         back_image.setOnClickListener { finish() }
         val uid = mFirebase.currentUid()!!
         add_friends_recycler.adapter = mAdapter
