@@ -83,7 +83,7 @@ class HomeActivity : BaseActivity(0), FeedAdapter.Listener {
 
     override fun onDestroy() {
         super.onDestroy()
-        mLikesListeners.values.forEach{mFirebase.database.removeEventListener(it)}
+        mLikesListeners.values.forEach { mFirebase.database.removeEventListener(it) }
     }
 }
 
