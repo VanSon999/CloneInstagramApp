@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.activity_profile.*
 import vanson.dev.instagramclone.Adapters.ImagesAdapter
+import vanson.dev.instagramclone.Controllers.addfriends.AddFriendsActivity
 import vanson.dev.instagramclone.Models.User
 import vanson.dev.instagramclone.R
 import vanson.dev.instagramclone.Utilites.FirebaseHelper
