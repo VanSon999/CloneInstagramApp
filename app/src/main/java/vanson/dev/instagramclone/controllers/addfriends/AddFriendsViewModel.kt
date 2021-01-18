@@ -2,15 +2,19 @@ package vanson.dev.instagramclone.controllers.addfriends
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
-import com.google.firebase.auth.FirebaseAuth
 import vanson.dev.instagramclone.mapCustom
 import vanson.dev.instagramclone.models.User
 import vanson.dev.instagramclone.repository.FeedPostsRepository
 import vanson.dev.instagramclone.repository.UsersRepository
 
-class AddFriendsViewModel(private val usersRepo: UsersRepository, private val feedPostsRepo: FeedPostsRepository) : ViewModel() {
+class AddFriendsViewModel(
+    private val onFailureListener: OnFailureListener,
+    private val usersRepo: UsersRepository,
+    private val feedPostsRepo: FeedPostsRepository
+) : ViewModel() {
     val userAndFriends: LiveData<Pair<User, List<User>>> =
 
         usersRepo.getUsers().mapCustom { allUsers ->
@@ -19,7 +23,7 @@ class AddFriendsViewModel(private val usersRepo: UsersRepository, private val fe
         }
 
     fun setFollow(currentUid: String, uid: String, follow: Boolean): Task<Void> {
-        return if (follow) {
+        return (if (follow) {
             Tasks.whenAll(
                 usersRepo.addFollow(currentUid, uid),
                 usersRepo.addFollower(currentUid, uid),
@@ -31,6 +35,6 @@ class AddFriendsViewModel(private val usersRepo: UsersRepository, private val fe
                 usersRepo.deleteFollower(currentUid, uid),
                 feedPostsRepo.deleteFeedPosts(postsAuthorUid = uid, uid = currentUid)
             )
-        }
+        }).addOnFailureListener(onFailureListener)
     }
 }

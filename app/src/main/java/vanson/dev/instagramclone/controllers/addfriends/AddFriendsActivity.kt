@@ -10,9 +10,10 @@ import vanson.dev.instagramclone.adapters.FriendsAdapter
 import vanson.dev.instagramclone.controllers.ViewModelFactory
 import vanson.dev.instagramclone.models.User
 import vanson.dev.instagramclone.R
+import vanson.dev.instagramclone.controllers.BaseActivity
 import vanson.dev.instagramclone.showToast
 
-class AddFriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
+class AddFriendsActivity : BaseActivity(), FriendsAdapter.Listener {
 
     private lateinit var mViewModel: AddFriendsViewModel
 
@@ -26,7 +27,7 @@ class AddFriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
         setContentView(R.layout.activity_add_friends)
         mAdapter = FriendsAdapter(this)
 
-        mViewModel = ViewModelProvider(this, ViewModelFactory()).get(AddFriendsViewModel::class.java)
+        mViewModel = initViewModel()
 
         back_image.setOnClickListener { finish() }
         add_friends_recycler.adapter = mAdapter
@@ -57,7 +58,7 @@ class AddFriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
     private fun setFollow(uid: String, follow: Boolean, onSuccess: () -> Unit) {
         mViewModel.setFollow(mUser.uid, uid, follow).addOnSuccessListener {
             onSuccess()
-        }.addOnFailureListener { showToast(it.message) }
+        }
     }
 }
 

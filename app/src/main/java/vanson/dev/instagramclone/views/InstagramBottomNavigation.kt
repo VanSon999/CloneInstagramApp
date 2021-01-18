@@ -1,6 +1,7 @@
 package vanson.dev.instagramclone.views
 
 import android.content.Intent
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
@@ -18,6 +19,7 @@ class InstagramBottomNavigation(
 ) : LifecycleObserver {
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun onResume() {
+        Log.d(tag, "onResume: $navNumber")
         bnv.menu.getItem(navNumber).isChecked = true
     }
 
@@ -51,6 +53,10 @@ class InstagramBottomNavigation(
                 false
             }
         }
+    }
+
+    companion object{
+        const val tag = "BottomNavigation"
     }
 }
 
