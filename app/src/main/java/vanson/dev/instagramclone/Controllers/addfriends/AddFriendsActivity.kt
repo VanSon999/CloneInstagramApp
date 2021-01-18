@@ -7,8 +7,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_add_friends.*
 import vanson.dev.instagramclone.Adapters.FriendsAdapter
+import vanson.dev.instagramclone.Controllers.ViewModelFactory
 import vanson.dev.instagramclone.Models.User
 import vanson.dev.instagramclone.R
+import vanson.dev.instagramclone.showToast
 
 class AddFriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
 
@@ -24,7 +26,7 @@ class AddFriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
         setContentView(R.layout.activity_add_friends)
         mAdapter = FriendsAdapter(this)
 
-        mViewModel = ViewModelProvider(this, AddFriendsViewModelFactory()).get(AddFriendsViewModel::class.java)
+        mViewModel = ViewModelProvider(this, ViewModelFactory()).get(AddFriendsViewModel::class.java)
 
         back_image.setOnClickListener { finish() }
         add_friends_recycler.adapter = mAdapter
@@ -55,7 +57,7 @@ class AddFriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
     private fun setFollow(uid: String, follow: Boolean, onSuccess: () -> Unit) {
         mViewModel.setFollow(mUser.uid, uid, follow).addOnSuccessListener {
             onSuccess()
-        }.addOnFailureListener { it.message }
+        }.addOnFailureListener { showToast(it.message) }
     }
 }
 

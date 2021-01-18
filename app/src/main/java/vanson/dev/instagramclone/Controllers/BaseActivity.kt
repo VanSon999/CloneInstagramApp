@@ -1,13 +1,17 @@
 package vanson.dev.instagramclone.Controllers
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.bottom_navigation_view.*
 import vanson.dev.instagramclone.*
 
 abstract class BaseActivity(val navNumber: Int) : AppCompatActivity() {
-    private val TAG = "BaseActivity"
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+    }
     fun setupBottomNavigation() {
         bottom_navigation_view.setTextVisibility(false)
         bottom_navigation_view.enableItemShiftingMode(false)
@@ -45,5 +49,9 @@ abstract class BaseActivity(val navNumber: Int) : AppCompatActivity() {
         if (bottom_navigation_view != null) {
             bottom_navigation_view.menu.getItem(navNumber).isChecked = true
         }
+    }
+
+    companion object{
+        const val tag = "BaseActivity"
     }
 }

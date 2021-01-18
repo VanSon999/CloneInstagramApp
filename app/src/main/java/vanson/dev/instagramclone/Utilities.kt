@@ -19,8 +19,8 @@ import vanson.dev.instagramclone.Models.FeedPost
 import vanson.dev.instagramclone.Models.User
 import vanson.dev.instagramclone.Utilites.GlideApp
 
-fun Context.showToast(text: String, duration: Int = Toast.LENGTH_SHORT) {
-    Toast.makeText(this, text, duration).show()
+fun Context.showToast(text: String?, duration: Int = Toast.LENGTH_SHORT) {
+    text?.let {Toast.makeText(this, it, duration).show()}
 } //Context is abstract, it will be come context of activity that it be called
 
 fun determineStateBtn(btn: Button, vararg input: EditText) {
