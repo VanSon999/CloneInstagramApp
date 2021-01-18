@@ -12,8 +12,9 @@ import vanson.dev.instagramclone.utilites.FirebaseHelper
 import vanson.dev.instagramclone.utilites.ValueEventListenerAdapter
 import vanson.dev.instagramclone.asFeedPost
 import vanson.dev.instagramclone.setValueTrueOrRemove
+import vanson.dev.instagramclone.views.setupBottomNavigation
 
-class HomeActivity : BaseActivity(0), FeedAdapter.Listener {
+class HomeActivity : BaseActivity(), FeedAdapter.Listener {
     private lateinit var mAdapter: FeedAdapter
     private val tag = "HomeActivity"
     private lateinit var mFirebase: FirebaseHelper
@@ -21,8 +22,8 @@ class HomeActivity : BaseActivity(0), FeedAdapter.Listener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.acitivity_home)
-        setupBottomNavigation()
-        Log.d(tag, "onCreate: ${this.navNumber}")
+        setupBottomNavigation(0)
+//        Log.d(tag, "onCreate: ${this.navNumber}")
 
         mFirebase = FirebaseHelper(this)
 

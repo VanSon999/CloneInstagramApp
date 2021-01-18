@@ -14,7 +14,7 @@ import vanson.dev.instagramclone.utilites.ValueEventListenerAdapter
 import vanson.dev.instagramclone.asUser
 import vanson.dev.instagramclone.showToast
 
-class ShareActivity : BaseActivity(2) {
+class ShareActivity : BaseActivity() {
     private val tag = "ShareActivity"
     private lateinit var mCamera: CameraHelper
     private lateinit var mFirebase: FirebaseHelper
@@ -23,7 +23,7 @@ class ShareActivity : BaseActivity(2) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_share)
 
-        Log.d(tag, "onCreate: ${this.navNumber}")
+//        Log.d(tag, "onCreate: ${this.navNumber}")
         mFirebase = FirebaseHelper(this)
         mCamera = CameraHelper(this)
         mCamera.takeImageFromCamera()

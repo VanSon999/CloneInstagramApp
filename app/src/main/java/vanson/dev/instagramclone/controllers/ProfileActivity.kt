@@ -14,8 +14,9 @@ import vanson.dev.instagramclone.utilites.FirebaseHelper
 import vanson.dev.instagramclone.utilites.ValueEventListenerAdapter
 import vanson.dev.instagramclone.asUser
 import vanson.dev.instagramclone.loadUserPhoto
+import vanson.dev.instagramclone.views.setupBottomNavigation
 
-class ProfileActivity : BaseActivity(4) {
+class ProfileActivity : BaseActivity() {
     private lateinit var mUser: User
     private lateinit var mFirebase: FirebaseHelper
     private val tag = "ProfileActivity"
@@ -23,8 +24,8 @@ class ProfileActivity : BaseActivity(4) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
-        setupBottomNavigation()
-        Log.d(tag, "onCreate: ${this.navNumber}")
+        setupBottomNavigation(4)
+//        Log.d(tag, "onCreate: ${this.navNumber}")
 
         edit_profile_btn.setOnClickListener {
             val intent = Intent(this, EditProfileActivity::class.java)

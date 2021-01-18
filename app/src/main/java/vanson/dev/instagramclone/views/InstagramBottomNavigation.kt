@@ -1,0 +1,59 @@
+package vanson.dev.instagramclone.views
+
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
+import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
+import kotlinx.android.synthetic.main.bottom_navigation_view.*
+import vanson.dev.instagramclone.R
+import vanson.dev.instagramclone.controllers.*
+
+@Suppress("DEPRECATION")
+class InstagramBottomNavigation(
+    private val navNumber: Int,
+    private val bnv: BottomNavigationViewEx,
+    activity: AppCompatActivity
+) : LifecycleObserver {
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    fun onResume() {
+        bnv.menu.getItem(navNumber).isChecked = true
+    }
+
+    init {
+        bnv.setTextVisibility(false)
+        bnv.enableItemShiftingMode(false)
+        bnv.enableShiftingMode(false)
+        bnv.enableAnimation(false)
+        for (x in 0 until bnv.menu.size()) {
+            bnv.setIconTintList(x, null)
+        }
+
+        bnv.setOnNavigationItemSelectedListener {
+            val nextActivity = when (it.itemId) {
+                R.id.nav_ic_home -> HomeActivity::class.java
+                R.id.nav_ic_likes -> LikesActivity::class.java
+                R.id.nav_ic_search -> SearchActivity::class.java
+                R.id.nav_ic_share -> ShareActivity::class.java
+                R.id.nav_ic_profile -> ProfileActivity::class.java
+                else -> {
+                    null
+                }
+            }
+            if (nextActivity != null) {
+                val intent = Intent(activity, nextActivity)
+                intent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
+                activity.overridePendingTransition(0, 0) //turn of animation convert Activity
+                activity.startActivity(intent)
+                true
+            } else {
+                false
+            }
+        }
+    }
+}
+
+fun BaseActivity.setupBottomNavigation(navNumber: Int) {
+    InstagramBottomNavigation(navNumber, bottom_navigation_view, this)
+}
