@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<vanson.dev.instagramclone.Views.KeyboardAwareScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<vanson.dev.instagramclone.views.KeyboardAwareScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Controllers.RegisterActivity"> <!-- Fill ui on screen, dont need scroll -->
+    tools:context=".controllers.RegisterActivity"> <!-- Fill ui on screen, dont need scroll -->
 
     <FrameLayout
         android:id="@+id/frame_layout"
@@ -12,4 +12,4 @@
         android:layout_height="match_parent">
 
     </FrameLayout>
-</vanson.dev.instagramclone.Views.KeyboardAwareScrollView>
+</vanson.dev.instagramclone.views.KeyboardAwareScrollView>

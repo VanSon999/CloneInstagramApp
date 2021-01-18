@@ -12,26 +12,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.InstagramClone">
-        <activity android:name=".Controllers.editprofile.EditProfileActivity" />
-        <activity android:name=".Controllers.HomeActivity">
+        <activity android:name=".controllers.editprofile.EditProfileActivity" />
+        <activity android:name=".controllers.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controllers.LikesActivity" />
-        <activity android:name=".Controllers.ShareActivity" />
-        <activity android:name=".Controllers.SearchActivity" />
-        <activity android:name=".Controllers.ProfileActivity" />
+        <activity android:name=".controllers.LikesActivity" />
+        <activity android:name=".controllers.ShareActivity" />
+        <activity android:name=".controllers.SearchActivity" />
+        <activity android:name=".controllers.ProfileActivity" />
         <activity
-            android:name=".Controllers.LoginActivity"
+            android:name=".controllers.LoginActivity"
             android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
-            android:name=".Controllers.RegisterActivity"
+            android:name=".controllers.RegisterActivity"
             android:windowSoftInputMode="stateVisible|adjustResize" />
-        <activity android:name=".Controllers.ProfileSettingActivity"/>
-        <activity android:name=".Controllers.addfriends.AddFriendsActivity"/>
+        <activity android:name=".controllers.ProfileSettingActivity"/>
+        <activity android:name=".controllers.addfriends.AddFriendsActivity"/>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="vanson.dev.instagramclone.fileprovider"

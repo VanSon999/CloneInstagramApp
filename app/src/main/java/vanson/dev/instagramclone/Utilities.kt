@@ -15,9 +15,9 @@ import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.TaskCompletionSource
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
-import vanson.dev.instagramclone.Models.FeedPost
-import vanson.dev.instagramclone.Models.User
-import vanson.dev.instagramclone.Utilites.GlideApp
+import vanson.dev.instagramclone.models.FeedPost
+import vanson.dev.instagramclone.models.User
+import vanson.dev.instagramclone.utilites.GlideApp
 
 fun Context.showToast(text: String?, duration: Int = Toast.LENGTH_SHORT) {
     text?.let {Toast.makeText(this, it, duration).show()}
