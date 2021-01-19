@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.feed_item.view.*
 import vanson.dev.instagramclone.controllers.home.FeedPostLikes
@@ -21,8 +22,9 @@ import vanson.dev.instagramclone.R
 import vanson.dev.instagramclone.controllers.common.loadImage
 import vanson.dev.instagramclone.controllers.common.loadUserPhoto
 import vanson.dev.instagramclone.controllers.common.showToast
+import vanson.dev.instagramclone.utilites.SimpleCallback
 
-class FeedAdapter(private val listener: Listener, private val posts: List<FeedPost>) :
+class FeedAdapter(private val listener: Listener) :
     RecyclerView.Adapter<FeedAdapter.ViewHolder>() {
     interface Listener {
         fun toggleLike(postId: String)
@@ -31,6 +33,7 @@ class FeedAdapter(private val listener: Listener, private val posts: List<FeedPo
 
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)
 
+    private var posts: List<FeedPost> = listOf()
     private var postLikes: Map<Int, FeedPostLikes> = emptyMap()
     private val defaultPostLikes = FeedPostLikes(0, false)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -91,7 +94,13 @@ class FeedAdapter(private val listener: Listener, private val posts: List<FeedPo
         notifyItemChanged(position)
     }
 
+    fun updatePosts(newPosts: List<FeedPost>) {
+        val diffResult = DiffUtil.calculateDiff(SimpleCallback(this.posts, newPosts) { it.id })
+        this.posts = newPosts
+        diffResult.dispatchUpdatesTo(this)
+    }
+}
+
 //    private fun ImageView.loadImage(urlImage: String?) {
 //        GlideApp.with(this).load(urlImage).centerCrop().into(this)
 //    }
-}
