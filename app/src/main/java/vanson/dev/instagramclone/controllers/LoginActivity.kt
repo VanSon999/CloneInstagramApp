@@ -11,6 +11,7 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventList
 import vanson.dev.instagramclone.R
 import vanson.dev.instagramclone.controllers.common.determineStateBtn
 import vanson.dev.instagramclone.controllers.common.showToast
+import vanson.dev.instagramclone.controllers.home.HomeActivity
 
 class LoginActivity : AppCompatActivity(), KeyboardVisibilityEventListener, View.OnClickListener {
     private val TAG = "LoginActivity"

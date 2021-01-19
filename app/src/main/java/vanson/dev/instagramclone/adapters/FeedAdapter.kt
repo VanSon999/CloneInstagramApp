@@ -15,7 +15,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.feed_item.view.*
-import vanson.dev.instagramclone.controllers.FeedPostLikes
+import vanson.dev.instagramclone.controllers.home.FeedPostLikes
 import vanson.dev.instagramclone.models.FeedPost
 import vanson.dev.instagramclone.R
 import vanson.dev.instagramclone.controllers.common.loadImage

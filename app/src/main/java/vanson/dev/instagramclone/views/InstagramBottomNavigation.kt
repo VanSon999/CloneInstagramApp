@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.bottom_navigation_view.*
 import vanson.dev.instagramclone.R
 import vanson.dev.instagramclone.controllers.*
 import vanson.dev.instagramclone.controllers.common.BaseActivity
+import vanson.dev.instagramclone.controllers.home.HomeActivity
 
 @Suppress("DEPRECATION")
 class InstagramBottomNavigation(
@@ -62,5 +63,6 @@ class InstagramBottomNavigation(
 }
 
 fun BaseActivity.setupBottomNavigation(navNumber: Int) {
-    InstagramBottomNavigation(navNumber, bottom_navigation_view, this)
+    val bnv = InstagramBottomNavigation(navNumber, bottom_navigation_view, this)
+    this.lifecycle.addObserver(bnv)
 }

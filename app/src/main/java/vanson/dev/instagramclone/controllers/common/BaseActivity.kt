@@ -1,5 +1,6 @@
 package vanson.dev.instagramclone.controllers.common
 
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import vanson.dev.instagramclone.*
+import vanson.dev.instagramclone.controllers.LoginActivity
 
 abstract class BaseActivity : AppCompatActivity() {
     protected lateinit var commonViewModel: CommonViewModel
@@ -24,6 +26,11 @@ abstract class BaseActivity : AppCompatActivity() {
 
     protected inline fun <reified T : ViewModel> initViewModel(): T =
         ViewModelProvider(this, ViewModelFactory(commonViewModel)).get(T::class.java)
+
+    fun goToLogin() {
+        startActivity(Intent(this, LoginActivity::class.java))
+        finish()
+    }
 
     companion object {
         const val tag = "BaseActivity"

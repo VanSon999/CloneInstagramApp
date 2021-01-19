@@ -20,6 +20,7 @@ import vanson.dev.instagramclone.models.User
 import vanson.dev.instagramclone.R
 import vanson.dev.instagramclone.controllers.common.determineStateBtn
 import vanson.dev.instagramclone.controllers.common.showToast
+import vanson.dev.instagramclone.controllers.home.HomeActivity
 import java.util.*
 
 class RegisterActivity : AppCompatActivity(), EmailFragment.Listener, NamePassFragment.Listener {

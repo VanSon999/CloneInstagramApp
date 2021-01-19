@@ -13,6 +13,7 @@ import vanson.dev.instagramclone.repository.common.FirebaseHelper
 import vanson.dev.instagramclone.utilites.ValueEventListenerAdapter
 import vanson.dev.instagramclone.controllers.common.BaseActivity
 import vanson.dev.instagramclone.controllers.common.loadUserPhoto
+import vanson.dev.instagramclone.controllers.profilesettings.ProfileSettingActivity
 import vanson.dev.instagramclone.repository.firebase.common.asUser
 import vanson.dev.instagramclone.views.setupBottomNavigation
 
