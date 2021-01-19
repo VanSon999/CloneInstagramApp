@@ -10,6 +10,7 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
 import kotlinx.android.synthetic.main.bottom_navigation_view.*
 import vanson.dev.instagramclone.R
 import vanson.dev.instagramclone.controllers.*
+import vanson.dev.instagramclone.controllers.common.BaseActivity
 
 @Suppress("DEPRECATION")
 class InstagramBottomNavigation(

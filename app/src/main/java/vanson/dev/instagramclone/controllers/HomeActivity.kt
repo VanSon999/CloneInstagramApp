@@ -2,16 +2,16 @@ package vanson.dev.instagramclone.controllers
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.acitivity_home.*
-import vanson.dev.instagramclone.adapters.FeedAdapter
 import vanson.dev.instagramclone.R
-import vanson.dev.instagramclone.utilites.FirebaseHelper
+import vanson.dev.instagramclone.adapters.FeedAdapter
+import vanson.dev.instagramclone.controllers.common.BaseActivity
+import vanson.dev.instagramclone.repository.firebase.common.asFeedPost
+import vanson.dev.instagramclone.repository.firebase.common.setValueTrueOrRemove
+import vanson.dev.instagramclone.repository.common.FirebaseHelper
 import vanson.dev.instagramclone.utilites.ValueEventListenerAdapter
-import vanson.dev.instagramclone.asFeedPost
-import vanson.dev.instagramclone.setValueTrueOrRemove
 import vanson.dev.instagramclone.views.setupBottomNavigation
 
 class HomeActivity : BaseActivity(), FeedAdapter.Listener {

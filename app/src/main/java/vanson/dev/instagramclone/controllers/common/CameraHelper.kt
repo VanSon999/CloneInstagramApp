@@ -1,4 +1,4 @@
-package vanson.dev.instagramclone.utilites
+package vanson.dev.instagramclone.controllers.common
 
 import android.annotation.SuppressLint
 import android.app.Activity

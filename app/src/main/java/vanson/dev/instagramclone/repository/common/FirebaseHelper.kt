@@ -1,4 +1,4 @@
-package vanson.dev.instagramclone.utilites
+package vanson.dev.instagramclone.repository.common
 
 import android.app.Activity
 import com.google.firebase.auth.FirebaseAuth

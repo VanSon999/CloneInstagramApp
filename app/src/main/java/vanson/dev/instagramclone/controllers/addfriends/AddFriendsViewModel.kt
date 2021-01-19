@@ -5,10 +5,10 @@ import androidx.lifecycle.ViewModel
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
-import vanson.dev.instagramclone.mapCustom
 import vanson.dev.instagramclone.models.User
 import vanson.dev.instagramclone.repository.FeedPostsRepository
 import vanson.dev.instagramclone.repository.UsersRepository
+import vanson.dev.instagramclone.repository.common.mapCustom
 
 class AddFriendsViewModel(
     private val onFailureListener: OnFailureListener,

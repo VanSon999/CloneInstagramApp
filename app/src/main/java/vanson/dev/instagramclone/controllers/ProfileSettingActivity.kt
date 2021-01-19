@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_profile_settings.*
 import vanson.dev.instagramclone.R
-import vanson.dev.instagramclone.utilites.FirebaseHelper
+import vanson.dev.instagramclone.repository.common.FirebaseHelper
 
 class ProfileSettingActivity : AppCompatActivity() {
     private lateinit var mFirebase : FirebaseHelper

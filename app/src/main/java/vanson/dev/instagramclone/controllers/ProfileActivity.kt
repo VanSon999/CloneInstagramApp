@@ -2,7 +2,6 @@ package vanson.dev.instagramclone.controllers
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.activity_profile.*
 import vanson.dev.instagramclone.adapters.ImagesAdapter
@@ -10,10 +9,11 @@ import vanson.dev.instagramclone.controllers.addfriends.AddFriendsActivity
 import vanson.dev.instagramclone.controllers.editprofile.EditProfileActivity
 import vanson.dev.instagramclone.models.User
 import vanson.dev.instagramclone.R
-import vanson.dev.instagramclone.utilites.FirebaseHelper
+import vanson.dev.instagramclone.repository.common.FirebaseHelper
 import vanson.dev.instagramclone.utilites.ValueEventListenerAdapter
-import vanson.dev.instagramclone.asUser
-import vanson.dev.instagramclone.loadUserPhoto
+import vanson.dev.instagramclone.controllers.common.BaseActivity
+import vanson.dev.instagramclone.controllers.common.loadUserPhoto
+import vanson.dev.instagramclone.repository.firebase.common.asUser
 import vanson.dev.instagramclone.views.setupBottomNavigation
 
 class ProfileActivity : BaseActivity() {

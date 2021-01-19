@@ -18,9 +18,9 @@ import kotlinx.android.synthetic.main.feed_item.view.*
 import vanson.dev.instagramclone.controllers.FeedPostLikes
 import vanson.dev.instagramclone.models.FeedPost
 import vanson.dev.instagramclone.R
-import vanson.dev.instagramclone.loadImage
-import vanson.dev.instagramclone.loadUserPhoto
-import vanson.dev.instagramclone.showToast
+import vanson.dev.instagramclone.controllers.common.loadImage
+import vanson.dev.instagramclone.controllers.common.loadUserPhoto
+import vanson.dev.instagramclone.controllers.common.showToast
 
 class FeedAdapter(private val listener: Listener, private val posts: List<FeedPost>) :
     RecyclerView.Adapter<FeedAdapter.ViewHolder>() {
@@ -52,11 +52,11 @@ class FeedAdapter(private val listener: Listener, private val posts: List<FeedPo
                 likes_text.visibility = View.GONE
             } else {
                 likes_text.visibility = View.VISIBLE
-                likes_text.text =
-                    likes.likesCount.toString() + " " + holder.view.context.resources.getQuantityString(
-                        R.plurals.likes_count,
-                        likes.likesCount
-                    )
+                likes_text.text = holder.view.context.resources.getQuantityString(
+                    R.plurals.likes_count,
+                    likes.likesCount,
+                    likes.likesCount
+                )
             }
             //Spannable: username(bold, clickable) caption
             caption_text.setCaptionText(post.username, post.caption)

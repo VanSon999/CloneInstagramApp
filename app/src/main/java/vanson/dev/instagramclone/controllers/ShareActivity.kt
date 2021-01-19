@@ -2,17 +2,17 @@ package vanson.dev.instagramclone.controllers
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import kotlinx.android.synthetic.main.activity_share.*
 import vanson.dev.instagramclone.models.FeedPost
 import vanson.dev.instagramclone.models.User
 import vanson.dev.instagramclone.R
-import vanson.dev.instagramclone.utilites.CameraHelper
-import vanson.dev.instagramclone.utilites.FirebaseHelper
-import vanson.dev.instagramclone.utilites.GlideApp
+import vanson.dev.instagramclone.controllers.common.CameraHelper
+import vanson.dev.instagramclone.repository.common.FirebaseHelper
 import vanson.dev.instagramclone.utilites.ValueEventListenerAdapter
-import vanson.dev.instagramclone.asUser
-import vanson.dev.instagramclone.showToast
+import vanson.dev.instagramclone.controllers.common.BaseActivity
+import vanson.dev.instagramclone.controllers.common.GlideApp
+import vanson.dev.instagramclone.controllers.common.showToast
+import vanson.dev.instagramclone.repository.firebase.common.asUser
 
 class ShareActivity : BaseActivity() {
     private val tag = "ShareActivity"

@@ -9,9 +9,13 @@ import com.google.firebase.auth.FirebaseAuth
 import vanson.dev.instagramclone.utilites.toUnit
 import vanson.dev.instagramclone.models.User
 import vanson.dev.instagramclone.repository.UsersRepository
+import vanson.dev.instagramclone.repository.common.liveData
+import vanson.dev.instagramclone.repository.common.mapCustom
+import vanson.dev.instagramclone.repository.firebase.common.asUser
+import vanson.dev.instagramclone.repository.firebase.common.auth
+import vanson.dev.instagramclone.repository.firebase.common.database
+import vanson.dev.instagramclone.repository.firebase.common.storage
 import vanson.dev.instagramclone.utilites.*
-import vanson.dev.instagramclone.asUser
-import vanson.dev.instagramclone.mapCustom
 
 class FirebaseUsersRepository : UsersRepository {
     override fun getUser(): LiveData<User> =

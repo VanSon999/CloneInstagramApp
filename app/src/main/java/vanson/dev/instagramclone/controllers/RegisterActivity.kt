@@ -18,8 +18,8 @@ import kotlinx.android.synthetic.main.fragment_register_email.*
 import kotlinx.android.synthetic.main.fragment_register_namepass.*
 import vanson.dev.instagramclone.models.User
 import vanson.dev.instagramclone.R
-import vanson.dev.instagramclone.determineStateBtn
-import vanson.dev.instagramclone.showToast
+import vanson.dev.instagramclone.controllers.common.determineStateBtn
+import vanson.dev.instagramclone.controllers.common.showToast
 import java.util.*
 
 class RegisterActivity : AppCompatActivity(), EmailFragment.Listener, NamePassFragment.Listener {

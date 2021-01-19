@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import vanson.dev.instagramclone.R
-import vanson.dev.instagramclone.loadImage
+import vanson.dev.instagramclone.controllers.common.loadImage
 
 class ImagesAdapter(private val images: List<String>) :
     RecyclerView.Adapter<ImagesAdapter.ViewHolder>() {

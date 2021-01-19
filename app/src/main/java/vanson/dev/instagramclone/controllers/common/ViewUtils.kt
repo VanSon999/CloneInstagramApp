@@ -1,4 +1,4 @@
-package vanson.dev.instagramclone
+package vanson.dev.instagramclone.controllers.common
 
 import android.app.Activity
 import android.content.Context
@@ -9,15 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
-import com.google.android.gms.tasks.Task
-import com.google.android.gms.tasks.TaskCompletionSource
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseReference
-import vanson.dev.instagramclone.models.FeedPost
-import vanson.dev.instagramclone.models.User
-import vanson.dev.instagramclone.utilites.GlideApp
+import vanson.dev.instagramclone.R
 
 fun Context.showToast(text: String?, duration: Int = Toast.LENGTH_SHORT) {
     text?.let {Toast.makeText(this, it, duration).show()}
@@ -62,18 +54,3 @@ private fun View.ifNotDestroyed(block: () -> Unit) {
         block()
     }
 }
-
-fun <T> task(block: (TaskCompletionSource<T>) -> Unit): Task<T> { //this is it when addOnCompleteListener!!!
-    val taskSource = TaskCompletionSource<T>()
-    block(taskSource)
-    return taskSource.task // this is equal mFirebase.database.child("Feed_Posts").child(mUser.uid!!).updateChildren(postsMap).addOnCompleteListener ...
-}
-
-fun DataSnapshot.asUser(): User? = getValue(User::class.java)?.copy(uid = key.toString())
-
-fun DataSnapshot.asFeedPost(): FeedPost? = getValue(FeedPost::class.java)?.copy(id = key.toString())
-
-fun DatabaseReference.setValueTrueOrRemove(follow: Boolean) =
-    if (follow) setValue(true) else removeValue()
-
-fun <A, B> LiveData<A>.mapCustom(f: (A) -> B): LiveData<B> = Transformations.map(this, f)

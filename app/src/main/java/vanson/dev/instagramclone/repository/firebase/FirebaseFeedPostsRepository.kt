@@ -1,12 +1,9 @@
 package vanson.dev.instagramclone.repository.firebase
 
 import com.google.android.gms.tasks.Task
-import vanson.dev.instagramclone.utilites.toUnit
 import vanson.dev.instagramclone.repository.FeedPostsRepository
-import vanson.dev.instagramclone.utilites.TaskSourceOnCompleteListener
-import vanson.dev.instagramclone.utilites.ValueEventListenerAdapter
-import vanson.dev.instagramclone.utilites.database
-import vanson.dev.instagramclone.task
+import vanson.dev.instagramclone.repository.firebase.common.database
+import vanson.dev.instagramclone.utilites.*
 
 class FirebaseFeedPostsRepository : FeedPostsRepository {
     override fun copyFeedPosts(postsAuthorUid: String, uid: String): Task<Unit> =

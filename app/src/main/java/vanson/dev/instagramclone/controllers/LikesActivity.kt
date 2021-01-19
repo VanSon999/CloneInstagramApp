@@ -1,8 +1,8 @@
 package vanson.dev.instagramclone.controllers
 
 import android.os.Bundle
-import android.util.Log
 import vanson.dev.instagramclone.R
+import vanson.dev.instagramclone.controllers.common.BaseActivity
 import vanson.dev.instagramclone.views.setupBottomNavigation
 
 class LikesActivity : BaseActivity() {

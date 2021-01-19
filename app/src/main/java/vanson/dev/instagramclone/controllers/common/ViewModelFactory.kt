@@ -1,4 +1,4 @@
-package vanson.dev.instagramclone.controllers
+package vanson.dev.instagramclone.controllers.common
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

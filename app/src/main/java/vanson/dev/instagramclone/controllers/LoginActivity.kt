@@ -9,8 +9,8 @@ import kotlinx.android.synthetic.main.activity_login.*
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
 import vanson.dev.instagramclone.R
-import vanson.dev.instagramclone.determineStateBtn
-import vanson.dev.instagramclone.showToast
+import vanson.dev.instagramclone.controllers.common.determineStateBtn
+import vanson.dev.instagramclone.controllers.common.showToast
 
 class LoginActivity : AppCompatActivity(), KeyboardVisibilityEventListener, View.OnClickListener {
     private val TAG = "LoginActivity"

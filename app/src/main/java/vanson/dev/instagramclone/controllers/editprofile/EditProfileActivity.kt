@@ -5,15 +5,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import vanson.dev.instagramclone.*
-import vanson.dev.instagramclone.controllers.BaseActivity
-import vanson.dev.instagramclone.controllers.ViewModelFactory
+import vanson.dev.instagramclone.controllers.common.BaseActivity
+import vanson.dev.instagramclone.controllers.common.loadUserPhoto
+import vanson.dev.instagramclone.controllers.common.showToast
+import vanson.dev.instagramclone.controllers.common.toStringOrNull
 import vanson.dev.instagramclone.models.User
-import vanson.dev.instagramclone.utilites.CameraHelper
+import vanson.dev.instagramclone.controllers.common.CameraHelper
 import vanson.dev.instagramclone.views.PasswordDialog
 
 class EditProfileActivity : BaseActivity(), PasswordDialog.Listener {

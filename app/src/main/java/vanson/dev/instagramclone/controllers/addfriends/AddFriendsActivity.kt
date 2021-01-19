@@ -1,17 +1,13 @@
 package vanson.dev.instagramclone.controllers.addfriends
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_add_friends.*
 import vanson.dev.instagramclone.adapters.FriendsAdapter
-import vanson.dev.instagramclone.controllers.ViewModelFactory
 import vanson.dev.instagramclone.models.User
 import vanson.dev.instagramclone.R
-import vanson.dev.instagramclone.controllers.BaseActivity
-import vanson.dev.instagramclone.showToast
+import vanson.dev.instagramclone.controllers.common.BaseActivity
 
 class AddFriendsActivity : BaseActivity(), FriendsAdapter.Listener {
 

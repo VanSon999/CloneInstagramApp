@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.add_friends_item.view.*
 import vanson.dev.instagramclone.models.User
 import vanson.dev.instagramclone.R
-import vanson.dev.instagramclone.loadUserPhoto
+import vanson.dev.instagramclone.controllers.common.loadUserPhoto
 
 class FriendsAdapter(private val listener: Listener) :
     RecyclerView.Adapter<FriendsAdapter.ViewHolder>() {
