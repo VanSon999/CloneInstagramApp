@@ -3,6 +3,7 @@ package vanson.dev.instagramclone.controllers.common
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.tasks.OnFailureListener
+import vanson.dev.instagramclone.controllers.LoginViewModel
 import vanson.dev.instagramclone.controllers.addfriends.AddFriendsViewModel
 import vanson.dev.instagramclone.repository.firebase.FirebaseFeedPostsRepository
 import vanson.dev.instagramclone.controllers.editprofile.EditProfileViewModel
@@ -33,6 +34,9 @@ class ViewModelFactory(private val onFailureListener: OnFailureListener) :
                 }
                 isAssignableFrom(ProfileSettingViewModel::class.java) -> {
                     ProfileSettingViewModel(FirebaseAuthManager()) as T
+                }
+                isAssignableFrom(LoginViewModel::class.java) -> {
+                    LoginViewModel(FirebaseAuthManager()) as T
                 }
                 else -> {
                     error("Unknown view model class $modelClass")

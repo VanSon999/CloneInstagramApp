@@ -8,6 +8,7 @@ import vanson.dev.instagramclone.adapters.FriendsAdapter
 import vanson.dev.instagramclone.models.User
 import vanson.dev.instagramclone.R
 import vanson.dev.instagramclone.controllers.common.BaseActivity
+import vanson.dev.instagramclone.controllers.common.setupAuthGuard
 
 class AddFriendsActivity : BaseActivity(), FriendsAdapter.Listener {
 
@@ -15,7 +16,6 @@ class AddFriendsActivity : BaseActivity(), FriendsAdapter.Listener {
 
     //    private val tag = "AddFriendsActivity"
     private lateinit var mAdapter: FriendsAdapter
-    private lateinit var mUsers: List<User>
     private lateinit var mUser: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,20 +23,20 @@ class AddFriendsActivity : BaseActivity(), FriendsAdapter.Listener {
         setContentView(R.layout.activity_add_friends)
         mAdapter = FriendsAdapter(this)
 
-        mViewModel = initViewModel()
+        setupAuthGuard {
+            mViewModel = initViewModel()
 
-        back_image.setOnClickListener { finish() }
-        add_friends_recycler.adapter = mAdapter
-        add_friends_recycler.layoutManager = LinearLayoutManager(this)
+            back_image.setOnClickListener { finish() }
+            add_friends_recycler.adapter = mAdapter
+            add_friends_recycler.layoutManager = LinearLayoutManager(this)
 
-        mViewModel.userAndFriends.observe(this, Observer {
-            it?.let { (user, otherUsers) -> // check if value of _userAndFriend != null
-                mUser = user
-                mUsers = otherUsers
-
-                mAdapter.update(mUsers, mUser.Follows)
-            }
-        })
+            mViewModel.userAndFriends.observe(this, Observer {
+                it?.let { (user, otherUsers) -> // check if value of _userAndFriend != null
+                    mUser = user
+                    mAdapter.update(otherUsers, mUser.Follows)
+                }
+            })
+        }
     }
 
     override fun follow(uid: String) {

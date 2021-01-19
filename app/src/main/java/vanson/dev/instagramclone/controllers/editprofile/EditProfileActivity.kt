@@ -8,12 +8,8 @@ import android.widget.TextView
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import vanson.dev.instagramclone.*
-import vanson.dev.instagramclone.controllers.common.BaseActivity
-import vanson.dev.instagramclone.controllers.common.loadUserPhoto
-import vanson.dev.instagramclone.controllers.common.showToast
-import vanson.dev.instagramclone.controllers.common.toStringOrNull
+import vanson.dev.instagramclone.controllers.common.*
 import vanson.dev.instagramclone.models.User
-import vanson.dev.instagramclone.controllers.common.CameraHelper
 import vanson.dev.instagramclone.views.PasswordDialog
 
 class EditProfileActivity : BaseActivity(), PasswordDialog.Listener {
@@ -27,27 +23,29 @@ class EditProfileActivity : BaseActivity(), PasswordDialog.Listener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
         Log.d(tag, "onCreate")
-        mCamera = CameraHelper(this)
 
-        mViewModel = initViewModel()
-        close_image.setOnClickListener {
-            finish()
-        }
-        save_image.setOnClickListener { updateProfile() }
-        change_avatar_text.setOnClickListener { mCamera.takeImageFromCamera() }
-
-        mViewModel.user.observe(this, Observer {
-            it?.let {
-                mUser = it
-                name_input.setText(mUser.name, TextView.BufferType.EDITABLE)
-                username_input.setText(mUser.username, TextView.BufferType.EDITABLE)
-                website_input.setText(mUser.website, TextView.BufferType.EDITABLE)
-                bio_input.setText(mUser.bio, TextView.BufferType.EDITABLE)
-                email_input.setText(mUser.email, TextView.BufferType.EDITABLE)
-                phone_input.setText(mUser.phone, TextView.BufferType.EDITABLE)
-                profile_image_edit.loadUserPhoto(mUser.photo)
+        setupAuthGuard {
+            mCamera = CameraHelper(this)
+            mViewModel = initViewModel()
+            close_image.setOnClickListener {
+                finish()
             }
-        })
+            save_image.setOnClickListener { updateProfile() }
+            change_avatar_text.setOnClickListener { mCamera.takeImageFromCamera() }
+
+            mViewModel.user.observe(this, Observer {
+                it?.let {
+                    mUser = it
+                    name_input.setText(mUser.name, TextView.BufferType.EDITABLE)
+                    username_input.setText(mUser.username, TextView.BufferType.EDITABLE)
+                    website_input.setText(mUser.website, TextView.BufferType.EDITABLE)
+                    bio_input.setText(mUser.bio, TextView.BufferType.EDITABLE)
+                    email_input.setText(mUser.email, TextView.BufferType.EDITABLE)
+                    phone_input.setText(mUser.phone, TextView.BufferType.EDITABLE)
+                    profile_image_edit.loadUserPhoto(mUser.photo)
+                }
+            })
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
