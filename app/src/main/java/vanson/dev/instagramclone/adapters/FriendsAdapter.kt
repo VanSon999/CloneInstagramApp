@@ -3,11 +3,13 @@ package vanson.dev.instagramclone.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.add_friends_item.view.*
 import vanson.dev.instagramclone.models.User
 import vanson.dev.instagramclone.R
 import vanson.dev.instagramclone.controllers.common.loadUserPhoto
+import vanson.dev.instagramclone.utilites.SimpleCallback
 
 class FriendsAdapter(private val listener: Listener) :
     RecyclerView.Adapter<FriendsAdapter.ViewHolder>() {
@@ -52,10 +54,11 @@ class FriendsAdapter(private val listener: Listener) :
     }
 
     fun update(users: List<User>, follows: Map<String, Boolean>) {
+        val diffResult = DiffUtil.calculateDiff(SimpleCallback(mUsers, users) { it.uid })
         mUsers = users
         mPositions = users.withIndex().map { (idx, user) -> user.uid to idx }.toMap()
         mFollows = follows
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
     }
 
     fun followed(uid: String) {
