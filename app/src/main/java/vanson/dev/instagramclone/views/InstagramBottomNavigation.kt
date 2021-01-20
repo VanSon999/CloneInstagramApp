@@ -12,6 +12,7 @@ import vanson.dev.instagramclone.R
 import vanson.dev.instagramclone.controllers.*
 import vanson.dev.instagramclone.controllers.common.BaseActivity
 import vanson.dev.instagramclone.controllers.home.HomeActivity
+import vanson.dev.instagramclone.controllers.profile.ProfileActivity
 
 @Suppress("DEPRECATION")
 class InstagramBottomNavigation(

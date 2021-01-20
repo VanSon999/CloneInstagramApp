@@ -23,12 +23,12 @@
         <activity android:name=".controllers.LikesActivity" />
         <activity android:name=".controllers.ShareActivity" />
         <activity android:name=".controllers.SearchActivity" />
-        <activity android:name=".controllers.ProfileActivity" />
+        <activity android:name=".controllers.profile.ProfileActivity" />
         <activity
             android:name=".controllers.login.LoginActivity"
             android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
-            android:name=".controllers.RegisterActivity"
+            android:name=".controllers.register.RegisterActivity"
             android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity android:name=".controllers.profilesettings.ProfileSettingActivity"/>
         <activity android:name=".controllers.addfriends.AddFriendsActivity"/>

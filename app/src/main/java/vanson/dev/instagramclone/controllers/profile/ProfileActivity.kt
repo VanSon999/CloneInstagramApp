@@ -1,4 +1,4 @@
-package vanson.dev.instagramclone.controllers
+package vanson.dev.instagramclone.controllers.profile
 
 import android.content.Intent
 import android.os.Bundle

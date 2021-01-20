@@ -4,7 +4,7 @@
     android:id="@+id/scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controllers.RegisterActivity"> <!-- Fill ui on screen, dont need scroll -->
+    tools:context=".controllers.register.RegisterActivity"> <!-- Fill ui on screen, dont need scroll -->
 
     <FrameLayout
         android:id="@+id/frame_layout"

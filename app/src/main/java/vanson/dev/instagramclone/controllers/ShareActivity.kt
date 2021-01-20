@@ -12,6 +12,7 @@ import vanson.dev.instagramclone.utilites.ValueEventListenerAdapter
 import vanson.dev.instagramclone.controllers.common.BaseActivity
 import vanson.dev.instagramclone.controllers.common.GlideApp
 import vanson.dev.instagramclone.controllers.common.showToast
+import vanson.dev.instagramclone.controllers.profile.ProfileActivity
 import vanson.dev.instagramclone.repository.firebase.common.asUser
 
 class ShareActivity : BaseActivity() {

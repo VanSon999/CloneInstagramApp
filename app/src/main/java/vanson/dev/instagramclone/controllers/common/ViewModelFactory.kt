@@ -8,7 +8,9 @@ import vanson.dev.instagramclone.controllers.login.LoginViewModel
 import vanson.dev.instagramclone.controllers.addfriends.AddFriendsViewModel
 import vanson.dev.instagramclone.controllers.editprofile.EditProfileViewModel
 import vanson.dev.instagramclone.controllers.home.HomeViewModel
+import vanson.dev.instagramclone.controllers.profile.ProfileViewModel
 import vanson.dev.instagramclone.controllers.profilesettings.ProfileSettingViewModel
+import vanson.dev.instagramclone.controllers.register.RegisterViewModel
 import vanson.dev.instagramclone.repository.firebase.FirebaseFeedPostsRepository
 import vanson.dev.instagramclone.repository.firebase.FirebaseUsersRepository
 import vanson.dev.instagramclone.utilites.firebase.FirebaseAuthManager
@@ -27,11 +29,7 @@ class ViewModelFactory(
             val authManger by lazy { FirebaseAuthManager() }
             return when {
                 isAssignableFrom(AddFriendsViewModel::class.java) -> {
-                    AddFriendsViewModel(
-                        onFailureListener,
-                        usersRepo,
-                        feedPostsRepo
-                    ) as T
+                    AddFriendsViewModel(onFailureListener, usersRepo, feedPostsRepo) as T
                 }
                 isAssignableFrom(EditProfileViewModel::class.java) -> {
                     EditProfileViewModel(onFailureListener, usersRepo) as T
@@ -43,12 +41,13 @@ class ViewModelFactory(
                     ProfileSettingViewModel(authManger) as T
                 }
                 isAssignableFrom(LoginViewModel::class.java) -> {
-                    LoginViewModel(
-                        authManger,
-                        app,
-                        commonViewModel,
-                        onFailureListener
-                    ) as T
+                    LoginViewModel(authManger, app, commonViewModel, onFailureListener) as T
+                }
+                isAssignableFrom(ProfileViewModel::class.java) -> {
+                    ProfileViewModel(usersRepo) as T
+                }
+                isAssignableFrom(RegisterViewModel::class.java) -> {
+                    RegisterViewModel(app, usersRepo, commonViewModel, onFailureListener) as T
                 }
                 else -> {
                     error("Unknown view model class $modelClass")

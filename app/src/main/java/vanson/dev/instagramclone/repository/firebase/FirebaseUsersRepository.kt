@@ -84,6 +84,17 @@ class FirebaseUsersRepository : UsersRepository {
             dataSnapshot.children.map{it.getValue(String::class.java)!!}
         }
 
+    override fun isUserExistsForEmail(email: String): Task<Boolean> =
+        auth.fetchSignInMethodsForEmail(email).onSuccessTask {
+            val signInMethod = it?.signInMethods ?: emptyList<String>()
+            Tasks.forResult(signInMethod.isNotEmpty())
+        }
+
+    override fun createUser(user: User, password: String): Task<Unit> =
+        auth.createUserWithEmailAndPassword(user.email, password).onSuccessTask {
+            database.child("Users").child(it!!.user!!.uid).setValue(user)
+        }.toUnit()
+
     private fun getFollowsRef(fromUid: String, toUid: String) =
         database.child("Users").child(fromUid).child("Follows").child(toUid)
 
