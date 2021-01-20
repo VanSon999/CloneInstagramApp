@@ -28,7 +28,7 @@ class FeedAdapter(private val listener: Listener) :
     RecyclerView.Adapter<FeedAdapter.ViewHolder>() {
     interface Listener {
         fun toggleLike(postId: String)
-        fun loadLikes(id: String, position: Int)
+        fun loadLikes(postId: String, position: Int)
     }
 
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)

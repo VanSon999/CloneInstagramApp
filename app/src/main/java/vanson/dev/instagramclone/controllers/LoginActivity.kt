@@ -34,9 +34,14 @@ class LoginActivity : BaseActivity(), KeyboardVisibilityEventListener, View.OnCl
         setupAuthGuard {
             mViewModel = initViewModel()
             mViewModel.gotoHomeScreen.observe(this, Observer {
-                it?.let {
+                it.getContentIfNotHandled()?.let {
                     startActivity(Intent(this, HomeActivity::class.java))
                     finish()
+                }
+            })
+            mViewModel.gotoRegisterScreen.observe(this, Observer{
+                it.getContentIfNotHandled()?.let {
+                    startActivity(Intent(this, RegisterActivity::class.java))
                 }
             })
             mAuth = FirebaseAuth.getInstance()
@@ -61,7 +66,6 @@ class LoginActivity : BaseActivity(), KeyboardVisibilityEventListener, View.OnCl
                 )
             R.id.create_account_text -> {
                 mViewModel.onRegisterClick()
-                startActivity(Intent(this, RegisterActivity::class.java))
             }
         }
     }
