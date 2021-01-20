@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.tasks.OnFailureListener
-import vanson.dev.instagramclone.controllers.LoginViewModel
+import vanson.dev.instagramclone.controllers.login.LoginViewModel
 import vanson.dev.instagramclone.controllers.addfriends.AddFriendsViewModel
 import vanson.dev.instagramclone.controllers.editprofile.EditProfileViewModel
 import vanson.dev.instagramclone.controllers.home.HomeViewModel

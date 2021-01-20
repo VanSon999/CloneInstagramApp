@@ -79,6 +79,11 @@ class FirebaseUsersRepository : UsersRepository {
         return database.child("Users").child(currentUid()!!).updateChildren(updateMap).toUnit()
     }
 
+    override fun getListImagesOfUser(uid: String): LiveData<List<String>> =
+        database.child("images").child(uid).liveData().mapCustom { dataSnapshot ->
+            dataSnapshot.children.map{it.getValue(String::class.java)!!}
+        }
+
     private fun getFollowsRef(fromUid: String, toUid: String) =
         database.child("Users").child(fromUid).child("Follows").child(toUid)
 

@@ -1,20 +1,19 @@
-package vanson.dev.instagramclone.controllers
+package vanson.dev.instagramclone.controllers.login
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
 import vanson.dev.instagramclone.R
+import vanson.dev.instagramclone.controllers.RegisterActivity
 import vanson.dev.instagramclone.controllers.common.BaseActivity
 import vanson.dev.instagramclone.controllers.common.determineStateBtn
 import vanson.dev.instagramclone.controllers.common.setupAuthGuard
-import vanson.dev.instagramclone.controllers.common.showToast
 import vanson.dev.instagramclone.controllers.home.HomeActivity
 
 class LoginActivity : BaseActivity(), KeyboardVisibilityEventListener, View.OnClickListener {

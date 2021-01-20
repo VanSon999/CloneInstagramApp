@@ -1,4 +1,4 @@
-package vanson.dev.instagramclone.controllers
+package vanson.dev.instagramclone.controllers.login
 
 import android.app.Application
 import androidx.lifecycle.LiveData
@@ -16,7 +16,7 @@ class LoginViewModel(
     private val commonViewModel: CommonViewModel,
     private val onFailureListener: OnFailureListener
 ) : ViewModel() {
-    private val _gotoHomeScreen = MutableLiveData<Event<Unit>>()
+    private val _gotoHomeScreen = MutableLiveData<Event<Unit>>() // handle problem 1 time active
     val gotoHomeScreen: LiveData<Event<Unit>> = _gotoHomeScreen
 
     private val _gotoRegisterScreen = MutableLiveData<Event<Unit>>()

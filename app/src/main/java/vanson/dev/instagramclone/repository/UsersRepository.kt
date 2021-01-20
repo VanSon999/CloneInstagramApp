@@ -17,4 +17,5 @@ interface UsersRepository {
     fun updateUserPhoto(downloadUrl: Uri): Task<Unit>
     fun updateEmail(currentEmail: String, newEmail: String, password: String): Task<Unit>
     fun updateUserProfile(currentUser: User, newUser: User): Task<Unit>
+    fun getListImagesOfUser(uid: String): LiveData<List<String>>
 }

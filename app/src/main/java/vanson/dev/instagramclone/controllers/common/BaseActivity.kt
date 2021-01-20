@@ -7,8 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import vanson.dev.instagramclone.*
-import vanson.dev.instagramclone.controllers.LoginActivity
+import vanson.dev.instagramclone.controllers.login.LoginActivity
 
 abstract class BaseActivity : AppCompatActivity() {
     protected lateinit var commonViewModel: CommonViewModel
