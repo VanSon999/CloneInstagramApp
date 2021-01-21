@@ -2,17 +2,17 @@ package vanson.dev.instagramclone.controllers.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.google.android.gms.tasks.OnFailureListener
+import vanson.dev.instagramclone.controllers.common.BaseViewModel
 import vanson.dev.instagramclone.models.FeedPost
 import vanson.dev.instagramclone.repository.FeedPostsRepository
 import vanson.dev.instagramclone.repository.common.mapCustom
 import vanson.dev.instagramclone.utilites.Event
 
 class HomeViewModel(
-    private val onFailureListener: OnFailureListener,
+    onFailureListener: OnFailureListener,
     private val feedPostsRepo: FeedPostsRepository
-) : ViewModel() {
+) : BaseViewModel(onFailureListener) {
     private val _gotoCommentScreen = MutableLiveData<Event<String>>()
     val gotoCommentScreen = _gotoCommentScreen
     lateinit var uid: String

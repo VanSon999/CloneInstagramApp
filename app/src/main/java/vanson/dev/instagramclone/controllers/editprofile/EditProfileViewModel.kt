@@ -2,16 +2,16 @@ package vanson.dev.instagramclone.controllers.editprofile
 
 import android.net.Uri
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.Task
+import vanson.dev.instagramclone.controllers.common.BaseViewModel
 import vanson.dev.instagramclone.models.User
 import vanson.dev.instagramclone.repository.UsersRepository
 
 class EditProfileViewModel(
-    private val onFailureListener: OnFailureListener,
+    onFailureListener: OnFailureListener,
     private val repository: UsersRepository
-) : ViewModel() {
+) : BaseViewModel(onFailureListener) {
     val user: LiveData<User> = repository.getUser()
 
     fun uploadAndSetUserPhoto(localImage: Uri): Task<Unit> =

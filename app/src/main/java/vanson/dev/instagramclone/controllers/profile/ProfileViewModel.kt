@@ -1,10 +1,14 @@
 package vanson.dev.instagramclone.controllers.profile
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
+import com.google.android.gms.tasks.OnFailureListener
+import vanson.dev.instagramclone.controllers.common.BaseViewModel
 import vanson.dev.instagramclone.repository.UsersRepository
 
-class ProfileViewModel(private val usersRepo: UsersRepository) : ViewModel() {
+class ProfileViewModel(
+    private val usersRepo: UsersRepository,
+    onFailureListener: OnFailureListener
+) : BaseViewModel(onFailureListener) {
     val user = usersRepo.getUser()
     lateinit var images: LiveData<List<String>>
 

@@ -23,7 +23,7 @@ abstract class BaseActivity : AppCompatActivity() {
         })
     }
 
-    protected inline fun <reified T : ViewModel> initViewModel(): T =
+    protected inline fun <reified T : BaseViewModel> initViewModel(): T =
         ViewModelProvider(this, ViewModelFactory(application, commonViewModel, commonViewModel)).get(T::class.java)
 
     fun goToLogin() {

@@ -40,13 +40,13 @@ class ViewModelFactory(
                     HomeViewModel(onFailureListener, feedPostsRepo) as T
                 }
                 isAssignableFrom(ProfileSettingViewModel::class.java) -> {
-                    ProfileSettingViewModel(authManger) as T
+                    ProfileSettingViewModel(authManger, onFailureListener) as T
                 }
                 isAssignableFrom(LoginViewModel::class.java) -> {
                     LoginViewModel(authManger, app, commonViewModel, onFailureListener) as T
                 }
                 isAssignableFrom(ProfileViewModel::class.java) -> {
-                    ProfileViewModel(usersRepo) as T
+                    ProfileViewModel(usersRepo, onFailureListener) as T
                 }
                 isAssignableFrom(RegisterViewModel::class.java) -> {
                     RegisterViewModel(app, usersRepo, commonViewModel, onFailureListener) as T

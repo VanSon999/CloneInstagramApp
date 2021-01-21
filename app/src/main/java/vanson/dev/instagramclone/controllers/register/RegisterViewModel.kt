@@ -1,12 +1,10 @@
 package vanson.dev.instagramclone.controllers.register
 
 import android.app.Application
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.google.android.gms.tasks.OnFailureListener
 import vanson.dev.instagramclone.R
+import vanson.dev.instagramclone.controllers.common.BaseViewModel
 import vanson.dev.instagramclone.controllers.common.CommonViewModel
 import vanson.dev.instagramclone.models.User
 import vanson.dev.instagramclone.repository.UsersRepository
@@ -17,8 +15,8 @@ class RegisterViewModel(
     private val app: Application,
     private val usersRepo: UsersRepository,
     private val commonViewModel: CommonViewModel,
-    private val onFailureListener: OnFailureListener
-) : ViewModel() {
+    onFailureListener: OnFailureListener
+) : BaseViewModel(onFailureListener) {
     private var email: String? = null
     private val _gotoNamePassScreen = MutableLiveData<Event<Unit>>()
     val gotoNamePassScreen = _gotoNamePassScreen
