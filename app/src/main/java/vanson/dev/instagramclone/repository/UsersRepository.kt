@@ -3,6 +3,7 @@ package vanson.dev.instagramclone.repository
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import com.google.android.gms.tasks.Task
+import vanson.dev.instagramclone.models.FeedPost
 import vanson.dev.instagramclone.models.User
 
 interface UsersRepository {
@@ -20,4 +21,7 @@ interface UsersRepository {
     fun getListImagesOfUser(uid: String): LiveData<List<String>>
     fun isUserExistsForEmail(email: String): Task<Boolean>
     fun createUser(user: User, password: String): Task<Unit>
+    fun uploadUserImage(uid: String, uriImage: Uri): Task<Uri>
+    fun setUserImage(uid: String, imageUri: Uri): Task<Unit>
+    fun createFeedPost(uid: String, feedPost: FeedPost): Task<Unit>
 }

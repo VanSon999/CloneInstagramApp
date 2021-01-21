@@ -3,10 +3,12 @@ package vanson.dev.instagramclone.repository.firebase
 import androidx.lifecycle.LiveData
 import com.google.android.gms.tasks.Task
 import vanson.dev.instagramclone.controllers.home.FeedPostLikes
+import vanson.dev.instagramclone.models.Comment
 import vanson.dev.instagramclone.models.FeedPost
 import vanson.dev.instagramclone.repository.FeedPostsRepository
 import vanson.dev.instagramclone.repository.common.liveData
 import vanson.dev.instagramclone.repository.common.mapCustom
+import vanson.dev.instagramclone.repository.firebase.common.asComment
 import vanson.dev.instagramclone.repository.firebase.common.asFeedPost
 import vanson.dev.instagramclone.repository.firebase.common.database
 import vanson.dev.instagramclone.repository.firebase.common.setValueTrueOrRemove
@@ -59,5 +61,11 @@ class FirebaseFeedPostsRepository : FeedPostsRepository {
             dataSnapshot.children.map { it.key!!}
         }
 
+    override fun createComment(postId: String, comment: Comment): Task<Unit> =
+        database.child("Comments").child(postId).push().setValue(comment).toUnit()
 
+    override fun getComments(postId: String): LiveData<List<Comment>> =
+        database.child("Comments").child(postId).liveData().mapCustom { dataSnapshot ->
+            dataSnapshot.children.map { it.asComment()!! }
+        }
 }

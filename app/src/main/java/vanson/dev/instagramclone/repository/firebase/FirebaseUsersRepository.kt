@@ -6,6 +6,7 @@ import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
+import vanson.dev.instagramclone.models.FeedPost
 import vanson.dev.instagramclone.models.User
 import vanson.dev.instagramclone.repository.UsersRepository
 import vanson.dev.instagramclone.repository.common.liveData
@@ -14,6 +15,7 @@ import vanson.dev.instagramclone.repository.firebase.common.asUser
 import vanson.dev.instagramclone.repository.firebase.common.auth
 import vanson.dev.instagramclone.repository.firebase.common.database
 import vanson.dev.instagramclone.repository.firebase.common.storage
+import vanson.dev.instagramclone.utilites.task
 import vanson.dev.instagramclone.utilites.toUnit
 
 class FirebaseUsersRepository : UsersRepository {
@@ -62,7 +64,7 @@ class FirebaseUsersRepository : UsersRepository {
             currentUser.reauthenticate(credentials).onSuccessTask {
                 currentUser.updateEmail(newEmail)
             }.toUnit()
-        }else{
+        } else {
             Tasks.forException<Unit>(IllegalStateException("User is not authenticated"))
         }
     }
@@ -81,7 +83,7 @@ class FirebaseUsersRepository : UsersRepository {
 
     override fun getListImagesOfUser(uid: String): LiveData<List<String>> =
         database.child("images").child(uid).liveData().mapCustom { dataSnapshot ->
-            dataSnapshot.children.map{it.getValue(String::class.java)!!}
+            dataSnapshot.children.map { it.getValue(String::class.java)!! }
         }
 
     override fun isUserExistsForEmail(email: String): Task<Boolean> =
@@ -94,6 +96,31 @@ class FirebaseUsersRepository : UsersRepository {
         auth.createUserWithEmailAndPassword(user.email, password).onSuccessTask {
             database.child("Users").child(it!!.user!!.uid).setValue(user)
         }.toUnit()
+
+    override fun uploadUserImage(uid: String, uriImage: Uri): Task<Uri> =
+        task { taskSource ->
+            storage.child("Users").child(uid).child("images").child(
+                uriImage.lastPathSegment!!
+            ).putFile(uriImage).continueWithTask { task ->
+                if (!task.isSuccessful) {
+                    error(task.exception!!.message!!)
+                }
+                storage.child("Users").child(uid).child("images")
+                    .child(uriImage.lastPathSegment!!).downloadUrl
+            }.addOnCompleteListener {
+                if (it.isSuccessful) {
+                    taskSource.setResult(it.result)
+                } else {
+                    taskSource.setException(it.exception!!)
+                }
+            }
+        }
+
+    override fun setUserImage(uid: String, imageUri: Uri): Task<Unit> =
+        database.child("images").child(uid).push().setValue(imageUri.toString()).toUnit()
+
+    override fun createFeedPost(uid: String, feedPost: FeedPost): Task<Unit> =
+        database.child("Feed-Posts").child(uid).push().setValue(feedPost).toUnit()
 
     private fun getFollowsRef(fromUid: String, toUid: String) =
         database.child("Users").child(fromUid).child("Follows").child(toUid)

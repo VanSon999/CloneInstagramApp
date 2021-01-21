@@ -2,19 +2,10 @@ package vanson.dev.instagramclone.controllers.register
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.Observer
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import vanson.dev.instagramclone.models.User
 import vanson.dev.instagramclone.R
 import vanson.dev.instagramclone.controllers.common.BaseActivity
-import vanson.dev.instagramclone.controllers.common.showToast
 import vanson.dev.instagramclone.controllers.home.HomeActivity
-import java.util.*
 
 class RegisterActivity : BaseActivity(), EmailFragment.Listener, NamePassFragment.Listener {
     private lateinit var mViewModel: RegisterViewModel

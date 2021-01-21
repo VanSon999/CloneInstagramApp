@@ -1,18 +1,23 @@
-package vanson.dev.instagramclone.controllers
+package vanson.dev.instagramclone.controllers.share
 
-import android.content.Intent
 import android.net.Uri
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.Tasks
-import kotlinx.android.synthetic.main.activity_share.*
-import vanson.dev.instagramclone.controllers.common.showToast
-import vanson.dev.instagramclone.controllers.profile.ProfileActivity
 import vanson.dev.instagramclone.models.FeedPost
 import vanson.dev.instagramclone.models.User
 import vanson.dev.instagramclone.repository.UsersRepository
+import vanson.dev.instagramclone.utilites.Event
 
-class ShareViewModel(private val usersRepo: UsersRepository, private val onFailureListener: OnFailureListener) : ViewModel() {
+class ShareViewModel(
+    private val usersRepo: UsersRepository,
+    private val onFailureListener: OnFailureListener
+) : ViewModel() {
+
+    private val _gotoProfileActivity = MutableLiveData<Event<Unit>>()
+    val gotoProfileActivity = _gotoProfileActivity
+
     val user = usersRepo.getUser()
 
     fun share(user: User, uriImage: Uri?, caption: String) {
@@ -20,8 +25,13 @@ class ShareViewModel(private val usersRepo: UsersRepository, private val onFailu
             usersRepo.uploadUserImage(user.uid, uriImage).onSuccessTask { downloadUrl ->
                 Tasks.whenAll(
                     usersRepo.setUserImage(user.uid, downloadUrl!!),
-                    usersRepo.createFeedPost(user.uid, mkFeedPost(user, caption, downloadUrl.toString()))
+                    usersRepo.createFeedPost(
+                        user.uid,
+                        mkFeedPost(user, caption, downloadUrl.toString())
+                    )
                 )
+            }.addOnCompleteListener {
+                _gotoProfileActivity.value = Event(Unit)
             }.addOnFailureListener(onFailureListener) // it is listener for both in and out uploadUserImage task
         }
     }

@@ -4,8 +4,10 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.tasks.OnFailureListener
+import vanson.dev.instagramclone.controllers.share.ShareViewModel
 import vanson.dev.instagramclone.controllers.login.LoginViewModel
 import vanson.dev.instagramclone.controllers.addfriends.AddFriendsViewModel
+import vanson.dev.instagramclone.controllers.comments.CommentsViewModel
 import vanson.dev.instagramclone.controllers.editprofile.EditProfileViewModel
 import vanson.dev.instagramclone.controllers.home.HomeViewModel
 import vanson.dev.instagramclone.controllers.profile.ProfileViewModel
@@ -48,6 +50,12 @@ class ViewModelFactory(
                 }
                 isAssignableFrom(RegisterViewModel::class.java) -> {
                     RegisterViewModel(app, usersRepo, commonViewModel, onFailureListener) as T
+                }
+                isAssignableFrom(ShareViewModel::class.java) -> {
+                    ShareViewModel(usersRepo, onFailureListener) as T
+                }
+                isAssignableFrom(CommentsViewModel::class.java) -> {
+                    CommentsViewModel(feedPostsRepo, usersRepo, onFailureListener) as T
                 }
                 else -> {
                     error("Unknown view model class $modelClass")

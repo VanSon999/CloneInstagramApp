@@ -2,17 +2,21 @@ package vanson.dev.instagramclone.controllers.common
 
 import android.app.Activity
 import android.content.Context
-import android.text.Editable
-import android.text.TextWatcher
+import android.graphics.Typeface
+import android.text.*
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.*
+import androidx.core.content.ContextCompat
 import vanson.dev.instagramclone.R
+import vanson.dev.instagramclone.utilites.formatRelativeTimestamp
+import java.util.*
 
 fun Context.showToast(text: String?, duration: Int = Toast.LENGTH_SHORT) {
-    text?.let {Toast.makeText(this, it, duration).show()}
+    text?.let { Toast.makeText(this, it, duration).show() }
 } //Context is abstract, it will be come context of activity that it be called
 
 fun determineStateBtn(btn: Button, vararg input: EditText) {
@@ -53,4 +57,44 @@ private fun View.ifNotDestroyed(block: () -> Unit) {
     if (!(context as Activity).isDestroyed) {
         block()
     }
+}
+
+fun TextView.setCaptionText(username: String, caption: String, date: Date? = null) {
+    val usernameSpannable = SpannableString(username)
+    usernameSpannable.setSpan(
+        StyleSpan(Typeface.BOLD),
+        0,
+        usernameSpannable.length,
+        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+    )
+    usernameSpannable.setSpan(object : ClickableSpan() {
+        override fun onClick(p0: View) {
+            p0.context.showToast("Username is clicked")
+        }
+
+        override fun updateDrawState(ds: TextPaint) {}
+    }, 0, usernameSpannable.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+    val dateSpannable = date?.let {
+        val dateText = formatRelativeTimestamp(date, Date())
+        val spannableString = SpannableString(dateText)
+        spannableString.setSpan(
+            ForegroundColorSpan(ContextCompat.getColor(context, R.color.gray)),
+            0,
+            dateText.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        spannableString
+    }
+    text = SpannableStringBuilder().apply {
+        append(usernameSpannable)
+        append(" ")
+        append(caption)
+        dateSpannable?.let{
+            append(" ")
+            append(it)
+        }
+    }
+    movementMethod = LinkMovementMethod.getInstance() // support for ClickableSpan()
 }

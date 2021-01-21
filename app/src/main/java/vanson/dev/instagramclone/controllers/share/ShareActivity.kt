@@ -1,17 +1,14 @@
-package vanson.dev.instagramclone.controllers
+package vanson.dev.instagramclone.controllers.share
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_share.*
-import vanson.dev.instagramclone.models.FeedPost
 import vanson.dev.instagramclone.models.User
 import vanson.dev.instagramclone.R
 import vanson.dev.instagramclone.controllers.common.*
-import vanson.dev.instagramclone.repository.common.FirebaseHelper
-import vanson.dev.instagramclone.utilites.ValueEventListenerAdapter
 import vanson.dev.instagramclone.controllers.profile.ProfileActivity
-import vanson.dev.instagramclone.repository.firebase.common.asUser
+import vanson.dev.instagramclone.repository.common.FirebaseHelper
 
 class ShareActivity : BaseActivity() {
     private lateinit var mViewModel: ShareViewModel
@@ -35,13 +32,19 @@ class ShareActivity : BaseActivity() {
                     mUser = it
                 }
             })
+
+            mViewModel.gotoProfileActivity.observe(this , Observer {
+                it.getContentIfNotHandled()?.let{
+                    startActivity(Intent(this, ProfileActivity::class.java))
+                    finish()
+                }
+            })
         }
 //        Log.d(tag, "onCreate: ${this.navNumber}")
     }
 
     private fun share() {
-        val uriImage = mCamera.mImageUri
-        mViewModel.share(mUser, uriImage, caption_input.text.toString())
+        mViewModel.share(mUser, mCamera.mImageUri, caption_input.text.toString())
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

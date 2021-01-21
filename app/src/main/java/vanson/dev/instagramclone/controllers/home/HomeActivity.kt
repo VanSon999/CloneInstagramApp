@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.acitivity_home.*
 import vanson.dev.instagramclone.R
 import vanson.dev.instagramclone.adapters.FeedAdapter
+import vanson.dev.instagramclone.controllers.comments.CommentsActivity
 import vanson.dev.instagramclone.controllers.common.BaseActivity
 import vanson.dev.instagramclone.controllers.common.setupAuthGuard
 import vanson.dev.instagramclone.views.setupBottomNavigation
@@ -30,6 +31,12 @@ class HomeActivity : BaseActivity(), FeedAdapter.Listener {
                     mAdapter.updatePosts(it)
                 }
             })
+
+            mViewModel.gotoCommentScreen.observe(this , Observer { event_it ->
+                event_it.getContentIfNotHandled()?.let{
+                     CommentsActivity.start(this ,it)
+                }
+            })
         }
     }
 
@@ -45,6 +52,10 @@ class HomeActivity : BaseActivity(), FeedAdapter.Listener {
                 }
             })
         }
+    }
+
+    override fun openComments(id: String) {
+        mViewModel.openComments(id)
     }
 
     companion object {

@@ -21,6 +21,7 @@ import vanson.dev.instagramclone.models.FeedPost
 import vanson.dev.instagramclone.R
 import vanson.dev.instagramclone.controllers.common.loadImage
 import vanson.dev.instagramclone.controllers.common.loadUserPhoto
+import vanson.dev.instagramclone.controllers.common.setCaptionText
 import vanson.dev.instagramclone.controllers.common.showToast
 import vanson.dev.instagramclone.utilites.SimpleCallback
 
@@ -29,6 +30,7 @@ class FeedAdapter(private val listener: Listener) :
     interface Listener {
         fun toggleLike(postId: String)
         fun loadLikes(postId: String, position: Int)
+        fun openComments(id: String)
     }
 
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)
@@ -65,28 +67,9 @@ class FeedAdapter(private val listener: Listener) :
             caption_text.setCaptionText(post.username, post.caption)
             like_image.setOnClickListener { listener.toggleLike(post.id) }
             like_image.setImageResource(if (likes.likeByUser) R.drawable.ic_likes_active else R.drawable.ic_favorite_boder)
+            comment_image.setOnClickListener { listener.openComments(post.id) }
             listener.loadLikes(post.id, position)
         }
-    }
-
-    private fun TextView.setCaptionText(username: String, caption: String) {
-        val usernameSpannable = SpannableString(username)
-        usernameSpannable.setSpan(
-            StyleSpan(Typeface.BOLD),
-            0,
-            usernameSpannable.length,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-        usernameSpannable.setSpan(object : ClickableSpan() {
-            override fun onClick(p0: View) {
-                p0.context.showToast("Username is clicked")
-            }
-
-            override fun updateDrawState(ds: TextPaint) {}
-        }, 0, usernameSpannable.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-
-        text = SpannableStringBuilder().append(usernameSpannable).append(" ").append(caption)
-        movementMethod = LinkMovementMethod.getInstance() // support for ClickableSpan()
     }
 
     fun updatePostLikes(position: Int, Likes: FeedPostLikes) {
