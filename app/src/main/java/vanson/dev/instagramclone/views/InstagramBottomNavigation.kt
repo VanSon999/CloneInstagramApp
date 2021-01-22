@@ -39,7 +39,7 @@ class InstagramBottomNavigation(
         bnv.setOnNavigationItemSelectedListener {
             val nextActivity = when (it.itemId) {
                 R.id.nav_ic_home -> HomeActivity::class.java
-                R.id.nav_ic_likes -> LikesActivity::class.java
+                R.id.nav_ic_likes -> NotificationsActivity::class.java
                 R.id.nav_ic_search -> SearchActivity::class.java
                 R.id.nav_ic_share -> ShareActivity::class.java
                 R.id.nav_ic_profile -> ProfileActivity::class.java

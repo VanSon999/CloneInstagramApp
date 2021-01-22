@@ -6,10 +6,10 @@ import vanson.dev.instagramclone.controllers.common.BaseActivity
 import vanson.dev.instagramclone.controllers.common.setupAuthGuard
 import vanson.dev.instagramclone.views.setupBottomNavigation
 
-class LikesActivity : BaseActivity() {
+class NotificationsActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile)
+        setContentView(R.layout.activity_notifications)
 
         setupBottomNavigation(3)
 //        Log.d(TAG, "onCreate: ${this.navNumber}")
