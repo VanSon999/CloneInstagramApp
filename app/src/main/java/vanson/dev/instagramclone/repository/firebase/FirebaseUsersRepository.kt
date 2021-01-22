@@ -119,9 +119,6 @@ class FirebaseUsersRepository : UsersRepository {
     override fun setUserImage(uid: String, imageUri: Uri): Task<Unit> =
         database.child("images").child(uid).push().setValue(imageUri.toString()).toUnit()
 
-    override fun createFeedPost(uid: String, feedPost: FeedPost): Task<Unit> =
-        database.child("Feed-Posts").child(uid).push().setValue(feedPost).toUnit()
-
     private fun getFollowsRef(fromUid: String, toUid: String) =
         database.child("Users").child(fromUid).child("Follows").child(toUid)
 

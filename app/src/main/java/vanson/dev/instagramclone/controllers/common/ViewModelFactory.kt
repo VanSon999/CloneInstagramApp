@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.tasks.OnFailureListener
+import vanson.dev.instagramclone.controllers.InstagramApp
 import vanson.dev.instagramclone.controllers.share.ShareViewModel
 import vanson.dev.instagramclone.controllers.login.LoginViewModel
 import vanson.dev.instagramclone.controllers.addfriends.AddFriendsViewModel
@@ -19,16 +20,16 @@ import vanson.dev.instagramclone.utilites.firebase.FirebaseAuthManager
 
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory(
-    private val app: Application,
+    private val app: InstagramApp,
     private val commonViewModel: CommonViewModel,
     private val onFailureListener: OnFailureListener
 ) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         with(modelClass) {
-            val usersRepo by lazy { FirebaseUsersRepository() }
-            val feedPostsRepo by lazy { FirebaseFeedPostsRepository() }
-            val authManger by lazy { FirebaseAuthManager() }
+            val usersRepo = app.usersRepo
+            val feedPostsRepo = app.feedPostsRepo
+            val authManger = app.authManger
             return when {
                 isAssignableFrom(AddFriendsViewModel::class.java) -> {
                     AddFriendsViewModel(onFailureListener, usersRepo, feedPostsRepo) as T
@@ -52,7 +53,7 @@ class ViewModelFactory(
                     RegisterViewModel(app, usersRepo, commonViewModel, onFailureListener) as T
                 }
                 isAssignableFrom(ShareViewModel::class.java) -> {
-                    ShareViewModel(usersRepo, onFailureListener) as T
+                    ShareViewModel(usersRepo, feedPostsRepo, onFailureListener) as T
                 }
                 isAssignableFrom(CommentsViewModel::class.java) -> {
                     CommentsViewModel(feedPostsRepo, usersRepo, onFailureListener) as T

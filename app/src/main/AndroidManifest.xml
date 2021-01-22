@@ -11,6 +11,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:name=".controllers.InstagramApp"
         android:theme="@style/Theme.InstagramClone">
         <activity android:name=".controllers.editprofile.EditProfileActivity" />
         <activity android:name=".controllers.home.HomeActivity">

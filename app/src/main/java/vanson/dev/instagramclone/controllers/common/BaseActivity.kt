@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import vanson.dev.instagramclone.controllers.InstagramApp
 import vanson.dev.instagramclone.controllers.login.LoginActivity
 
 abstract class BaseActivity : AppCompatActivity() {
@@ -24,7 +25,7 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     protected inline fun <reified T : BaseViewModel> initViewModel(): T =
-        ViewModelProvider(this, ViewModelFactory(application, commonViewModel, commonViewModel)).get(T::class.java)
+        ViewModelProvider(this, ViewModelFactory(application as InstagramApp, commonViewModel, commonViewModel)).get(T::class.java)
 
     fun goToLogin() {
         startActivity(Intent(this, LoginActivity::class.java))

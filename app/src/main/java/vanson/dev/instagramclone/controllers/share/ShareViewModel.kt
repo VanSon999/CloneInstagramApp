@@ -8,11 +8,13 @@ import com.google.android.gms.tasks.Tasks
 import vanson.dev.instagramclone.controllers.common.BaseViewModel
 import vanson.dev.instagramclone.models.FeedPost
 import vanson.dev.instagramclone.models.User
+import vanson.dev.instagramclone.repository.FeedPostsRepository
 import vanson.dev.instagramclone.repository.UsersRepository
 import vanson.dev.instagramclone.utilites.Event
 
 class ShareViewModel(
     private val usersRepo: UsersRepository,
+    private val feedPostRepo: FeedPostsRepository,
     onFailureListener: OnFailureListener
 ) : BaseViewModel(onFailureListener) {
 
@@ -26,7 +28,7 @@ class ShareViewModel(
             usersRepo.uploadUserImage(user.uid, uriImage).onSuccessTask { downloadUrl ->
                 Tasks.whenAll(
                     usersRepo.setUserImage(user.uid, downloadUrl!!),
-                    usersRepo.createFeedPost(
+                    feedPostRepo.createFeedPost(
                         user.uid,
                         mkFeedPost(user, caption, downloadUrl.toString())
                     )

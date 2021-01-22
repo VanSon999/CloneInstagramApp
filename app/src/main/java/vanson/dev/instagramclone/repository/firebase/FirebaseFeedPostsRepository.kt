@@ -15,6 +15,9 @@ import vanson.dev.instagramclone.repository.firebase.common.setValueTrueOrRemove
 import vanson.dev.instagramclone.utilites.*
 
 class FirebaseFeedPostsRepository : FeedPostsRepository {
+    override fun createFeedPost(uid: String, feedPost: FeedPost): Task<Unit> =
+        database.child("Feed-Posts").child(uid).push().setValue(feedPost).toUnit()
+
     override fun copyFeedPosts(postsAuthorUid: String, uid: String): Task<Unit> =
         task<Unit> { taskSource ->
             database.child("Feed-Posts").child(postsAuthorUid)
@@ -58,7 +61,7 @@ class FirebaseFeedPostsRepository : FeedPostsRepository {
 
     override fun getLikes(postId: String): LiveData<List<String>> =
         database.child("likes").child(postId).liveData().mapCustom { dataSnapshot ->
-            dataSnapshot.children.map { it.key!!}
+            dataSnapshot.children.map { it.key!! }
         }
 
     override fun createComment(postId: String, comment: Comment): Task<Unit> =
