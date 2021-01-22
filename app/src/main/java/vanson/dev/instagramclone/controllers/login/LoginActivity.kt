@@ -17,7 +17,6 @@ import vanson.dev.instagramclone.controllers.common.setupAuthGuard
 import vanson.dev.instagramclone.controllers.home.HomeActivity
 
 class LoginActivity : BaseActivity(), KeyboardVisibilityEventListener, View.OnClickListener {
-    private lateinit var mAuth: FirebaseAuth
     private lateinit var mViewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,21 +29,18 @@ class LoginActivity : BaseActivity(), KeyboardVisibilityEventListener, View.OnCl
         determineStateBtn(login_btn, email_login, password_login)
         create_account_text.setOnClickListener(this)
         Log.d(tag, "onCreate: LoginActivity")
-        setupAuthGuard {
-            mViewModel = initViewModel()
-            mViewModel.gotoHomeScreen.observe(this, Observer {
-                it.getContentIfNotHandled()?.let {
-                    startActivity(Intent(this, HomeActivity::class.java))
-                    finish()
-                }
-            })
-            mViewModel.gotoRegisterScreen.observe(this, Observer{
-                it.getContentIfNotHandled()?.let {
-                    startActivity(Intent(this, RegisterActivity::class.java))
-                }
-            })
-            mAuth = FirebaseAuth.getInstance()
-        }
+        mViewModel = initViewModel()
+        mViewModel.gotoHomeScreen.observe(this, Observer {
+            it.getContentIfNotHandled()?.let {
+                startActivity(Intent(this, HomeActivity::class.java))
+                finish()
+            }
+        })
+        mViewModel.gotoRegisterScreen.observe(this, Observer {
+            it.getContentIfNotHandled()?.let {
+                startActivity(Intent(this, RegisterActivity::class.java))
+            }
+        })
     }
 
     override fun onVisibilityChanged(isOpen: Boolean) {

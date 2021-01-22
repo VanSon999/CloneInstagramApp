@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.activity_comments.*
 import vanson.dev.instagramclone.R
 import vanson.dev.instagramclone.adapters.CommentsAdapter
 import vanson.dev.instagramclone.controllers.common.BaseActivity
+import vanson.dev.instagramclone.controllers.common.loadUserPhoto
 import vanson.dev.instagramclone.controllers.common.setupAuthGuard
 import vanson.dev.instagramclone.models.User
 
@@ -30,6 +31,7 @@ class CommentsActivity : BaseActivity() {
             viewModel.user.observe(this, Observer {
                 it?.let {
                     mUser = it
+                    icon_author.loadUserPhoto(mUser.photo)
                 }
             })
             viewModel.init(postId)

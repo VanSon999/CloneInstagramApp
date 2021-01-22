@@ -60,6 +60,7 @@
         android:background="@drawable/top_border_grey">
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/icon_author"
             style="@style/icon"
             android:src="@drawable/person"/>
 

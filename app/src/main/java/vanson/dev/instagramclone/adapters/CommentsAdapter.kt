@@ -12,19 +12,20 @@ import vanson.dev.instagramclone.controllers.common.setCaptionText
 import vanson.dev.instagramclone.models.Comment
 import vanson.dev.instagramclone.utilites.SimpleCallback
 
-class CommentsAdapter : RecyclerView.Adapter<CommentsAdapter.ViewHolder>(){
+class CommentsAdapter : RecyclerView.Adapter<CommentsAdapter.ViewHolder>() {
     private var comments: List<Comment> = listOf()
 
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.comments_item, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.comments_item, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val comment = comments[position]
-        with(holder.view){
+        with(holder.view) {
             photo.loadUserPhoto(comment.photo)
             text.setCaptionText(comment.username, comment.text, comment.timestampDate())
         }
@@ -33,7 +34,8 @@ class CommentsAdapter : RecyclerView.Adapter<CommentsAdapter.ViewHolder>(){
     override fun getItemCount(): Int = comments.size
 
     fun updateComments(newComments: List<Comment>) {
-        val diffResult = DiffUtil.calculateDiff(SimpleCallback(comments, newComments){it.id})
+        val diffResult = DiffUtil.calculateDiff(SimpleCallback(comments, newComments) { it.id })
+        comments = newComments
         diffResult.dispatchUpdatesTo(this)
     }
 
