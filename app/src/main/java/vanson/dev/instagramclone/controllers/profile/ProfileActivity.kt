@@ -47,12 +47,16 @@ class ProfileActivity : BaseActivity() {
                 it?.let {
                     profile_image.loadUserPhoto(it.photo)
                     username_text.text = it.username
+                    followers_count_text.text = it.Followers.size.toString()
+                    following_count_text.text = it.Follows.size.toString()
+
                 }
             })
 
             mViewModel.images.observe(this, Observer {
                 it?.let {
                     mAdapter.updateImages(it)//images
+                    posts_count_text.text = it.size.toString()
                 }
             })
         }

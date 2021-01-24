@@ -35,7 +35,7 @@ class ShareActivity : BaseActivity() {
 
             mViewModel.gotoProfileActivity.observe(this , Observer {
                 it.getContentIfNotHandled()?.let{
-                    startActivity(Intent(this, ProfileActivity::class.java))
+//                    startActivity(Intent(this, ProfileActivity::class.java))
                     finish()
                 }
             })
