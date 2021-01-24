@@ -8,7 +8,7 @@ import vanson.dev.instagramclone.controllers.common.BaseViewModel
 import vanson.dev.instagramclone.controllers.common.CommonViewModel
 import vanson.dev.instagramclone.models.User
 import vanson.dev.instagramclone.repository.UsersRepository
-import vanson.dev.instagramclone.utilites.Event
+import vanson.dev.instagramclone.utilites.EventWrapper
 import java.util.*
 
 class RegisterViewModel(
@@ -18,13 +18,13 @@ class RegisterViewModel(
     onFailureListener: OnFailureListener
 ) : BaseViewModel(onFailureListener) {
     private var email: String? = null
-    private val _gotoNamePassScreen = MutableLiveData<Event<Unit>>()
+    private val _gotoNamePassScreen = MutableLiveData<EventWrapper<Unit>>()
     val gotoNamePassScreen = _gotoNamePassScreen
 
-    private val _gotoHomeScreen =  MutableLiveData<Event<Unit>>()
+    private val _gotoHomeScreen =  MutableLiveData<EventWrapper<Unit>>()
     val gotoHomeScreen = _gotoHomeScreen
 
-    private val _goBackToEmailScreen =  MutableLiveData<Event<Unit>>()
+    private val _goBackToEmailScreen =  MutableLiveData<EventWrapper<Unit>>()
     val goBackToEmailScreen = _goBackToEmailScreen
 
     fun onEmailEntered(email: String) {
@@ -32,7 +32,7 @@ class RegisterViewModel(
             this.email = email
             usersRepo.isUserExistsForEmail(email).addOnSuccessListener { exists ->
                 if (!exists) {
-                    _gotoNamePassScreen.value = Event(Unit)
+                    _gotoNamePassScreen.value = EventWrapper(Unit)
                 } else {
                     commonViewModel.setErrorMessage(app.getString(R.string.email_already_exists))
                 }
@@ -47,11 +47,11 @@ class RegisterViewModel(
             val localEmail = email
             if (localEmail != null) { //check again because mEmail can be change with var!
                 usersRepo.createUser(mUser(fullName, localEmail), password).addOnSuccessListener {
-                    _gotoHomeScreen.value = Event(Unit)
+                    _gotoHomeScreen.value = EventWrapper(Unit)
                 }.addOnFailureListener(onFailureListener)
             } else {
                 commonViewModel.setErrorMessage(app.getString(R.string.please_enter_email))
-                _goBackToEmailScreen.value = Event(Unit) // back to EmailFragment
+                _goBackToEmailScreen.value = EventWrapper(Unit) // back to EmailFragment
             }
         } else {
             commonViewModel.setErrorMessage(app.getString(R.string.please_enter_fullname_pass))

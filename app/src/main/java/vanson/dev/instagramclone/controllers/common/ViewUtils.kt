@@ -52,6 +52,13 @@ fun ImageView.loadUserPhoto(photoUrl: String?) =
 fun ImageView.loadImage(urlImage: String?) =
     ifNotDestroyed { GlideApp.with(this).load(urlImage).centerCrop().into(this) }
 
+fun ImageView.loadImageOrHide(image: String?) =
+    if(image != null){
+        visibility = View.VISIBLE
+        loadImage(image)
+    }else{
+        visibility = View.GONE
+    }
 
 private fun View.ifNotDestroyed(block: () -> Unit) {
     if (!(context as Activity).isDestroyed) {

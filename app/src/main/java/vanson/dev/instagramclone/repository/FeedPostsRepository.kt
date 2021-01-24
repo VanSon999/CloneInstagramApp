@@ -15,4 +15,5 @@ interface FeedPostsRepository {
     fun getComments(postId: String): LiveData<List<Comment>>
     fun createComment(postId: String, comment: Comment): Task<Unit>
     fun createFeedPost(uid: String, feedPost: FeedPost): Task<Unit>
+    fun getFeedPost(uid: String, postId: String): LiveData<FeedPost>
 }

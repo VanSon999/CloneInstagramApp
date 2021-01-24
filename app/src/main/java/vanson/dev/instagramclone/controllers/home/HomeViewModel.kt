@@ -7,13 +7,13 @@ import vanson.dev.instagramclone.controllers.common.BaseViewModel
 import vanson.dev.instagramclone.models.FeedPost
 import vanson.dev.instagramclone.repository.FeedPostsRepository
 import vanson.dev.instagramclone.repository.common.mapCustom
-import vanson.dev.instagramclone.utilites.Event
+import vanson.dev.instagramclone.utilites.EventWrapper
 
 class HomeViewModel(
     onFailureListener: OnFailureListener,
     private val feedPostsRepo: FeedPostsRepository
 ) : BaseViewModel(onFailureListener) {
-    private val _gotoCommentScreen = MutableLiveData<Event<String>>()
+    private val _gotoCommentScreen = MutableLiveData<EventWrapper<String>>()
     val gotoCommentScreen = _gotoCommentScreen
     lateinit var uid: String
     lateinit var feedPosts: LiveData<List<FeedPost>>
@@ -47,7 +47,7 @@ class HomeViewModel(
     }
 
     fun openComments(postId: String) {
-        _gotoCommentScreen.value = Event(postId)
+        _gotoCommentScreen.value = EventWrapper(postId)
     }
 
 }

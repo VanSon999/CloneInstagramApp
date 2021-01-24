@@ -2,16 +2,13 @@ package vanson.dev.instagramclone.repository.firebase
 
 import androidx.lifecycle.LiveData
 import com.google.android.gms.tasks.Task
-import vanson.dev.instagramclone.controllers.home.FeedPostLikes
+import com.google.firebase.database.DataSnapshot
 import vanson.dev.instagramclone.models.Comment
 import vanson.dev.instagramclone.models.FeedPost
 import vanson.dev.instagramclone.repository.FeedPostsRepository
 import vanson.dev.instagramclone.repository.common.liveData
 import vanson.dev.instagramclone.repository.common.mapCustom
-import vanson.dev.instagramclone.repository.firebase.common.asComment
-import vanson.dev.instagramclone.repository.firebase.common.asFeedPost
 import vanson.dev.instagramclone.repository.firebase.common.database
-import vanson.dev.instagramclone.repository.firebase.common.setValueTrueOrRemove
 import vanson.dev.instagramclone.utilites.*
 
 class FirebaseFeedPostsRepository : FeedPostsRepository {
@@ -32,7 +29,7 @@ class FirebaseFeedPostsRepository : FeedPostsRepository {
         }
 
     override fun deleteFeedPosts(postsAuthorUid: String, uid: String): Task<Unit> =
-        task<Unit> { taskSource ->
+        task { taskSource ->
             database.child("Feed-Posts").child(uid)
                 .orderByChild("uid")
                 .equalTo(postsAuthorUid)
@@ -44,6 +41,11 @@ class FirebaseFeedPostsRepository : FeedPostsRepository {
                 })
         }
 
+    override fun getFeedPost(uid: String, postId: String): LiveData<FeedPost> =
+        database.child("Feed-Posts").child(uid).child(postId).liveData().mapCustom { dataSnapshot ->
+            dataSnapshot.asFeedPost()!!
+        }
+
     override fun getFeedPosts(uid: String): LiveData<List<FeedPost>> =
         database.child("Feed-Posts").child(uid).liveData().mapCustom { dataSnapshot ->
             dataSnapshot.children.map { it.asFeedPost()!! }
@@ -52,8 +54,13 @@ class FirebaseFeedPostsRepository : FeedPostsRepository {
     override fun toggleLike(postId: String, uid: String): Task<Unit> {
         val reference = database.child("likes").child(postId).child(uid)
         return task { taskSource ->
-            reference.addListenerForSingleValueEvent(ValueEventListenerAdapter {
-                reference.setValueTrueOrRemove(!it.exists())
+            reference.addListenerForSingleValueEvent(ValueEventListenerAdapter { like ->
+                if(!like.exists()){
+                    reference.setValue(true)
+                    EventBus.publish(Event.CreateLike(postId, uid))
+                }else{
+                    reference.removeValue()
+                }
             })
             taskSource.setResult(Unit)
         }
@@ -65,10 +72,15 @@ class FirebaseFeedPostsRepository : FeedPostsRepository {
         }
 
     override fun createComment(postId: String, comment: Comment): Task<Unit> =
-        database.child("Comments").child(postId).push().setValue(comment).toUnit()
+        database.child("Comments").child(postId).push().setValue(comment).toUnit().addOnSuccessListener {
+            EventBus.publish(Event.CreateComment(postId, comment))
+        }
 
     override fun getComments(postId: String): LiveData<List<Comment>> =
         database.child("Comments").child(postId).liveData().mapCustom { dataSnapshot ->
             dataSnapshot.children.map { it.asComment()!! }
         }
+
+    private fun DataSnapshot.asFeedPost(): FeedPost? = getValue(FeedPost::class.java)?.copy(id = key.toString())
+    private fun DataSnapshot.asComment(): Comment? = getValue(Comment::class.java)?.copy(id = key.toString())
 }

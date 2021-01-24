@@ -29,4 +29,6 @@ class CommentsViewModel(private val feedPostsRepo: FeedPostsRepository,
 
         feedPostsRepo.createComment(postId, comment).addOnFailureListener(onFailureListener)
     }
+
+
 }

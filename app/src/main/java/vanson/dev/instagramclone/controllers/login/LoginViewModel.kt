@@ -8,7 +8,7 @@ import vanson.dev.instagramclone.R
 import vanson.dev.instagramclone.controllers.common.BaseViewModel
 import vanson.dev.instagramclone.controllers.common.CommonViewModel
 import vanson.dev.instagramclone.utilites.AuthManager
-import vanson.dev.instagramclone.utilites.Event
+import vanson.dev.instagramclone.utilites.EventWrapper
 
 class LoginViewModel(
     private val authManager: AuthManager,
@@ -16,17 +16,17 @@ class LoginViewModel(
     private val commonViewModel: CommonViewModel,
     onFailureListener: OnFailureListener
 ) : BaseViewModel(onFailureListener) {
-    private val _gotoHomeScreen = MutableLiveData<Event<Unit>>() // handle problem 1 time active
-    val gotoHomeScreen: LiveData<Event<Unit>> = _gotoHomeScreen
+    private val _gotoHomeScreen = MutableLiveData<EventWrapper<Unit>>() // handle problem 1 time active
+    val gotoHomeScreen: LiveData<EventWrapper<Unit>> = _gotoHomeScreen
 
-    private val _gotoRegisterScreen = MutableLiveData<Event<Unit>>()
-    val gotoRegisterScreen: LiveData<Event<Unit>> = _gotoRegisterScreen
+    private val _gotoRegisterScreen = MutableLiveData<EventWrapper<Unit>>()
+    val gotoRegisterScreen: LiveData<EventWrapper<Unit>> = _gotoRegisterScreen
 
     fun onLoginClick(email: String, password: String) {
         if (validate(email, password)) {
             authManager.signIn(email, password)
                 .addOnSuccessListener {
-                    _gotoHomeScreen.value = Event(Unit)
+                    _gotoHomeScreen.value = EventWrapper(Unit)
                 }
                 .addOnFailureListener(onFailureListener)
         } else {
@@ -38,6 +38,6 @@ class LoginViewModel(
         email.isNotEmpty() && password.isNotEmpty()
 
     fun onRegisterClick() {
-        _gotoRegisterScreen.value = Event(Unit)
+        _gotoRegisterScreen.value = EventWrapper(Unit)
     }
 }

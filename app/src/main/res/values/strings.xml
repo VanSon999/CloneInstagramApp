@@ -48,6 +48,9 @@
     <string name="add_a_comment">Add a comment</string>
     <string name="lorem_ip_sum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dignissim suspendisse in est ante in nibh mauris cursus mattis. Sit amet mauris commodo quis imperdiet massa tincidunt nunc. Tellus molestie nunc non blandit massa enim nec. Quis viverra nibh cras pulvinar mattis nunc. Nibh tortor id aliquet lectus proin nibh nisl condimentum id. Natoque penatibus et magnis dis. Fringilla ut morbi tincidunt augue interdum velit. Viverra nibh cras pulvinar mattis nunc. Ut tortor pretium viverra suspendisse potenti nullam ac tortor vitae. A cras semper auctor neque vitae tempus quam pellentesque nec. Quis commodo odio aenean sed adipiscing. Quam pellentesque nec nam aliquam sem et tortor. Vitae suscipit tellus mauris a. Posuere ac ut consequat semper viverra nam libero.</string>
     <string name="notifications">Notifications</string>
+    <string name="liked_your_post">Liked your post</string>
+    <string name="started_following_your">Started following you</string>
+    <string name="commented">Commented: %s</string>
 
     <plurals name="likes_count">
         <item quantity="one">%d like</item>

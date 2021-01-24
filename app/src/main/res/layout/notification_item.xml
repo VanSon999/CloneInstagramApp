@@ -23,7 +23,7 @@
         android:layout_marginTop="10dp"
         tools:text="@string/lorem_ip_sum"/>
 
-    <TextView
+    <ImageView
         android:id="@+id/post_image"
         style="@style/icon"
         app:layout_constraintEnd_toEndOf="parent"

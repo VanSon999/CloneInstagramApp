@@ -6,20 +6,23 @@ import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
-import vanson.dev.instagramclone.models.FeedPost
+import com.google.firebase.database.DataSnapshot
 import vanson.dev.instagramclone.models.User
 import vanson.dev.instagramclone.repository.UsersRepository
 import vanson.dev.instagramclone.repository.common.liveData
 import vanson.dev.instagramclone.repository.common.mapCustom
-import vanson.dev.instagramclone.repository.firebase.common.asUser
 import vanson.dev.instagramclone.repository.firebase.common.auth
 import vanson.dev.instagramclone.repository.firebase.common.database
 import vanson.dev.instagramclone.repository.firebase.common.storage
+import vanson.dev.instagramclone.utilites.Event
+import vanson.dev.instagramclone.utilites.EventBus
 import vanson.dev.instagramclone.utilites.task
 import vanson.dev.instagramclone.utilites.toUnit
 
 class FirebaseUsersRepository : UsersRepository {
-    override fun getUser(): LiveData<User> =
+    override fun getUser(): LiveData<User> = getUser(currentUid()!!)
+
+    override fun getUser(uid: String): LiveData<User> =
         database.child("Users").child(currentUid()!!).liveData().mapCustom {
             it.asUser()!!
         }
@@ -31,7 +34,9 @@ class FirebaseUsersRepository : UsersRepository {
 
 
     override fun addFollow(fromUid: String, toUid: String): Task<Unit> =
-        getFollowsRef(fromUid, toUid).setValue(true).toUnit()
+        getFollowsRef(fromUid, toUid).setValue(true).toUnit().addOnSuccessListener {
+            EventBus.publish(Event.CreateFollow(fromUid, toUid))
+        }
 
 
     override fun deleteFollow(fromUid: String, toUid: String): Task<Unit> =
@@ -126,4 +131,6 @@ class FirebaseUsersRepository : UsersRepository {
         database.child("Users").child(toUid).child("Followers").child(fromUid)
 
     override fun currentUid(): String? = FirebaseAuth.getInstance().currentUser?.uid
+
+    private fun DataSnapshot.asUser(): User? = getValue(User::class.java)?.copy(uid = key.toString())
 }

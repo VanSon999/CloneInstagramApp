@@ -1,22 +1,19 @@
 package vanson.dev.instagramclone.controllers.common
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.tasks.OnFailureListener
 import vanson.dev.instagramclone.controllers.InstagramApp
-import vanson.dev.instagramclone.controllers.share.ShareViewModel
-import vanson.dev.instagramclone.controllers.login.LoginViewModel
 import vanson.dev.instagramclone.controllers.addfriends.AddFriendsViewModel
 import vanson.dev.instagramclone.controllers.comments.CommentsViewModel
 import vanson.dev.instagramclone.controllers.editprofile.EditProfileViewModel
 import vanson.dev.instagramclone.controllers.home.HomeViewModel
+import vanson.dev.instagramclone.controllers.login.LoginViewModel
+import vanson.dev.instagramclone.controllers.notification.NotificationsViewModel
 import vanson.dev.instagramclone.controllers.profile.ProfileViewModel
 import vanson.dev.instagramclone.controllers.profilesettings.ProfileSettingViewModel
 import vanson.dev.instagramclone.controllers.register.RegisterViewModel
-import vanson.dev.instagramclone.repository.firebase.FirebaseFeedPostsRepository
-import vanson.dev.instagramclone.repository.firebase.FirebaseUsersRepository
-import vanson.dev.instagramclone.utilites.firebase.FirebaseAuthManager
+import vanson.dev.instagramclone.controllers.share.ShareViewModel
 
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory(
@@ -30,6 +27,7 @@ class ViewModelFactory(
             val usersRepo = app.usersRepo
             val feedPostsRepo = app.feedPostsRepo
             val authManger = app.authManger
+            val notificationsRepo = app.notificationsRepo
             return when {
                 isAssignableFrom(AddFriendsViewModel::class.java) -> {
                     AddFriendsViewModel(onFailureListener, usersRepo, feedPostsRepo) as T
@@ -57,6 +55,9 @@ class ViewModelFactory(
                 }
                 isAssignableFrom(CommentsViewModel::class.java) -> {
                     CommentsViewModel(feedPostsRepo, usersRepo, onFailureListener) as T
+                }
+                isAssignableFrom(NotificationsViewModel::class.java) -> {
+                    NotificationsViewModel(notificationsRepo, onFailureListener) as T
                 }
                 else -> {
                     error("Unknown view model class $modelClass")

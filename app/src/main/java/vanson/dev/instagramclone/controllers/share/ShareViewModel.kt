@@ -2,7 +2,6 @@ package vanson.dev.instagramclone.controllers.share
 
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.Tasks
 import vanson.dev.instagramclone.controllers.common.BaseViewModel
@@ -10,7 +9,7 @@ import vanson.dev.instagramclone.models.FeedPost
 import vanson.dev.instagramclone.models.User
 import vanson.dev.instagramclone.repository.FeedPostsRepository
 import vanson.dev.instagramclone.repository.UsersRepository
-import vanson.dev.instagramclone.utilites.Event
+import vanson.dev.instagramclone.utilites.EventWrapper
 
 class ShareViewModel(
     private val usersRepo: UsersRepository,
@@ -18,7 +17,7 @@ class ShareViewModel(
     onFailureListener: OnFailureListener
 ) : BaseViewModel(onFailureListener) {
 
-    private val _gotoProfileActivity = MutableLiveData<Event<Unit>>()
+    private val _gotoProfileActivity = MutableLiveData<EventWrapper<Unit>>()
     val gotoProfileActivity = _gotoProfileActivity
 
     val user = usersRepo.getUser()
@@ -34,7 +33,7 @@ class ShareViewModel(
                     )
                 )
             }.addOnCompleteListener {
-                _gotoProfileActivity.value = Event(Unit)
+                _gotoProfileActivity.value = EventWrapper(Unit)
             }.addOnFailureListener(onFailureListener) // it is listener for both in and out uploadUserImage task
         }
     }
