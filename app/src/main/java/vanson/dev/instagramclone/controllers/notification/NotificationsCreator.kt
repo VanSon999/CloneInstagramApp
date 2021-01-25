@@ -14,6 +14,7 @@ import vanson.dev.instagramclone.repository.NotificationsRepository
 import vanson.dev.instagramclone.repository.UsersRepository
 import vanson.dev.instagramclone.repository.common.observeFirstNotNull
 import vanson.dev.instagramclone.repository.common.zip
+import vanson.dev.instagramclone.utilites.BaseEventListener
 import vanson.dev.instagramclone.utilites.Event
 import vanson.dev.instagramclone.utilites.EventBus
 
@@ -21,13 +22,10 @@ class NotificationsCreator(
     private val notificationsRepo: NotificationsRepository,
     private val usersRepo: UsersRepository,
     private val feedPostsRepo: FeedPostsRepository
-) : LifecycleOwner {
+) : BaseEventListener() {
 
-    private val lifecycleRegistry = LifecycleRegistry(this)
 
     init {
-        lifecycleRegistry.currentState = Lifecycle.State.CREATED
-        lifecycleRegistry.currentState = Lifecycle.State.STARTED //specify that: Only work when app at started state
         EventBus.events.observe(this, Observer { event_ ->
             event_?.let { event ->
                 when (event) {
@@ -85,13 +83,12 @@ class NotificationsCreator(
                                 }
                         }
                     }
+                    is Event.CreateSearchPost -> {
+                    }
                 }
             }
         })
     }
-
-    
-    override fun getLifecycle(): Lifecycle = lifecycleRegistry
 
     companion object {
         const val TAG = "NotificationsCreator"

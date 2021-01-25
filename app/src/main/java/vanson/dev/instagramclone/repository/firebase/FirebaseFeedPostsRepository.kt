@@ -12,8 +12,12 @@ import vanson.dev.instagramclone.repository.firebase.common.database
 import vanson.dev.instagramclone.utilites.*
 
 class FirebaseFeedPostsRepository : FeedPostsRepository {
-    override fun createFeedPost(uid: String, feedPost: FeedPost): Task<Unit> =
-        database.child("Feed-Posts").child(uid).push().setValue(feedPost).toUnit()
+    override fun createFeedPost(uid: String, feedPost: FeedPost): Task<Unit> {
+        val reference = database.child("Feed-Posts").child(uid).push()
+        return reference.setValue(feedPost).toUnit().addOnSuccessListener {
+            EventBus.publish(Event.CreateSearchPost(feedPost.copy(id = reference.key!!)))
+        }
+    }
 
     override fun copyFeedPosts(postsAuthorUid: String, uid: String): Task<Unit> =
         task<Unit> { taskSource ->

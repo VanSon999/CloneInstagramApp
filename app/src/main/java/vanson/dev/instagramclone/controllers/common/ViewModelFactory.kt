@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.tasks.OnFailureListener
 import vanson.dev.instagramclone.controllers.InstagramApp
+import vanson.dev.instagramclone.controllers.SearchViewModel
 import vanson.dev.instagramclone.controllers.addfriends.AddFriendsViewModel
 import vanson.dev.instagramclone.controllers.comments.CommentsViewModel
 import vanson.dev.instagramclone.controllers.editprofile.EditProfileViewModel
@@ -28,6 +29,7 @@ class ViewModelFactory(
             val feedPostsRepo = app.feedPostsRepo
             val authManger = app.authManger
             val notificationsRepo = app.notificationsRepo
+            val searchPostsRepo = app.searchPostsRepo
             return when {
                 isAssignableFrom(AddFriendsViewModel::class.java) -> {
                     AddFriendsViewModel(onFailureListener, usersRepo, feedPostsRepo) as T
@@ -58,6 +60,9 @@ class ViewModelFactory(
                 }
                 isAssignableFrom(NotificationsViewModel::class.java) -> {
                     NotificationsViewModel(notificationsRepo, onFailureListener) as T
+                }
+                isAssignableFrom(SearchViewModel::class.java) -> {
+                    SearchViewModel(searchPostsRepo,onFailureListener) as T
                 }
                 else -> {
                     error("Unknown view model class $modelClass")
