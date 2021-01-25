@@ -20,9 +20,11 @@ class HomeViewModel(
     private var loadedLikes = mapOf<String, LiveData<FeedPostLikes>>()
 
     fun init(uid: String) {
-        this.uid = uid
-        feedPosts = feedPostsRepo.getFeedPosts(uid)
-            .mapCustom { it -> it.sortedByDescending { it.timestampDate() } }
+        if(!this::uid.isInitialized){
+            this.uid = uid
+            feedPosts = feedPostsRepo.getFeedPosts(uid)
+                .mapCustom { it -> it.sortedByDescending { it.timestampDate() } }
+        }
     }
 
     fun toggleLike(postId: String) {

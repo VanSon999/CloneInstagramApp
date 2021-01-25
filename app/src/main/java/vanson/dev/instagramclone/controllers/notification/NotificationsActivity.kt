@@ -16,9 +16,9 @@ class NotificationsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notifications)
 
-        setupBottomNavigation(3)
 //        Log.d(TAG, "onCreate: ${this.navNumber}")
         setupAuthGuard {uid ->
+            setupBottomNavigation(uid,3)
             mAdapter = NotificationsAdapter()
             notification_recycler.layoutManager = LinearLayoutManager(this)
             notification_recycler.adapter = mAdapter

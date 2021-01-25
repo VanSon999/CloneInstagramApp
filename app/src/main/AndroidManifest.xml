@@ -23,7 +23,7 @@
         </activity>
         <activity android:name=".controllers.notification.NotificationsActivity" />
         <activity android:name=".controllers.share.ShareActivity" />
-        <activity android:name=".controllers.SearchActivity" />
+        <activity android:name=".controllers.search.SearchActivity" />
         <activity android:name=".controllers.profile.ProfileActivity" />
         <activity
             android:name=".controllers.login.LoginActivity"

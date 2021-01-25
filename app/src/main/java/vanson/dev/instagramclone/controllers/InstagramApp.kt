@@ -2,6 +2,7 @@ package vanson.dev.instagramclone.controllers
 
 import android.app.Application
 import vanson.dev.instagramclone.controllers.notification.NotificationsCreator
+import vanson.dev.instagramclone.controllers.search.SearchPostsCreator
 import vanson.dev.instagramclone.repository.firebase.FirebaseFeedPostsRepository
 import vanson.dev.instagramclone.repository.firebase.FirebaseNotificationsRepository
 import vanson.dev.instagramclone.repository.firebase.FirebaseSearchRepository

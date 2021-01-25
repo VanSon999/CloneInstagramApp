@@ -1,4 +1,4 @@
-package vanson.dev.instagramclone.controllers
+package vanson.dev.instagramclone.controllers.search
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

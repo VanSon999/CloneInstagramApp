@@ -13,6 +13,8 @@ class ProfileViewModel(
     lateinit var images: LiveData<List<String>>
 
     fun init(uid: String) {
-        images = usersRepo.getListImagesOfUser(uid)
+        if (!this::images.isInitialized) {
+            images = usersRepo.getListImagesOfUser(uid)
+        }
     }
 }

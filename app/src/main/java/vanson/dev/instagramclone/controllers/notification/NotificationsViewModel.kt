@@ -14,8 +14,10 @@ class NotificationsViewModel(
     lateinit var notifications: LiveData<List<Notification>>
     private lateinit var uid: String
     fun init(uid: String) {
-        this.uid = uid
-        notifications = notificationsRepo.getNotifications(uid)
+        if(!this::uid.isInitialized){
+            this.uid = uid
+            notifications = notificationsRepo.getNotifications(uid)
+        }
     }
 
     fun setNotificationsRead(notifications: List<Notification>) {

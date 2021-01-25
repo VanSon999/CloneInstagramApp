@@ -11,7 +11,7 @@ import vanson.dev.instagramclone.controllers.InstagramApp
 import vanson.dev.instagramclone.controllers.login.LoginActivity
 
 abstract class BaseActivity : AppCompatActivity() {
-    protected lateinit var commonViewModel: CommonViewModel
+    lateinit var commonViewModel: CommonViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +24,7 @@ abstract class BaseActivity : AppCompatActivity() {
         })
     }
 
-    protected inline fun <reified T : BaseViewModel> initViewModel(): T =
+    inline fun <reified T : BaseViewModel> initViewModel(): T =
         ViewModelProvider(this, ViewModelFactory(application as InstagramApp, commonViewModel, commonViewModel)).get(T::class.java)
 
     fun goToLogin() {

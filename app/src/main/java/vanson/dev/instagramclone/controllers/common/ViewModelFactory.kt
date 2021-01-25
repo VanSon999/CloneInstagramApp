@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.tasks.OnFailureListener
 import vanson.dev.instagramclone.controllers.InstagramApp
-import vanson.dev.instagramclone.controllers.SearchViewModel
+import vanson.dev.instagramclone.controllers.search.SearchViewModel
 import vanson.dev.instagramclone.controllers.addfriends.AddFriendsViewModel
 import vanson.dev.instagramclone.controllers.comments.CommentsViewModel
 import vanson.dev.instagramclone.controllers.editprofile.EditProfileViewModel

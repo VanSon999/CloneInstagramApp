@@ -1,4 +1,4 @@
-package vanson.dev.instagramclone.controllers
+package vanson.dev.instagramclone.controllers.search
 
 import android.os.Bundle
 import android.os.Handler
@@ -22,8 +22,8 @@ class SearchActivity : BaseActivity(), TextWatcher {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
-        setupBottomNavigation(1)
         setupAuthGuard {
+            setupBottomNavigation(it,1)
             mAdapter = ImagesAdapter()
             search_result_recycler.layoutManager = GridLayoutManager(this, 3)
             search_result_recycler.adapter = mAdapter
@@ -31,8 +31,8 @@ class SearchActivity : BaseActivity(), TextWatcher {
             mViewModel = initViewModel()
 
             mViewModel.posts.observe(this, Observer { list ->
-                list?.let{ posts ->
-                    mAdapter.updateImages(posts.map{it.image})
+                list?.let { posts ->
+                    mAdapter.updateImages(posts.map { it.image })
                 }
             })
             search_input.addTextChangedListener(this)
@@ -49,7 +49,7 @@ class SearchActivity : BaseActivity(), TextWatcher {
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
     override fun afterTextChanged(s: Editable?) {
-        if(!isSearchEntered){
+        if (!isSearchEntered) {
             isSearchEntered = true
             @Suppress("DEPRECATION")
             Handler().postDelayed({
